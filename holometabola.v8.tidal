@@ -1,0 +1,327 @@
+-- no intro
+
+
+hush
+
+-- bosco
+do
+  panic
+  hush
+  resetCycles
+  setcps(180/60/4)
+  -- setcps(86/60/4)
+  unsoloAll
+  a1 $ every 8 (fast 2 . density 0.25 . (#cutoff 650) . (#hcutoff 500) . (#legato 0.25) ) $ density 0.25 $ stack [
+      s "bsc:3(2, 4)" # legato 2 # accelerate 0.1,
+      s "~ ~ ~ bsc:3/2"
+      ] # gain 0.4
+  a2 $ density 0.25 $ stack [
+      stack [
+        fast 2 $ s "<bsc:4(3, 12, 2), [bsc:4 bsc:4 ~ bsc:4]>",
+        every 4 (density 2) $ s "<bsc:4(3, 12, 2), bsc:4(4, 12, 2), [bsc:4 bsc:2 ~ bsc:3]*2>" # freq 64 # gain 0.5 # legato 0.25 # stretch 0.2
+      ] # room 1 # gain 0.45 # cutoff 9500 # freq 128 # stretch 0.5 # gain 0.75,
+      slow 2 $ stack [
+        density 2 $ s "<bsc:4(1, 12, 2), [~ [bsc:4 bsc:4] ~ bsc:4]>",
+        density 0.5 $ s "<bsc:4(3, 12, 2), bsc:4(4, 12, 2), [bsc:4 bsc:2 ~ bsc:3]*2>" # freq 64 # gain 0.5 # legato 0.25 # stretch 0.2
+      ] # room 1 # gain 0.55 # cutoff 9500 # freq 256
+    ] # dry 0.8 # room 1 # cutoff 15000 # hcutoff 4000
+  a3 $ density 0.25 $ stack [
+      stack [
+        s "<bsc:4(3, 12, 2), [bsc:4 bsc:4 ~ bsc:4]>",
+        every 4 (density 0.5) $ s "<bsc:4(3, 12, 2), bsc:4(4, 12, 2), [bsc:4 bsc:2 ~ bsc:3]*2>" # freq 64 # gain 0.5 # legato 0.25 # stretch 0.2
+      ] # room 1 # gain 0.75 # cutoff 9500 # freq 64 # stretch 0.5,
+      density 0.25 $ stack [
+        density 2 $ s "<bsc:4(1, 12, 2), [~ [bsc:4 bsc:4] ~ bsc:4]>",
+        density 0.5 $ s "<bsc:4(3, 12, 2), bsc:4(4, 12, 2), [bsc:4 bsc:2 ~ bsc:3]*2>" # freq 64 # gain 0.5 # legato 0.25 # stretch 0.2
+      ]
+    ] # hcutoff 4000 # room 0.8 # resonance 0.8 # gain sine + 0.4
+  a4 $ density 0.25 $ stack [
+      slow 4 $ stack [
+        density 2 $ s "<bsc:4(1, 12, 2), [~ [bsc:4 bsc:4] ~ bsc:4]>",
+        density 0.5 $ s "<bsc:4(3, 12, 2), bsc:4(4, 12, 2), [bsc:4 bsc:2 ~ bsc:3]*2>" # freq 64 # gain 0.5 # legato 0.25 # stretch 0.2
+      ] # room 1 # gain 0.55 # cutoff 9500 # freq 256
+    ] # dry 0.8 # room 0.6 # cutoff 15000 # freq 400 # gain 0.75 # resonance 0.1
+  a5 $ density 0.25 $ stack [
+      slow 4 $ stack [
+        density 2 $ s "<bsc:4(1, 12, 2), [~ [bsc:4 bsc:4] ~ bsc:4]>" # gain 0.7,
+        density 0.5 $ s "<bsc:4(3, 12, 2), bsc:4(4, 12, 2), [bsc:4 bsc:2 ~ bsc:3]*2>" # freq 64 # gain 0.8 # legato 0.25 # stretch 0.2
+      ] # room 1 # gain 0.55 # cutoff 9500 # freq 256
+    ] # dry 0.8 # room 1 # cutoff 15000 # freq 400 # gain 0.8
+  a6 $ density 0.25 $ stack [
+      stack [
+        s "<bsc:4(3, 12, 2), [bsc:4 bsc:4 ~ bsc:4]>",
+        every 4 (density 2) $ s "<bsc:4(3, 12, 2), bsc:4(4, 12, 2), [bsc:4 bsc:2 ~ bsc:3]*2>" # freq 64 # gain 0.5 # legato 0.25 # stretch 0.2
+      ] # room 1 # gain 0.75 # cutoff 9500 # freq 64 # stretch 0.5,
+      slow 2 $ stack [
+        density 2 $ s "<bsc:4(1, 12, 2), [~ [bsc:4 bsc:4] ~ bsc:4]>",
+        density 2 $ s "<bsc:4(3, 12, 2), bsc:4(4, 12, 2), [bsc:4 bsc:2 ~ bsc:3]*2>" # freq 64 # gain 0.5 # legato 0.25 # stretch 0.2
+      ] # room 1 # gain 0.75 # cutoff 9500 # freq 128
+    ] # gain 0.65
+  -- soft
+  l4 $ density 1 $ layer[density 1 . (# gain 0.75), density 0.5 . (# freq 512) . (# cutoff 600) . (# hcutoff 400)] $ layer[slow 2 . (# freq 128), striate 2 . (# freq 1024)] $ stack [
+      slowcat [
+        slowcat [
+          s "<vt:2*4, bsc:6>" # freq 200 # gain 0.7 # room 1,
+          s "<vt:2*4, bsc:6>" # freq 300 # gain 0.7 # room 1 # legato 2
+        ],
+        s "<vt:2*4, bsc:6>" # freq 380 # gain 0.8 # stretch 2 # legato 1 # decay 3,
+        s "<vt:2*4, bsc:6>" # freq 380 # gain 0.8 # stretch 2 # legato 1 # decay 2
+      ],
+      density 0.15 $ s "<vt:2*4, bsc:6>" # freq 180 # gain 0.5 # room 1 # legato 0.25
+    ]
+  l1 $ s "<vt:2(1, 12, 2), vt:2(3, 12, 4), [vt:2 vt:2 ~ vt:3]>" # room 0.6 # gain 0.75 # cutoff 9500 # freq 400
+  l2 $ striate 2 $ slow 8 $ s "<vt:2(1, 12, 2), [vt:2 vt:2 ~ vt:2]>" # room 0.6 # gain 0.75 # cutoff 9500 # freq 400 # stretch sine/3 + 0.04
+  -- d11 $ silence -- layer[density 0.5, density 2] $ layer[slow 4, (#freq 800), (#higher 2), striate 4] $ s "<vt:2(6, 8, 2), bsc:6>" # freq 200 # gain 0.8
+  l5 $ s "<vt:2(3, 12, 2), vt:2(3, 12, 4), [vt:2 vt:2 ~ vt:3]>" # room 0.6 # gain 0.75 # cutoff 9500 # freq 400
+  l6 $ striate 4 $ slow 4 $ s "<vt:2(3, 12, 2), [vt:2 vt:2 ~ vt:2]>" # room 0.6 # gain 0.75 # cutoff 9500 # freq 400 # stretch sine/3 + 0.04
+  l3 $ slow 2 $ layer[slow 2, striate 2] $ s "<vt:2*4, bsc:6>" # freq 200 # gain 0.8
+
+
+
+do
+  a1 $ silence
+  b1 $ every 4 (# cutoff 1500) $ s "<bass2:2(3, 12, 2), [bass2:2 bass2:2 ~ bass2:2], bass1:2*6, bass2:3*2>"
+    # room 0.6 # gain 0.75 # cutoff 500 # freq 200
+  b2 $ every 4 (# cutoff 1500) $ slow 2 $ s "<bass2:2(3, 12, 2), [bass2:2 bass2:2 ~ bass2:2], bass1:2*6, bass2:3*2>"
+    # room 0.6 # gain 0.75 # cutoff 500 # freq 200
+  b3 $ s "<vt:2(3, 12, 2), [vt:2 vt:2 ~ vt:2]>"
+    # room 0.8 # gain 0.75 # cutoff 9500 # freq 200
+  b4 $ density 0.25 $ s "~ <bass2(8, 8), bass2(2, 8, 2)>" # room 0.6 # gain 0.75 # cutoff 2000 # freq 400
+
+
+  do
+    a3 $ silence
+    b1 $ every 4 (# cutoff 1500) $ s "<bass2:2(3, 12, 2), [bass2:2 bass2:2 ~ bass2:2], bass1:2*6, bass2:3*2>"
+      # room 0.6 # gain 0.75 # cutoff 200 # freq 200
+    b2 $ every 4 (# cutoff 1500) $ slow 2 $ s "<bass2:2(3, 12, 2), [bass2:2 bass2:2 ~ bass2:2], bass1:2*6, bass2:3*2>"
+      # room 0.6 # gain 0.75 # cutoff 200 # freq 200
+    b3 $ s "<vt:2(3, 12, 2), [vt:2 vt:2 ~ vt:2]>"
+      # room 1 # gain 0.75 # cutoff 500 # freq 200
+    b4 $ density 0.25 $ s "~ <bass2(8, 8), bass2(2, 8, 2)>" # room 0.6 # gain 0.75 # cutoff 200 # freq 400
+
+
+do
+  a2 $ silence
+  a5 $ silence
+
+-- ambient
+a2 $ s "<vt:2(1, 12, 2), vt:2(3, 12, 4), [vt:2 vt:2 ~ vt:3]>" # room 0.6 # gain 0.75 # cutoff 9500 # freq 400
+
+-- no
+l5 $ layer[density 2 . (# freq 524) . (# hcutoff 600), density 1] $ striate 2 $ slow 8 $ s "<vt:2(1, 12, 2), [vt:2 vt:2 ~ vt:2]>" # room 0.6 # gain 0.75 # cutoff 9500 # freq 400 # stretch sine/3 + 0.04
+  -- d11 $ silence -- layer[density 0.5, density 2] $ layer[slow 4, (#freq 800), (#higher 2), striate 4] $ s "<vt:2(6, 8, 2), bsc:6>" # freq 200 # gain 0.8
+
+
+
+do -- drama birds - main
+  l4 $ jux( (#cutoff 1500). (# delay 0.01) ) $ striate 4 $ layer [slow 4, density 0.25] $ slowcat [
+        s "<vt:3(6, 12, 2), vt:2(2, 12, 4), vt:2*6>" # legato 0.75,
+        density 0.5 $ s "<vt:3*3, [vt:2(6, 12, 1)]/2, vt:3*4, vt:2(3, 12, 1)>" # legato 0.2
+      ]
+      # room cosine |+| 0.8
+      # stretch 0.12
+      # gain 0.95
+      # cutoff 5100
+      # hcutoff 2500
+      # freq 3500
+      # dry 1.9
+  a1 $ every 8 (fast 2 . density 0.25 . (#cutoff 650) . (#hcutoff 500) . (#legato 0.25) ) $ density 0.25 $ stack [
+      s "bsc:3(2, 4)" # legato 2 # accelerate 0.1,
+      s "~ ~ ~ bsc:3/2"
+      ] # gain 0.4 # hcutoff 5000 # cutoff 5000
+
+
+do
+  b1 $ silence
+
+
+do
+  -- d11 $ silence
+  b1 $ every 4 (# cutoff 1500) $ s "<bass2:2(3, 12, 2), [bass2:2 bass2:2 ~ bass2:2], bass1:2*6, bass2:3*2>"
+    # room 0.6 # gain 0.65 # cutoff 500 # freq 200
+  b2 $ every 4 (# cutoff 1500) $ slow 2 $ s "<bass2:2(3, 12, 2), [bass2:2 bass2:2 ~ bass2:2], bass1:2*6, bass2:3*2>"
+    # room 0.6 # gain 0.65 # cutoff 500 # freq 200
+  b3 $ striate 2 $ slow 2 $ slowcat [
+      s "<vt:2(3, 12, 2), [vt:2 vt:2 ~ vt:2]>" # freq 200 # stretch sine/3 + 0.04,
+      slow 2 $ s "<vt:2(3, 12, 2), [vt:1 ~ vt:2 ~ ]>" # freq 300 # stretch 0.2
+    ] # room 0.6 # gain 0.75 # cutoff 9500
+
+
+do
+    b4 $ density 0.25 $ s "~ <bass2(8, 8), bass2(2, 8, 2)>" # room 0.6 # gain 0.85 # cutoff 100 # freq 400
+    -- birds - can be super fast
+    l1 $ stut 1 2 0.2 $ density 0.5 $ jux(#cutoff 1500) $ striate 4 $ slow 8 $ layer [slow 8, slow 16, striate 4] $ stack [
+          s "<bsc:3*3, [bsc:2(6, 12, 3)]/2, vt:2, bsc:2(3, 12)>"
+      ] # legato 0.95 # cutoff 1000 # hcutoff 2000
+      -- drama III
+    l2 $ s "<vt:2(3, 12, 2), [vt:3 vt:2 ~ vt:3]>"
+      # room 1 # gain 0.75 # cutoff 4500 # freq 2000
+
+do
+  a3 $ silence
+  b1 $ slow 2 $ every 4 (# cutoff 1500) $ s "<bass2:2(3, 12, 2), [bass2:2 bass2:2 ~ bass2:2], bass1:2*6, bass2:3*2>"
+    # room 0.6 # gain 0.65 # cutoff 500 # freq 200
+  b2 $ every 4 (# cutoff 1500) $ slow 2 $ s "<bass2:2(3, 12, 2), [bass2:2 bass2:2 ~ bass2:2], bass1:2*6, bass2:3*2>"
+    # room 0.6 # gain 0.65 # cutoff 500 # freq 200
+  b3 $ striate 2 $ slow 2 $ slowcat [
+      s "<vt:2(3, 12, 2), [vt:2 vt:2 ~ vt:2]>" # freq 200 # stretch sine/3 + 0.04,
+      slow 2 $ s "<vt:2(3, 12, 2), [vt:1 ~ vt:2 ~ ]>" # freq 300 # stretch 0.2
+    ] # room 0.6 # gain 0.75 # cutoff 9500
+
+
+do
+  a4 $ s "<vt:2(3, 12, 2), [vt:3 vt:2 ~ vt:3]>" # room 1 # gain 0.75 # cutoff 4500 # freq 2000
+  -- move on
+  a3 $ stut 1 2 0.2 $ density 1 $ jux(#cutoff 1500) $ striate 4 $ slow 8 $ layer [slow 8, slow 16, striate 4] $ stack [
+        s "<bsc:3*3, [bsc:2(6, 12, 3)]/2, vt:2, bsc:2(3, 12)>"
+    ] # legato 0.95 # cutoff 2000
+  a2 $ stack [
+      striate 4 $ density 0.25 $ s "vt:2 ~ [vt:2 vt:2] ~ ~ ~ [vt:2] ~ ~ ~ ~ ~" # freq 300 # legato 0.75 # stretch 0.2,
+      density 0.25 $ s "bsc:2 ~ [bsc:2 bsc:2] ~ ~ ~ [bsc:2] ~ ~ ~ ~ ~" # freq 1200 # legato 0.75 # stretch 0.2,
+      s "vt:2 ~ [vt:2 vt:2] ~ ~ [vt:2] ~ ~ ~ vt:2 ~ ~" # freq 300 # legato 2 # delay 0.2 # gain 0.4
+    ]
+  -- better for other, slow chords
+  a1 $ slow 4 $ stack [
+        s "<vt:2(3, 12, 2), [vt:2 vt:2 ~ vt:2]>" # freq 200 # stretch sine/3 + 0.04,
+        density 2 $ s "<vt:2(2, 12, 1), [~ vt:2 ~ vt:2]>" # freq 420 # dry 0.2 # room 0.8
+      ] # gain 1 # cutoff 3500 # hcutoff 600
+  b1 $ fast 1 $ s "<bass2:2(3, 12, 2), bass2:2:8(3, 12, 4), [bass2:2 bass2:2 ~ bass2:2]>" # room 0.6 # gain 0.55 # cutoff 9500 # freq 200
+  b2 $ fast 1 $ s "<bass2:2(3, 12, 2), bass2:2:8(3, 12, 4), [bass2:2 bass2:2 ~ bass2:2]>" # room 0.6 # gain 0.45 # cutoff 9500 # freq 400
+  b3 $ slow 4 $ s "~ ~ ~ <bass2:2(6, 12, 2), bass2:8(6, 12, 4), [bass2:2 bass2:2 ~ bass2:2]>" # room 0.8 # gain 0.7 # cutoff 1000 # freq 280
+  -- holo end
+  b4 $ s "<bass2:2(3, 12, 2), [bass2:2 bass2:2 ~ bass2:2]>" # room 0.3 # gain 0.95 # cutoff 500 # freq 200
+
+panic
+
+l2 $ density 0.125 $ layer[jux(#cutoff 1500), striate 8, fast 2, (#cutoff 2000)] $ layer [slow 8, rev, id, fast 4] $ slowcat [
+    s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>" # legato 0.75,
+    every 4 (density 2) $ s "<vt:3*3, [vt:2(6, 12, 3)]/2, vt:3*4, vt:2(3, 12)>" # legato 0.2
+  ]
+  # room 0.2 |+| 2
+  # gain 0.65
+  # decay 0.2
+  # release 0.8
+  # sustain 0.8
+  # room 0.9
+  # cutoff 2100
+  # freq 1600
+  # delay 0.2
+  # lfo 2
+  # speed (fmap ([2,1,3]!!)
+  $ markovPat 16 2 [[3,5,2], [4,4,2], [0,1,0]])
+  # gain 0.5
+
+
+
+
+do -- drama birds
+  a2 $ s "<vt:2(1, 12, 2), vt:2(3, 12, 4), [vt:2 vt:2 ~ vt:3]>" # room 0.6 # gain 0.75 # cutoff 9500 # freq 400
+  a3 $ striate 2 $ slow 8 $ s "<vt:2(1, 12, 2), [vt:2 vt:2 ~ vt:2]>" # room 0.6 # gain 0.75 # cutoff 9500 # freq 400 # stretch sine/3 + 0.04
+
+
+l3 $ slow 4 $ stack [
+    s "<vt:2(1, 12, 2), [vt:2 vt:2 ~ vt:2]>" # freq 200 # stretch sine/3 + 0.04,
+    s "<vt:2(4, 12, 2), [~ vt:2 ~ vt:2]>" # freq 220 # dry 0.2 # room 0.8
+    ] # amp 1 # cutoff 3500 # hcutoff 600
+
+do
+  b2 $ silence
+  b3 $ silence
+  -- movement
+  l1 $ jux(#cutoff 1500) $ slow 4 $ layer [slow 4, fast 2, striate 4] $ stack [
+      s "<vt:3*3, [vt:2(6, 12, 3)]/2, vt:3*4, vt:2(3, 12)>" # stretch 0.2,
+      interlace (density 2 $ s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>" # stretch 4) (density 0.25 $s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>")
+    ]
+    # gain 0.7
+    # room cosine |+| 0.4
+    # cutoff 2100
+    # freq 3800
+    # dry 1.9
+  b2 $ every 8 (# cutoff 1500) $ every 32 (#cutoff 500) $ interlace (s "<gabba:2(4, 12, 2), [bass2:2 bass2:2 ~ bass2:2], gabba:2*3, gabba:4*2>")
+    (s "<gabba:2(6, 12, 2), [bass2:2 bass2:2 ~ bass2:2], gabba:3(3, 16, 3), gabba:4*4>")
+    # room 0.4 # gain 0.75 # cutoff 4912 # freq 2400
+
+
+do
+  l1 $ density 0.25 $ slowcat [
+    jux(#cutoff 1500) $ striate 4 $ slow 4 $ layer [slow 4, id, slow 8, striate 4] $ stack [
+        s "<vt:3*3, [vt:2(6, 12, 3)]/2, vt:3*4, vt:2(3, 12)>",
+        striate 2 $ s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>"
+      ]
+      # room cosine |+| 0.2
+      # room 2
+      # freq 2500,
+      jux(#cutoff 1500) $ slow 4 $ layer [slow 4, fast 2, striate 4] $ stack [
+        s "<vt:3*3, [vt:2(6, 12, 3)]/2, vt:3*4, vt:2(3, 12)>" # stretch 0.2,
+        interlace (density 2 $ s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>" # stretch 4) (density 0.25 $s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>")
+      ]
+      # gain 0.75
+      # room cosine |+| 0.4
+      # freq 3800
+    ] # gain 0.58 # dry 1.9 # cutoff 1100 # room 3 # cut 0
+  unsoloAll
+  b1 $ every 4 (# cutoff 1500) $ s "<bass2:2(3, 12, 2), [bass2:2 bass2:2 ~ bass2:2], bass1:2*6, bass2:3*2>"
+    # room 0.6 # gain 0.75 # cutoff 500 # freq 200
+  b2 $ every 4 (# cutoff 1500) $ slow 2 $ s "<bass2:2(3, 12, 2), [bass2:2 bass2:2 ~ bass2:2], bass1:2*6, bass2:3*2>"
+    # room 0.6 # gain 0.75 # cutoff 500 # freq 200
+  l5 $ s "<vt:2(3, 12, 2), [vt:2 vt:2 ~ vt:2]>"
+    # room 1 # gain 0.75 # cutoff 9500 # freq 200
+  l4 $ s "<vt:2*4, bsc:6>" # freq 200 # gain 0.7 # room 1
+  -- can be super fast
+  l2 $ stut 1 2 0.2 $ density 0.5 $ jux(#cutoff 1500) $ striate 4 $ slow 8 $ layer [slow 8, slow 16, striate 4] $ stack [
+        s "<bsc:3*3, [bsc:2(6, 12, 3)]/2, vt:2, bsc:2(3, 12)>"
+    ] # legato 0.95 # cutoff 1000 # hcutoff 2000
+
+
+
+do
+  -- better as interlude (or post holo) can be super fast
+  l1 $ stut 1 2 0.2 $ density 1 $ jux(#cutoff 1500) $ striate 4 $ slow 8 $ layer [slow 8, slow 16, striate 4] $ stack [
+        s "<bsc:3*3, [bsc:2(6, 12, 3)]/2, vt:2, bsc:2(3, 12)>"
+    ] # legato 0.95 # cutoff 2000 # gain 0.9
+  a1 $ stack [
+      striate 4 $ density 0.25 $ s "vt:2 ~ [vt:2 vt:2] ~ ~ ~ [vt:2] ~ ~ ~ ~ ~" # freq 300 # legato 0.75 # stretch 0.2 # gain 0.9,
+      density 0.25 $ s "bsc:2 ~ [bsc:2 bsc:2] ~ ~ ~ [bsc:2] ~ ~ ~ ~ ~" # freq 1200 # legato 0.75 # stretch 0.2 # gain 0.8,
+      s "vt:2 ~ [vt:2 vt:2] ~ ~ [vt:2] ~ ~ ~ vt:2 ~ ~" # freq 300 # legato 2 # delay 0.2 # gain 0.9
+    ] # gain 0.7
+  -- better for other, slow chords
+  a2 $ slow 4 $ stack [
+        s "<vt:2(3, 12, 2), [vt:2 vt:2 ~ vt:2]>" # freq 200 # stretch sine/3 + 0.04,
+        density 2 $ s "<vt:2(2, 12, 1), [~ vt:2 ~ vt:2]>" # freq 420 # dry 0.2 # room 0.8
+      ] # gain 0.9 # cutoff 3500 # hcutoff 600
+
+
+do -- pre hyper
+  b6 $ every 8 (# cutoff 1500) $ every 32 (#cutoff 500) $ interlace (s "<gabba:2(4, 12, 2), [bass2:2 bass2:2 ~ bass2:2], gabba:2*3, gabba:4*2>")
+    (s "<gabba:2(6, 12, 2), [bass2:2 bass2:2 ~ bass2:2], gabba:3(3, 16, 3), gabba:4*4>")
+    # room 0.4 # gain 0.75 # cutoff 4912 # freq 2400
+
+    b5 $ slow 2 $ stack [
+        slow 4 $ s "<909:2(1, 12, 2), [909:2 909:2 ~ 909:2]>" # freq 200 # stretch sine/3 + 0.04 # gain 1 # cutoff 3500 # hcutoff 600,
+        s "<gabba:4(4, 12, 2), [~ gabba:4 ~ gabba:4]>" # freq 220 # dry 0.2 # room 0.8
+      ] # cutoff 500
+
+
+do
+  -- better as interlude (or post holo) can be super fast
+  l1 $ stut 1 2 0.2 $ density 1 $ jux(#cutoff 1500) $ striate 4 $ slow 8 $ layer [slow 8, slow 16, striate 4] $ stack [
+        s "<bsc:3*3, [bsc:2(6, 12, 3)]/2, vt:2, bsc:2(3, 12)>"
+    ] # legato 0.95 # cutoff 2000 # gain 0.9
+  a1 $ stack [
+      striate 4 $ density 0.25 $ s "vt:2 ~ [vt:2 vt:2] ~ ~ ~ [vt:2] ~ ~ ~ ~ ~" # freq 300 # legato 0.75 # stretch 0.2 # gain 0.9,
+      density 0.25 $ s "bsc:2 ~ [bsc:2 bsc:2] ~ ~ ~ [bsc:2] ~ ~ ~ ~ ~" # freq 1200 # legato 0.75 # stretch 0.2 # gain 0.8,
+      s "vt:2 ~ [vt:2 vt:2] ~ ~ [vt:2] ~ ~ ~ vt:2 ~ ~" # freq 300 # legato 2 # delay 0.2 # gain 0.9
+    ]
+  -- better for other, slow chords
+  a2 $ slow 4 $ stack [
+        s "<vt:2(3, 12, 2), [vt:2 vt:2 ~ vt:2]>" # freq 200 # stretch sine/3 + 0.04,
+        density 2 $ s "<vt:2(2, 12, 1), [~ vt:2 ~ vt:2]>" # freq 420 # dry 0.2 # room 0.8
+      ] # gain 1 # cutoff 3500 # hcutoff 600
+  b5 $ silence
+
+
+do
+  -- hyper
+  b5 $ every 8 (# cutoff 1500) $ every 32 (#cutoff 500) $ interlace (s "<gabba:2(4, 12, 2), [bass2:2 bass2:2 ~ bass2:2], gabba:2*3, gabba:4*2>")
+    (s "<gabba:2(6, 12, 2), [bass2:2 bass2:2 ~ bass2:2]*3, gabba:3(3, 16, 3), gabba:4*4>")
+    # room 0.4 # gain 0.85 # cutoff 3912 # freq 2400 # room 2 # resonance 0.1
