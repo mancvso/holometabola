@@ -91,6 +91,7 @@ do
     ] # gain 0.9 # cutoff 8500 # hcutoff 1000 # room 2 # size 2 # delay 0.2
 
 do
+  b5 $ silence
   a4 $ s "<vt:2(3, 12, 2), [vt:3 vt:2 ~ vt:3]>" # room 1 # gain 0.75 # cutoff 4500 # freq 2000
   -- move on
   a3 $ stut 1 2 0.2 $ density 1 $ jux(#cutoff 1500) $ striate 4 $ slow 8 $ layer [slow 8, slow 16, striate 4] $ stack [
@@ -152,7 +153,7 @@ do
     # lfo 2
     # speed (fmap ([2,1,3]!!)
     $ markovPat 16 2 [[3,5,2], [4,4,2], [0,1,0]])
-    # gain 0.9
+    # gain 0.6
 
   unsoloAll
 
@@ -222,7 +223,7 @@ do
       # speed (fmap ([2,1,3]!!)
       $ markovPat 16 2 [[3,5,2], [4,4,2], [0,1,0]])
       # cutoff 4250 # hcutoff 1000 # dry 0.1 # resonance 0.8 # decay 0.4 # release 0.8
-      # room 0.2 # cutoff 4800
+      # room 0.2 # cutoff 480 # freq 128 # hcutoff 600
 
   b1 $ density 0.25 $ every 8 (# cutoff 1500) $ every 32 (#cutoff 500) $ interlace (s "<gabba:2(4, 12, 2), [bass2:2 bass2:2 ~ bass2:2], gabba:2*3, gabba:4*2>")
     (s "<gabba:2(6, 12, 2), [bass2:2 bass2:2 ~ bass2:2], gabba:3(3, 16, 3), gabba:4*4>")
@@ -295,13 +296,13 @@ do
 
 hush
 
+-- movement
 do
   b2 $ silence
   b3 $ silence
-  -- movement
-  l1 $ jux(#cutoff 1500) $ slow 4 $ layer [slow 4, fast 2, striate 4] $ stack [
+  l1 $ jux( # cutoff 1500) $ slow 4 $ layer [slow 4, fast 2, striate 4] $ stack [
       s "<vt:3*3, [vt:2(6, 12, 3)]/2, vt:3*4, vt:2(3, 12)>" # stretch 0.2,
-      interlace (density 2 $ s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>" # stretch 4) (density 0.25 $s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>")
+      interlace (density 2 $ s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>" # stretch 4) (density 0.25 $ s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>")
     ]
     # gain 0.7
     # room cosine |+| 0.4
@@ -378,7 +379,7 @@ do
 
 
 do -- hyper 2
-  b2 $ slow 1 $ every 8 (# cutoff 1500) $ every 32 (#cutoff 500) $ interlace (s "<gabba:2(4, 12, 2), [bass2:2 bass2:2 ~ bass2:2], gabba:2*3, gabba:4*2>")
+  b5 $ slow 1 $ every 8 (# cutoff 1500) $ every 32 (#cutoff 500) $ interlace (s "<gabba:2(4, 12, 2), [bass2:2 bass2:2 ~ bass2:2], gabba:2*3, gabba:4*2>")
     (s "<gabba:2(6, 12, 2), [bass2:2 bass2:2 ~ bass2:2]*3, gabba:3(3, 16, 3), gabba:4*4>")
     # room 0.4 # gain 0.75 # cutoff 4912 # freq 2400
 
@@ -403,7 +404,7 @@ do
     # stretch 4 # freq 4256 # pan sine
 
 do
-  b4 $ slowcat [
+  b3 $ slowcat [
     layer[density 1, density 0.25, striate 2] $ slow 2 $ stack [
     s "<gabba:4*3, gabba:4(4, 12), [uxay:4(6, 12, 1)], gabba:3(4, 8, 2), 909:4(3, 16, 2), bd:4*2>" # stretch 2 # freq 256 # pan sine,
     density 1 $ s "<gabba:4*3, [bend:4(6, 12, 3)]/2, haw:3*4, 909:4(3, 12), bd:4*2>" # stretch 1 # freq 456 # pan sine
@@ -467,12 +468,12 @@ do
 
 streamHush
 
-b1 $ s "[gabba:4] [~ gabba:4] [gabba:4] [gabba:4]"
+b1 $ slow 8 $ every 4 (slow 4) $ stut 2 0.5 0.4 $ s "[gabba:4] [~ gabba:4] [gabba:4] [gabba:4]" # pan cosine # cutoff 200
 
 hush
 
-do
-  b1 $ density 4 $ stack [
+do -- no
+  b2 $ density 4 $ stack [
       layer[density 0.125] $ stack [
         s "<gabba:4(1, 4), [~] [gabba:4] [~] [gabba:4], gabba:4(2, 8), gabba:3(3, 8), gabba:2(1, 4), 909:4(1, 16), bd:4>"
           # stretch 1 # freq 256 # pan sine,
@@ -496,7 +497,7 @@ do
     l1 $ silence
     l2 $ jux(#cutoff 1500) $ slow 4 $ layer [slow 4, fast 2, striate 4] $ stack [
         s "<vt:3*3, [vt:2(6, 12, 3)]/2, vt:3*4, vt:2(3, 12)>" # stretch 0.2,
-        interlace (density 2 $ s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>" # stretch 4) (density 0.25 $s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>")
+        interlace (density 2 $ s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>" # stretch 4) (density 0.25 $ s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>")
       ]
       # gain 0.7
       # room cosine |+| 0.4
@@ -505,7 +506,7 @@ do
       # dry 1.9
     l3 $ jux(#cutoff 1500) $ slow 2 $ layer [slow 4, fast 2, striate 4] $ stack [
         s "<vt:3*3, [vt:2(6, 12, 3)]/2, vt:3*4, vt:2(3, 12)>" # stretch 0.2,
-        interlace (density 2 $ s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>" # stretch 4) (density 0.25 $s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>")
+        interlace (density 2 $ s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>" # stretch 4) (density 0.25 $ s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>")
       ]
       # gain 0.65
       # room cosine |+| 0.4
@@ -604,6 +605,13 @@ do
       striate 2 $ density 2 $ s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>" # freq 256
     ] # legato sine # room 0.2 # freq 400 # gain 0.6
 
+
+
+
+
+
+
+
     -- hope
     l4 $ stut 2 0.3 0.4 $ layer [slow 16, slow 8] $ density 2 $ stack [
         s "<vt:3*6, [vt:2(6, 12, 3)]/2, vt:3*4, vt:2(6, 12)>" # freq 128,
@@ -653,7 +661,7 @@ do
   -- original movement
   l2 $ jux(#cutoff 1500) $ slow 4 $ layer [slow 4, fast 2, striate 4] $ stack [
     s "<vt:3*3, [vt:2(6, 12, 3)]/2, vt:3*4, vt:2(3, 12)>" # stretch 0.2,
-    interlace (density 2 $ s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>" # stretch 4) (density 0.25 $s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>")
+    interlace (density 2 $ s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>" # stretch 4) (density 0.25 $ s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>")
   ]
   # gain 0.55 |+| 0.01
   # room cosine |+| 0.4
@@ -717,6 +725,7 @@ do
     # degrade 0.8
     # stretch 0.2
 
+hush
 
     -- movement
     d5 $ jux(#cutoff 1500) $ slow 4 $ layer [slow 4, fast 2, striate 4] $ stack [

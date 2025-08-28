@@ -1,0 +1,78 @@
+hush
+
+l2 $ layer[rev, slow 4] $ density 0.125 $ slow 2 $ layer[density 4 . (#gain 0.4), density 0.25 . (# freq 1900), density 0.25 . (# freq 190)] $ stack [
+  slowcat [
+    stack [
+      striate 8 $ s "<vt:2(6, 12, 2), vt:3*2, vt:5(4, 16, 8)>",
+      every 8 (density 2) $ density 0.25 $ striate 8 $ s "~ ~ <vt:2(6, 12, 2), vt:3*2, vt:5(4, 16, 8)>" # freq 1024,
+      striate 4 $ s "<vt:2(6, 12, 2), vt:3*2, vt:5(4, 16, 8)> ~ ~" # freq 512 # higher 2 # room 0.25,
+      striate 8 $ s "~ ~ <vt:2(6, 12, 2), vt:3*2, vt:5(4, 16, 8)>" # freq 524 # higher 2 # room 0.5
+    ], stack [
+      striate 4 $ s "<vt:2(6, 12, 2), vt:3*2, vt:5(4, 16, 8)>" # freq 512 # higher 2 # room 0.25,
+      striate 8 $ s "~ ~ <vt:2(6, 12, 2), vt:3*2, vt:5(4, 16, 8)>" # freq 524 # higher 2 # room 0.5
+    ],
+    stack [
+      density 0.25 $ striate 8 $ s "~ ~ <vt:2(6, 12, 2), vt:3*2, vt:5(4, 16, 8)>" # freq 1024 # stretch 0.5,
+      striate 4 $ s "<vt:2(6, 12, 2), vt:3*2, vt:5(4, 16, 8)> ~ ~" # freq 512 # higher 2 # room 0.25,
+      striate 8 $ s "~ ~ <vt:2(6, 12, 2), vt:3*2, vt:5(4, 16, 8)>" # freq 524 # higher 2 # room 0.5
+    ],
+    stack [
+      striate 4 $ s "<vt:2(6, 12, 2), vt:3*2, vt:5(4, 16, 8)>" # freq 512 # higher 2 # room 0.5,
+      striate 8 $ s "~ ~ <vt:2(6, 12, 2), vt:3*2, vt:5(4, 16, 8)>" # freq 524 # higher 2 # room 0.5,
+      striate 4 $ s "~ ~ <vt:4(3, 12, 2), vt:3*2, vt:3(3, 16, 1)> ~ ~" # freq 510 # room 0.25 # legato 0.25
+    ]
+  ] # gain 0.8 # room 0.5,
+  layer[striate 2, slow 4] $ slowcat [
+    s "<vt:2(6, 12, 2), vt:3*2, vt:5(4, 16, 8)>" # freq 512 # higher 2 # room 0.25,
+    stack [
+      s "~ ~ <vt:2(3, 8, 2), vt:3*2, vt:5(2, 8)>" # freq 1024 # higher 4 # room 0.5,
+      density 1 $ s "<vt:2(3, 8, 2), vt:5(2, 8)> [vt:5 ~ ] ~ " # freq 512 # legato 0.5 # higher 2 # room 0.5
+    ], stack [
+      slow 4 $ every 8 (fast 2) $ layer [striate 2, slow 2] $ s "<vt:2(6, 8), vt:3(4, 8, 1), vt:5(8, 16)>" # freq 512 # higher 2 # room 0.25,
+      density 0.5 $ s "<vt:2(6, 8, 2), vt:3*3, vt:5(12, 8)>" # freq 1024 # higher 4 # room 0.5,
+      density 0.25 $ s "~ ~ <vt:2(3, 8, 2), vt:5(2, 8)> [vt:5 ~ ]" # freq 128 # legato 0.25 # room 0.5
+    ],
+    stack [
+      density 2 $ s "<vt:2(6, 12, 2), vt:3*2, vt:5(4, 16, 8)>" # freq 512 # higher 2 # room 0.25,
+      s "~ ~ <vt:2(3, 8, 2), vt:3*2, vt:5(2, 8)>" # freq 1024 # higher 4 # room 0.5,
+      density 0.5 $ s "<vt:2(3, 8, 2), vt:5(2, 8)> [vt:5 ~ ] ~ " # freq 512 # legato 0.5 # higher 2 # room 0.5
+    ],
+    stack [
+      striate 2 $ density 0.25 $ s "<vt:2(6, 12, 2), vt:3*2, vt:5(4, 16, 8)>" # freq 512 # higher 2 # room 0.25,
+      density 0.5 $ s "~ ~ <vt:2(3, 8, 2), vt:3*2, vt:5(2, 8)>" # freq 1026 # higher 4 # room 0.5,
+      density 1 $ s "<vt:2(3, 8, 2), vt:5(2, 8)> [vt:5 ~ ] ~ " # freq 1024 # legato 0.25 # higher 2 # room 0.5
+    ]
+  ]
+  ] # gain 0.7 # stretch 0.4 # cutoff 5880 # freq 6100 # delay 0.03 # room 1 # resonance 0.3
+
+do
+  hush
+  -- 8% - gentler this time
+  a3 $ layer[density 1, density 0.125, (# freq 128), (# freq 256), (# freq 512)] $ stack [
+      density 0.5 $ striate 4 $ slowcat [
+        stack [
+          n (run 6) # s "[bd bd]" # gain 1,
+          striate 2 $ n (run 3) # s "[~ [vt]]" # gain 0.8 # freq 128
+        ]
+      ] # stretch 0.8
+    ] # freq 972 # cutoff 4000 # legato 2 # speed 4 # stretch 0.1 # gain 1.2
+  a2 $ density 1 $ layer[(# freq 512), gentle] $ n (run 4) # sound "vt(8, 8)" # pan 0.25 # cutoff 1500 # gain 0.6
+    # lfo 0.8 # rate 0.7 # dry 0.5 # room 0.3 # resonance sine - 0.4
+
+  l2 $ density 1 $ stack [
+      every 4 (slow 4) $ s "uxay:4(4, 8)" # cutoff 4096 # gain 1.55 # lfo 0.25 # room 4,
+      slowcat [
+        "~ ~ uxay:4",
+        "~ uxay:4 uxay:4",
+        "~ ~ uxay:4",
+        "~ uxay:4 uxay:4",
+        "uxay:4 uxay:4 uxay:4",
+        "~ uxay:4 uxay:4",
+        "uxay:4 uxay:4 uxay:4",
+        "~ ~ uxay:4",
+        "uxay:4 uxay:4 ~"
+      ] # cutoff 2096 # gain 0.6 # lfo 0.25 # room 1,
+      s "uxay:4(4, 8, 2)" # cutoff 11096 # hcutoff 5042 # gain 1.55 # room sine --floor
+    ] # gain 1
+
+do

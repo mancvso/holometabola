@@ -1,66 +1,175 @@
 
 
-              ---------------------------------------------------------------
-              ---------------------------------------------------------------
-              ---------------------------------------------------------------
-              ---------------------------------------------------------------
-              ---------------------------------------------------------------
-              -- #######################################
-              -- :EXUVIAE - 140cps
-              -- #######################################
+---------------------------------------------------------------
+---------------------------------------------------------------
+---------------------------------------------------------------
+---------------------------------------------------------------
+---------------------------------------------------------------
+-- #######################################
+-- :EXUVIAE - 140cps
+-- #######################################
 
-              do
-                resetCycles
-                hush
-                setcps(140/60/4)
-                unsoloAll
-                l2 $ density 0.5 $ stack [
-                    s "uxay:4(4, 8)" # cutoff 4096 # gain 1.55 # lfo 0.25 # room 4,
-                    fast 1 $ s "uxay:4(4, 8)" # cutoff 11096 # hcutoff 5042 # gain 1.55 # room 1 --floor
-                  ] # gain 1.1 |+| 0.8
-                  -- better
-                b4 $ density 0.125 $ striate 128 $ slow 4 $ s "[[co mt] co] [[co co] [[co mt] co [co mt] co]]" # freq 120 |+| 30 # stretch 0.2
-                  # gain 0.6 # delay 0.2
-                  # freq 512
-                  # stretch 0.6
-                  # room 0.2
-                  # dry 0.1
-                  -- the good one below
-                b3 $ density 1 $ s "[[gabba:2 mt:3] gabba:2] [[gabba:2 gabba:2] [[gabba:2 mt:3] gabba:2 [gabba:2 mt:3] gabba:2]]"
-                  # legato 0.6 # gain 1 # pan 0.5 # degrade 0.19 # cutoff 15000 # freq 12800 # lfo 5
+do
+  resetCycles
+  hush
+  setcps(140/60/4)
+  unsoloAll
 
 
-              a4 $ density 0.25 $ layer[density 0.25, (#freq 6514)] $ every 4 (# leslie 0.5) $ density 0.5 $ layer [striate 2, striate 4, density 0.25] $ slowcat [
-                  stack [
-                    n (run 6) # s "vt",
-                    n (run 3) # s "vt" # freq 512,
-                    density 2 $ n (run 6) # s "vt" # freq 256 # degrade 2,
-                    s "bd"
-                  ] # stretch 0.4 # gain 0.7,
-                  stack [
-                    n (run 6) # s "vt",
-                    fast 2 $ n (run 3) # s "vt" # freq 512,
-                    density 2 $ n (run 6) # s "vt" # freq 256 # degrade 2,
-                    s "bd"
-                  ] # stretch 0.4 # gain 0.7,
-                  stack [
-                    striate 2 $ n (run 6) # s "vt",
-                    fast 4 $ n (run 3) # s "vt" # freq 512,
-                    n (run 8) # s "vt" # freq 256 # degrade 2,
-                    s "bd"
-                  ] # stretch 0.4 # gain 0.8
-                ] # room 1 # dry 0.2 # gain 0.3
+do
+  b1 $ silence
+  b2 $ silence
+  b3 $ silence
+  b4 $ silence
+  b5 $ silence
+  b6 $ silence
+
+  let gentle = layer[density 1, density 0.125, (# freq 128), (# freq 256), (# freq 512)]
+
+hush
+
+    -- ready - dron
+    l5 $ every 6 (fast 2) $ slow 2 $ layer[struct "[1 1] [1 ~ 1 0] 1 [1 [~ 1]]", (#dry 0.01) . (# cutoff 400) . (#room 0.8) . (# freq 4000) . (#hcutoff 200)] $ gentle $ stack [
+          stack [
+            slow 16 $ sound "[bass0:3 imp:6/2] [[bass0:3:2*2] [ co bass0:3 [imp:6 imp:6/2] bass0:3]]" # gain 0.7 # legato 0.95 # pan sine ,
+            sound "[[co:3 co:3] imp:6/2] [co:3 [co:3 co:3 [co:3 co:3] imp:6/4]]" # legato 2 # gain 0.7 # room 2 # pan sine ,
+            slow 16 $ sound "<bass0:3(1, 8, 4), imp(3, 16, 2)>" # gain 0.8,
+            s "imp:6(3, 16, 2)" # gain sine # pan sine*2
+            -- sound "[[909 909] [ co:3 909 [909 909] 909]] [909 909] co:3 [909 [ co:3 909 [909 909] 909]]" # legato 1.25
+          ] # cutoff 2000 # freq "200 300 300 300" # lfo 5,
+          n (run 4) # sound "co(8, 8)" # pan 0.5 |+| sine # cutoff 2500 |/| 500 # gain 0.6
+      ] # gain 0.75 # resonance 0.4 # cutoff 250
+      # freq 2190 # cutoff 810 # legato 2 # speed 4 # stretch 0.5 # gain 0.8
+
+do
+  a2 $ density 1 $ layer[(# freq 512), gentle] $ n (run 4) # sound "vt(8, 8)" # pan 0.25 # cutoff 1500 # gain 0.6
+    # lfo 0.8 # rate 0.7 # dry 0.5 # room 0.3 # resonance sine - 0.4
+
+  l2 $ density 1 $ stack [
+      s "uxay:4(4, 8)" # cutoff 4096 # gain 1.55 # lfo 0.25 # room 4,
+      slowcat [
+        "~ ~ uxay:4",
+        "~ uxay:4 uxay:4",
+        "~ ~ uxay:4",
+        "~ uxay:4 uxay:4",
+        "uxay:4 uxay:4 uxay:4",
+        "~ uxay:4 uxay:4",
+        "uxay:4 uxay:4 uxay:4",
+        "~ ~ uxay:4",
+        "uxay:4 uxay:4 ~"
+      ] # cutoff 2096 # gain 0.6 # lfo 0.25 # room 1,
+      s "uxay:4(4, 8)" # cutoff 11096 # hcutoff 5042 # gain 1.55 # room sine --floor
+    ] # gain 1
+
+  -- better
+  b4 $ density 0.125 $ striate 128 $ slow 4 $ s "[[co mt] co] [[co co] [[co mt] co [co mt] co]]" # freq 120 |+| 30 # stretch 0.2
+    # gain 0.6 # delay 0.2
+    # freq 5120
+    # stretch sine
+    # room 0.2
+    # dry 0.1
+
+do
+  b6 $ layer [density 0.5, every 4 (fast 2) . slow 2 . gentle] $ struct "[1 [0 1] [1 1] [0 1]]" $ s "~ <uxay:5(2, 8, 1), [uxay:8 uxay:5], uxay:4(6, 8, 2), uxay:9(4, 8), uxay:5(4, 16)>"
+    # higher 1
+    # freq 1820
+    # degrade 0.1
+    # resonance 0.4
+  b1 $ layer [density 0.5, every 4 (fast 2) . slow 2 . gentle] $ stack [
+    s "uxay:4(4, 8)" # cutoff 4096 # gain 1.55 # lfo 0.25 # room 4,
+    fast 2 $ s "uxay:4(4, 8)" # cutoff 11096 # hcutoff 5042 # gain 1.55 # room 1 , --floor
+    interlace (
+      s "<909:4(4, 8), [~ 909:4(4, 8) ~]>" # cutoff 11096
+      # hcutoff 512 # gain 1 |+| 0.4 # room 2 #
+      degrade 2 ) (
+        struct "[1 0 1 0] 0 [1010] 1" $ s "[909:4(4, 8)] ~ [909:4(4, 8)] ~" # cutoff 5096
+        # hcutoff 2048 # gain 3 |/| 0.6 # room 8
+        # degrade 2.4  # legato "1 0.1 1 1 2 1 1 0.1 1 1 1 0.1 1 2"
+        # lfo 3.1 # attack 0.01 # release 0.8 # decay 0.25 # pan 0.4 |/| 0.24
+      ) --floor
+    ] # gain 0.6 # cutoff 1500
+  l4 $ density 0.5 $ struct "0 1 1 1" $ layer [
+      every 2 (density 4) . density 2 . (#fshift 8000),
+      every 4 (slow 4) . fast 4 . id . (# hcutoff 2000),
+      density 2 . (#cutoff 128) . (#accelerate 0.2)]
+     $ stack [
+        n 1 # s "<[[exxo ~] exxo], [[exxo exxo] [exxo ~] exxo [exxo ~] exxo]>" # freq 182 # degrade 0.29,
+        slow 2 $ n 4 # s "<[[exxo ~] exxo] [[exxo ~]], [exxo mt:3] ~ [exxo mt] exxo>" # freq 800,
+        slowcat [
+          fast 4 $ n 4 # s "<[[exxo:2 exxo] exxo:2], [[exxo:2 exxo:2] [[exxo:2 exxo] exxo:2 [exxo:2 exxo] exxo]]>" # freq 182,
+          n 3 # s "[exxo:2 mt:3 exxo] [exxo exxo mt:3 ~ [exxo mt] exxo]" # freq 182,
+          s "mt:3*8" # freq 182
+        ],
+        striate 8 $ slow 4 $ n (run 6) # s "[exxo ~]" # gain 0.4 # stretch 0.4
+      ]
+    # legato 2 # gain 1 # pan 0.65 # cutoff 6000
+    # lfo 0.8 # lfocutoffint 0.6 # lfodelay 0.2 # attack 0.1 # release 0.8 # stretch 1
+
+hush
+
+  a4 $ density 0.25 $ layer[density 0.25, (#freq 6514)] $ every 4 (# leslie 0.5) $ density 0.5 $ layer [striate 2, striate 4, density 0.25] $ slowcat [
+      stack [
+        n (run 6) # s "vt",
+        n (run 3) # s "vt" # freq 512,
+        density 2 $ n (run 6) # s "vt" # freq 256 # degrade 2,
+        s "bd"
+      ] # stretch 0.4 # gain 0.7,
+      stack [
+        n (run 6) # s "vt",
+        fast 2 $ n (run 3) # s "vt" # freq 512,
+        density 2 $ n (run 6) # s "vt" # freq 256 # degrade 2,
+        s "bd"
+      ] # stretch 0.4 # gain 0.7,
+      stack [
+        striate 2 $ n (run 6) # s "vt",
+        fast 4 $ n (run 3) # s "vt" # freq 512,
+        n (run 8) # s "vt" # freq 256 # degrade 2,
+        s "bd"
+      ] # stretch 0.4 # gain 0.8
+    ] # room 1 # dry 0.2 # gain 0.3
+
+    -- later
+    l3 $ density (range 1 2 $ sine) $ layer[id, slow 4] $ stack [
+        stack [
+          sound "[~ imp:6/2] [~ [ ~ ~ [imp:6 imp:6/2] ~]]" # gain 0.7 # legato 0.95 # pan sine ,
+          slow 2 $ sound "[~ imp:6/2] [~ [~ ~ ~ imp:6/4]]" # legato 1 # gain 0.7 # room 2 # pan sine ,
+          fast 2 $ sound "<~, imp(4, 4, 2)>" # gain 0.7,
+          s "imp:6(3, 16, 2)" # gain sine # pan sine*2
+          -- sound "[[909 909] [ co:3 909 [909 909] 909]] [909 909] co:3 [909 [ co:3 909 [909 909] 909]]" # legato 1.25
+        ] # cutoff 2000 # freq "200 300 300 300"
+    ] # gain 0.65
 
 
-              -- 8%
-              a3 $ layer[density 1, density 0.125] $ stack [
-                density 0.5 $ striate 4 $ slowcat [
-                  stack [
-                    n (run 6) # s "[bd bd]" # gain 1,
-                    striate 2 $ n (run 3) # s "[~ [vt]]" # gain 0.8 # freq 128
-                  ]
-                ] # stretch 0.8
-              ] # freq 972 # cutoff 4000 # legato 2 # speed 4 # stretch 0.1 # gain 0.3
+    -- compress and explode
+    l6 $ layer [density 0.25 . (# fshift 40), (# freq 9200), density 0.25 . (# freq 400), density 0.25] $ stack [
+      s "uxay:4(4, 8)" # cutoff 4096 # gain 1.55 # lfo 0.25 # room 4,
+      fast 2 $ s "uxay:4(4, 8)" # cutoff 11096 # hcutoff 5042 # gain 1.55 # room 1 , --floor
+      interlace (
+        s "<gabba:2(2, 8), [~ 909:4(8, 8) ~]>" # cutoff 11096
+        # hcutoff 1512 # gain 1 |+| 0.4 # room 2 #
+        degrade 4 # freq 512 ) (
+          -- high
+          struct "[1 0 1 0] 0 [1010] 1" $ s "[909:4(4, 8)] ~ [909:4(4, 8)] ~" # cutoff 5096
+          # hcutoff 3048 # gain 3 |/| 0.6 # room 8
+          # degrade 2.4  # legato "1 0.1 1 1 2 1 1 0.1 1 1 1 0.1 1 2"
+          # lfo 3.1 # attack 0.01 # release 0.8 # decay 0.25 # pan 0.4 |/| 0.24
+        ) --floor
+    ] # gain 0.8
+
+
+
+
+
+
+
+
+
+    do
+      b3 $ layer[density 0.5, density 0.125] $ layer[density 1, density 4 . (#freq 128)] $ stack [
+          s "uxay:4(4, 8)" # cutoff 4096 # gain 1.55 # lfo 0.25 # room 4 # freq 255,
+          fast 2 $ s "uxay:4(4, 8)" # cutoff 11096 # hcutoff 5042 # gain 1.55 # room 1, --floor
+          fast 2 $ every 16 (fast 2) $ s "uxay:4(4, 8, 4)" # cutoff 11096 # hcutoff 2042 # gain 0.55 # degrade 0.7 # room 2
+        ] # gain 1 # freq 5120
 
               solo 9
               unsoloAll
@@ -70,14 +179,14 @@ let gain_slide x y z = gain y
               l3 $ density 2 $ stack [
                 s "uxay:4(4, 8)" # cutoff 4096 # gain 1.55 # lfo 0.25 # room 4,
                 density 2 $ s "uxay:4(4, 8)" # cutoff 11096 # hcutoff 5042 # gain 1.55 # room 1 --floor
-              ] # gain_slide "3" 0.7 1.1
+              ] # gain 0.7
 
               let gain_slide x y z = gain y
 
 
 
 
-              b1 $ stack [
+              b1 $ fast 2 $ stack [
                 s "uxay:4(4, 8)" # cutoff 4096 # gain 1.55 # lfo 0.25 # room 4,
                 fast 2 $ s "uxay:4(4, 8)" # cutoff 11096 # hcutoff 5042 # gain 1.55 # room 1 , --floor
                 interlace (
@@ -91,16 +200,22 @@ let gain_slide x y z = gain y
                   ) --floor
               ] # gain 0.6
 
-              b2 $ s "~ <sd:5(2, 8, 1), [sd:8 sd:5], sd:4(6, 8, 2), sd:9(4, 8), sd:5(4, 16)>"
+              b5 $ s "~ <sd:5(2, 8, 1), [sd:8 sd:5], sd:4(6, 8, 2), sd:9(4, 8), sd:5(4, 16)>"
               # freq 2000 # cutoff 2000
 
-              b3 $ density 2 $ struct "[1 [0 1] [1 1] [0 1]]" $ s "~ <uxay:5(2, 8, 1), [uxay:8 uxay:5], uxay:4(6, 8, 2), uxay:9(4, 8), uxay:5(4, 16)>"
+              b6 $ density 2 $ struct "[1 [0 1] [1 1] [0 1]]" $ s "~ <uxay:5(2, 8, 1), [uxay:8 uxay:5], uxay:4(6, 8, 2), uxay:9(4, 8), uxay:5(4, 16)>"
               # higher 1
               # freq 1820
               # degrade 0.1
               # resonance 0.4
 
-              b4 $ stack [
+              b6 $ density 0.5 $ struct "[1 [0 1] [1 1] [0 1]]" $ s "~ <uxay:5(2, 8, 1), [uxay:8 uxay:5], uxay:4(6, 8, 2), uxay:9(4, 8), uxay:5(4, 16)>"
+              # higher 1
+              # freq 1820
+              # degrade 0.1
+              # resonance 0.4
+
+              b1 $ stack [
                 s "uxay:4(4, 8)" # cutoff 4096 # gain 1.55 # lfo 0.25 # room 4,
                 fast 2 $ s "uxay:4(4, 8)" # cutoff 11096 # hcutoff 5042 # gain 1.55 # room 1 , --floor
                 interlace (
@@ -117,7 +232,7 @@ let gain_slide x y z = gain y
               unsoloAll
 
               -- compress and explode
-              b5 $ stack [
+              l1 $ layer [density 0.25 . (# fshift 40), (# freq 9200), density 0.25 . (# freq 400), density 0.25] $ stack [
                 s "uxay:4(4, 8)" # cutoff 4096 # gain 1.55 # lfo 0.25 # room 4,
                 fast 2 $ s "uxay:4(4, 8)" # cutoff 11096 # hcutoff 5042 # gain 1.55 # room 1 , --floor
                 interlace (
@@ -132,7 +247,7 @@ let gain_slide x y z = gain y
                   ) --floor
               ] # gain 0.8
 
-              b6 $ layer[id, slow 4, slow 8] $ every 4 (stut 2 0.5 0.5) $ stack [
+              b4 $ layer[id, slow 4, slow 8] $ every 4 (stut 2 0.5 0.5) $ stack [
                 s "[gabba] [~ gabba:4 gabba:3*2 gabba:5*4]",
                 s "[gabba] [~ gabba:4 gabba:3*2 gabba:5*2]",
                 s "[gabba] [~ gabba:4 gabba:3 gabba:5*4]",
@@ -140,16 +255,8 @@ let gain_slide x y z = gain y
               ]
               # gain 0.5 |+| 2 # room 0.9 |+| 5 # lfo 2 |+| 2
 
-              -- later
-              l3 $ density (range 1 2 $ sine) $ layer[id, slow 4] $ stack [
-                  stack [
-                    sound "[~ imp:6/2] [~ [ ~ ~ [imp:6 imp:6/2] ~]]" # gain 0.7 # legato 0.95 # pan sine ,
-                    slow 2 $ sound "[~ imp:6/2] [~ [~ ~ ~ imp:6/4]]" # legato 1 # gain 0.7 # room 2 # pan sine ,
-                    fast 2 $ sound "<~, imp(4, 4, 2)>" # gain 0.7,
-                    s "imp:6(3, 16, 2)" # gain sine # pan sine*2
-                    -- sound "[[909 909] [ co:3 909 [909 909] 909]] [909 909] co:3 [909 [ co:3 909 [909 909] 909]]" # legato 1.25
-                  ] # cutoff 2000 # freq "200 300 300 300"
-              ] # gain 0.55
+
+hush
 
               b2 $ layer[id, slow 4] $ stack [
                   stack [
@@ -160,7 +267,7 @@ let gain_slide x y z = gain y
                     -- sound "[[909 909] [ co:3 909 [909 909] 909]] [909 909] co:3 [909 [ co:3 909 [909 909] 909]]" # legato 1.25
                   ] # cutoff 2000 # freq "200 300 300 300" # lfo 5,
                   n (run 4) # sound "co(8, 8)" # pan 0.5 |+| sine # cutoff 2500 |/| 500 # gain 0.6
-              ] # gain 0.6
+              ] # gain 0.7
 
 
 
@@ -182,6 +289,10 @@ let gain_slide x y z = gain y
                     ] # gain 0.8
 
 
+
+
+
+
               l2 $ density 0.5 $ s "<~ htch:1(3, 12) ~ ~, [gabba:6(4, 16, 2) ~]/2>"
               # freq 8000 # gain 0.6 # room 0.25
               # cutoff 8000
@@ -198,22 +309,25 @@ let gain_slide x y z = gain y
                     -- sound "[[909 909] [ co:3 909 [909 909] 909]] [909 909] co:3 [909 [ co:3 909 [909 909] 909]]" # legato 1.25
                   ] # cutoff 2000 # freq "200 300 300 300" # lfo 5,
                   n (run 4) # sound "co(8, 8)" # pan 0.5 |+| sine # cutoff 2500 |/| 500 # gain 0.6
-              ] # gain 1
+              ] # gain 0.85
 
-              -- not ready
-              l1 $ layer[fast 8, slow 4, (# freq 100)] $ stack [
+
+hush
+
+              -- never ready
+              l2 $ layer[fast 8, slow 4, (# freq 100)] $ stack [
                   stack [
                     slow 16 $ sound "[bass0:3 imp:6/2] [[bass0:3:2*2] [ co bass0:3 [imp:6 imp:6/2] bass0:3]]" # gain 0.7 # legato 0.95 # pan sine ,
                     slow 2 $ sound "[[co:3 co:3] imp:6/2] [co:3 [co:3 co:3 [co:3 co:3] imp:6/4]]" # legato 2 # gain 0.7 # room 2 # pan sine ,
                     slow 8 $ sound "<bass0:3(1, 8, 4), imp(3, 16, 2)>" # gain 0.8,
                     s "imp:6(3, 16, 2)" # gain sine # pan sine*2
                     -- sound "[[909 909] [ co:3 909 [909 909] 909]] [909 909] co:3 [909 [ co:3 909 [909 909] 909]]" # legato 1.25
-                  ] # cutoff 2000 # freq "200 300 300 300" # lfo 5,
-                  n (run 4) # sound "co(8, 8)" # pan 0.5 |+| sine # cutoff 2500 |/| 500 # gain 0.6
-              ] # gain 0.7
+                  ] # cutoff 2000 # freq 300 # lfo 5,
+                  n (run 4) # sound "co(8, 8)" # pan 0.5 |+| sine # cutoff 5500 # gain 0.6
+              ] # gain 0.6
 
 
-              l1 $ layer[id, slow 4] $ stack [
+              l3 $ layer[id, slow 4] $ stack [
                   stack [
                     sound "<rep:4(2, 8), imp(4, 4, 2)>" # gain 0.8,
                     s "imp:6(3, 16, 2)" # gain sine # pan sine*2,
@@ -233,17 +347,27 @@ let gain_slide x y z = gain y
                   # stretch 0.2
                   # room 2
                   # delay 0.4
+
+                  b3 $ layer[density 1, density 4 . (#freq 128)] $ stack [
+                      s "uxay:4(4, 8)" # cutoff 4096 # gain 1.55 # lfo 0.25 # room 4 # freq 255,
+                      fast 2 $ s "uxay:4(4, 8)" # cutoff 11096 # hcutoff 5042 # gain 1.55 # room 1, --floor
+                      fast 2 $ every 16 (fast 2) $ s "uxay:4(4, 8, 4)" # cutoff 11096 # hcutoff 2042 # gain 0.55 # degrade 0.7 # room 2
+                    ] # gain 1 # freq 5120
+
+              do
                 a2 $ silence
                 a4 $ silence
                 a1 $ silence
                 a3 $ silence
                 b2 $ silence
+                l2 $ silence
+                l1 $ silence
                 -- meditation
-                b1 $ density 0.25 $ s "<gabba:4(3, 16, 1), gabba:4(8, 8), 909(6, 8, 2), bd:4(8, 16, 4)>" # accelerate "0.5" # cutoff 500
+                b1 $ layer[density 0.25, density 0.125] $ s "<gabba:4(3, 16, 1), gabba:4(8, 8), 909(6, 8, 2), bd:4(8, 16, 4)>" # accelerate "0.5" # cutoff 500
 
               -- this
               do
-                l2 $ layer[density 0.25, slow 4] $ slowcat [
+                l2 $ layer[density 2, slow 4] $ slowcat [
                       stack [
                         sound "<rep:4(2, 8), imp(4, 4, 2)>" # gain 0.8,
                         s "imp:6(3, 16, 2)" # gain sine # pan sine*2,
@@ -255,11 +379,16 @@ let gain_slide x y z = gain y
                       n (run 4) # sound "co(8, 8)" # pan 0.5 |+| sine # cutoff 2500 |/| 500 # gain 0.7
                   ] # room 0.8
                 -- quicker
-                b2 $ layer [density 0.125, density 0.25, striate 2, striate 8] $ s "<gabba:4(16, 16, 2), gabba:4(8, 8, 2), 909(6, 8, 2), bd:4(8, 16, 4)>" # cutoff 550 # gain 0.7
+                b2 $ layer [density 0.125, density 0.25, striate 2, striate 8 . (# freq 100)] $ s "<gabba:4(16, 16, 2), gabba:4(8, 8, 2), 909(6, 8, 2), bd:4(8, 16, 4)>" # cutoff 550 # gain 0.7
+                b3 $ layer[density 1, density 4 . (#freq 128)] $ stack [
+                    s "uxay:4(4, 8)" # cutoff 4096 # gain 1.55 # lfo 0.25 # room 4 # freq 255,
+                    fast 2 $ s "uxay:4(4, 8)" # cutoff 11096 # hcutoff 5042 # gain 1.55 # room 1, --floor
+                    fast 2 $ every 16 (fast 2) $ s "uxay:4(4, 8, 4)" # cutoff 11096 # hcutoff 2042 # gain 0.55 # degrade 0.7 # room 2
+                  ] # gain 1 # freq 512
 
 
               b1 $ density 0.5 $ layer[density 0.25, striate 2, density 0.125] $ s "<gabba:4(3, 16, 1), gabba:4(8, 8), 909(6, 8, 2), bd:4(8, 16, 4)>"
-                # accelerate 0.5 # cutoff 600 # gain 0.75
+                # accelerate 0.5 # cutoff 900  # hcutoff 6000 # gain 0.75
 
 
                 hush
@@ -277,11 +406,8 @@ let gain_slide x y z = gain y
                   n (run 4) # sound "co(8, 8)" # pan 0.5 |+| sine # cutoff 2500 |/| 500 # gain 0.6
               ] # gain 0.85
 
-
-
-
               -- slower
-              b6 $ layer [density 0.125, striate 8] $ s "<gabba:4(16, 16, 2), gabba:4(8, 8, 2), 909(6, 8, 2), bd:4(8, 16, 4)>" # cutoff 550 # gain 0.7
+              b6 $ layer [density 0.125, striate 8 . (#freq 8000)] $ s "<gabba:4(16, 16, 2), gabba:4(8, 8, 2), 909(6, 8, 2), bd:4(8, 16, 4)>" # cutoff 550 # gain 0.7
               --
               b4 $ density 0.25 $ s "<gabba:4(3, 16, 1), gabba:4(8, 8), 909(6, 8, 2), bd:4(8, 16, 4)>" # accelerate "0.5" # cutoff 500
 
@@ -301,9 +427,9 @@ let gain_slide x y z = gain y
                   -- the good one below
                 b3 $ density 2 $ s "[[gabba:2 mt:3] gabba:2] [[gabba:2 gabba:2] [[gabba:2 mt:3] gabba:2 [gabba:2 mt:3] gabba:2]]"
                   # legato 0.6 # gain 1 # pan 0.5 # degrade 0.19 # cutoff 15000 # freq 12800 # lfo 5
-                b4 $ layer [density 0.25, density 0.5, striate 8] $ s "<gabba:4(16, 16, 2), gabba:4(8, 8, 2), 909(6, 8, 2), bd:4(8, 16, 4)>" # cutoff 550 # gain 0.7
+                b4 $ layer [density 0.25, density 0.5, striate 8 . (#freq 1900)] $ s "<gabba:4(16, 16, 2), gabba:4(8, 8, 2), 909(6, 8, 2), bd:4(8, 16, 4)>" # cutoff 550 # gain 0.7
 
-
+hush
 
 
                 do
@@ -316,7 +442,7 @@ let gain_slide x y z = gain y
 
 
                 -- meditation
-                b1 $ density 0.25 $ s "<gabba:4(3, 16, 1), gabba:4(8, 8), 909(6, 8, 2), bd:4(8, 16, 4)>" # accelerate "0.5" # cutoff 500
+                b5 $ density 0.25 $ s "<gabba:4(3, 16, 1), gabba:4(8, 8), 909(6, 8, 2), bd:4(8, 16, 4)>" # accelerate "0.5" # cutoff 500 # freq 256
 
 
 
@@ -330,7 +456,7 @@ let gain_slide x y z = gain y
                     -- sound "[[909 909] [ co:3 909 [909 909] 909]] [909 909] co:3 [909 [ co:3 909 [909 909] 909]]" # legato 1.25
                   ] # cutoff 2000 # freq "200 300 300 300" # lfo 5,
                   n (run 4) # sound "co(8, 8)" # pan 0.5 |+| sine # cutoff 2500 |/| 500 # gain 0.6
-              ] # gain 0.6 # resonance 0.4
+              ] # gain 0.75 # resonance 0.4
 
               hush
 
@@ -346,11 +472,24 @@ let gain_slide x y z = gain y
                   n (run 4) # sound "co(8, 8)" # pan 0.5 |+| sine # cutoff 2500 |/| 500 # gain 0.6
               ] # gain 0.75 # resonance 0.4
 
+              -- ready - dron
+              l5 $ slow 4 $ layer[struct "[1 1] [1 ~ 1 0] 1 [1 [~ 1]]", (#dry 0.01) . (# cutoff 400) . (#room 0.8) . (# freq 4000) . (#hcutoff 200)] $ gentle $ stack [
+                    stack [
+                      slow 16 $ sound "[bass0:3 imp:6/2] [[bass0:3:2*2] [ co bass0:3 [imp:6 imp:6/2] bass0:3]]" # gain 0.7 # legato 0.95 # pan sine ,
+                      sound "[[co:3 co:3] imp:6/2] [co:3 [co:3 co:3 [co:3 co:3] imp:6/4]]" # legato 2 # gain 0.7 # room 2 # pan sine ,
+                      slow 16 $ sound "<bass0:3(1, 8, 4), imp(3, 16, 2)>" # gain 0.8,
+                      s "imp:6(3, 16, 2)" # gain sine # pan sine*2
+                      -- sound "[[909 909] [ co:3 909 [909 909] 909]] [909 909] co:3 [909 [ co:3 909 [909 909] 909]]" # legato 1.25
+                    ] # cutoff 2000 # freq "200 300 300 300" # lfo 5,
+                    n (run 4) # sound "co(8, 8)" # pan 0.5 |+| sine # cutoff 2500 |/| 500 # gain 0.6
+                ] # resonance 0.425
+                # freq 250 # cutoff 410 # hcutoff 500 # legato 2 # speed 2 # stretch 0.5 # gain 0.6
 
-              b3 $ density 0.25 $ stack [
-                  s "<gabba:4(3, 16, 1), gabba:4(8, 8), 909(6, 8, 2), bd:4(8, 16, 4)>" # accelerate "0.5" # cutoff 500,
-                  s "<gabba:4(6, 16, 1), gabba:4(4, 8, 2), 909(4, 8, 2), bd:4(3, 16, 4)>" # accelerate "0.5" # cutoff 700
-                ]
+
+              b1 $ slow 4 $ layer[density 1, struct "0 1 0 [0 0 0 1]"] $ stack [
+                  s "<gabba:4(3, 16, 1), gabba:4(8, 8), 909(6, 8, 2), bd:4(8, 16, 4)>" # accelerate "0.5" # cutoff 350,
+                  s "<gabba:4(6, 16, 1), gabba:4(4, 8, 2), 909(4, 8, 2), bd:4(3, 16, 4)>" # accelerate "0.5" # cutoff 4000
+                ] # cutoff 2000 # freq 300 # gain 0.8
 
 
               do -- good
@@ -398,6 +537,8 @@ a1 $ silence
                 ] # gain 0.6
 
               -- this
+              l5 $ silence
+
               do
                 setcps(140/60/4)
                 unsoloAll
@@ -420,8 +561,10 @@ a1 $ silence
 
               let gain_slide x y z = gain x
 
+hush
+
 do
-  b5 $ stack [
+  l3 $ stack [
       s "uxay:4(4, 8)" # cutoff 4096 # gain 1.55 # lfo 0.25 # room 4,
       fast 1 $ s "uxay:4(4, 8)" # cutoff 11096 # hcutoff 5042 # gain 1.55 # room 1 --floor
     ] # gain 1.1 |+| 0.8
@@ -453,7 +596,7 @@ do
 
 
               -- not ready
-              d4 $ layer[fast 8, slow 4, (# freq 100)] $ stack [
+              l4 $ layer[fast 8, slow 4, (# freq 100)] $ stack [
                   stack [
                     slow 16 $ sound "[bass0:3 imp:6/2] [[bass0:3:2*2] [ co bass0:3 [imp:6 imp:6/2] bass0:3]]" # gain 0.7 # legato 0.95 # pan sine ,
                     slow 2 $ sound "[[co:3 co:3] imp:6/2] [co:3 [co:3 co:3 [co:3 co:3] imp:6/4]]" # legato 2 # gain 0.7 # room 2 # pan sine ,
@@ -462,11 +605,11 @@ do
                     -- sound "[[909 909] [ co:3 909 [909 909] 909]] [909 909] co:3 [909 [ co:3 909 [909 909] 909]]" # legato 1.25
                   ] # cutoff 2000 # freq "200 300 300 300" # lfo 5,
                   n (run 4) # sound "co(8, 8)" # pan 0.5 |+| sine # cutoff 2500 |/| 500 # gain 0.6
-              ] # gain 0.7 # freq 2000 # cutoff 3000 # hcutoff 1000
+              ] # gain 0.7 # freq 500 # cutoff 3000 # hcutoff 1000
 
 
 -- ready - pause
-l2 $ density 0.25 $ layer[fast 8, slow 4, (# freq 100)] $ stack [
+l5 $ density 0.25 $ layer[fast 8, slow 4, (# freq 100)] $ stack [
     stack [
       slow 16 $ sound "[bass0:3 imp:6/2] [[bass0:3:2*2] [ co bass0:3 [imp:6 imp:6/2] bass0:3]]" # gain 0.7 # legato 0.95 # pan sine ,
       slow 2 $ sound "[[co:3 co:3] imp:6/2] [co:3 [co:3 co:3 [co:3 co:3] imp:6/4]]" # legato 2 # gain 0.7 # room 2 # pan sine ,
@@ -479,12 +622,12 @@ l2 $ density 0.25 $ layer[fast 8, slow 4, (# freq 100)] $ stack [
 
 
   do
-    b1 $ stack [
+    b1 $ layer[id . (# cutoff 500), striate 8 . struct "1 0 [0 0 1 0] 0" . (# freq 100) . (# cutoff 128)] $ stack [
         s "uxay:4(4, 8)" # cutoff 4096 # gain 1.55 # lfo 0.25 # room 4,
         fast 1 $ s "uxay:4(4, 8)" # cutoff 11096 # hcutoff 5042 # gain 1.55 # room 1 --floor
       ] # gain 1.1 |+| 0.8
       -- better
-    b2 $ density 0.25 $ striate 128 $ slow 4 $ s "[[co mt] co] [[co co] [[co mt] co [co mt] co]]" # freq 120 |+| 30 # stretch 0.2
+    b2 $ density 0.25 $ striate 128 $ slow 4 $ s "[[co mt] co] [[co co] [[co mt] co [co mt] co]]" # freq 220 |+| 30 # stretch 0.2
       # gain 0.6 # delay 0.2
       # freq 512
       # stretch 0.6
@@ -493,8 +636,32 @@ l2 $ density 0.25 $ layer[fast 8, slow 4, (# freq 100)] $ stack [
       -- the good one below
     b3 $ density 2 $ s "[[gabba:2 mt:3] gabba:2] [[gabba:2 gabba:2] [[gabba:2 mt:3] gabba:2 [gabba:2 mt:3] gabba:2]]"
       # legato 0.6 # gain 1 # pan 0.5 # degrade 0.19 # cutoff 15000 # freq 12800 # lfo 5
-    b4 $ layer [density 0.25, density 0.5, striate 8] $ s "<gabba:4(16, 16, 2), gabba:4(8, 8, 2), 909(6, 8, 2), bd:4(8, 16, 4)>" # cutoff 550 # gain 0.7
+    b4 $ layer [struct "1 [0 [1 1]] 1 [0 0 0 1]" . (# fshift 1920), striate 4 . (# freq 640)] $ s "<gabba:4(16, 16, 2), gabba:4(8, 8, 2), 909(6, 8, 2), bd:4(8, 16, 4)>" # cutoff 9050 # gain 0.7
+    l5 $ layer [density 0.25 . (# freq 7000), density 1 . (#freq 100), striate 8 . (# freq 29) . (# fshift 200)] $ s "<gabba:4(16, 16, 2), gabba:4(8, 8, 2), 909(6, 8, 2), bd:4(8, 16, 4)>"
+      # cutoff 9500 # gain 0.7
 
 
 hush
+
+b4 $ layer [density 0.25 . (# freq 7000), density 1 . (#freq 100), striate 8 . (# freq 29) . (# fshift 200)] $ s "<gabba:4(16, 16, 2), gabba:4(8, 8, 2), 909(6, 8, 2), bd:4(8, 16, 4)>"
+# cutoff 9500 # gain 0.7
+
+b4 $ density 2 $ s "[[gabba:2 mt:3] gabba:2] [[gabba:2 gabba:2] [[gabba:2 mt:3] gabba:2 [gabba:2 mt:3] gabba:2]]"
+  # legato 0.6 # gain 1 # pan 0.5 # degrade 0.19 # cutoff 15000 # freq 12800 # lfo 5
+
+b2 $ density 0.25 $ striate 128 $ slow 4 $ s "[[co mt] co] [[co co] [[co mt] co [co mt] co]]" # freq 120 |+| 30 # stretch 0.2
+  # gain 0.6 # delay 0.2
+  # freq 512
+  # stretch 0.6
+  # room 0.2
+  # dry 0.1
+
+
+b1 $ layer[id, striate 8 . struct "1 0 [0 0 1 0] 0" . (# freq 100)] $ stack [
+    s "uxay:4(4, 8)" # cutoff 4096 # gain 1.55 # lfo 0.25 # room 4,
+    fast 1 $ s "uxay:4(4, 8)" # cutoff 11096 # hcutoff 5042 # gain 1.55 # room 1 --floor
+  ] # gain 1.1 |+| 0.8
+
 panic
+
+hush
