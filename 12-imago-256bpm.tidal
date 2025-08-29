@@ -176,6 +176,16 @@ do
       $ markovPat 16 2 [[3,5,2], [4,4,2], [0,1,0]])
 
 
+      -- heart
+      l4 $ layer[fast 2 . (# freq 100), density 0.5 . (# freq 256)] $ stack [
+          every 16 (slow 2) $ stack [
+            every 8 (slow 2) $ s "[co co] ~ co ~ [co co] ~ co [co co]"  # pan 0.5,
+            slow 2 $ s "[co co:6] ~ co ~ co ~ [co co:6] [co co:6]" # degrade 0.2 |-| 0.1 # gain 1.15 # room 0.4 |*| 1.4  # delay 0.25 # pan sine,
+            every 8 (fast 2) $ s "~ [co:4 co:4] co ~ co ~ [co:4 co:4] co"  # pan 0.25
+          ] # room 4 # freq "400 300 200 40 400 400" # degrade 2.2 # gain 2,
+          striate 4 $ density 2 $ s "[co co] ~ co ~ [co co] ~ co [co co]" # freq "1700 2500 4096 1024 712" # pan 0.7 # gain 1.1
+        ] # room 2 # gain 0.5
+
 do
   -- heart
   l4 $ stack [
@@ -297,7 +307,7 @@ l1 $ stack [
     every 8 (fast 2) $ s "~ [co:4 co:4] co ~ co ~ [co:4 co:4] co"  # pan 0.25
   ] # room 4 # freq "400 300 200 40 400 400" # degrade 2.2 # gain 2,
   striate 4 $ density 2 $ s "[co co] ~ co ~ [co co] ~ co [co co]" # freq "1700 2500 4096 1024 712" # pan 0.7 # gain 1.1
-] # room 2 # gain 0.8
+] # room 2 # gain 0.5
 
 
 do
@@ -572,8 +582,8 @@ a4 $ every 8 (slow 2) $ s "[gabba:4] [~ gabba:4] [gabba:4] [gabba:4]" # cutoff 6
 
 do
   -- easy
-  b3 $ stack [
     s "<[co co] ~ co ~  co [co ~] ~ ~ [co co], co(8, 16), co:2(3, 8, 2)>" # gain "1 1.1 [0.9 1 0.9 0.9] 1 [0 1 0 1] 1.1 [0.9 1 0.9 0.9] 1"
+    b3 $ layer [density 0.125, density 0.25] $ stack [
     # room 6 # freq "400 300 300 400"
     # stretch 2 # cutoff 4000,
     s "<[co co] ~ co ~  co [co ~] ~ ~ [co co], co(8, 16), co:2(3, 8, 2)>" # gain "1 1.1 [0.9 1 0.9 0.9] 1 [0 1 0 1] 1.1 [0.9 1 0.9 0.9] 1" # stretch 0.4 # gain 0.5

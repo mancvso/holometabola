@@ -181,6 +181,7 @@ do -- continue
     ] # freq 252 # room 1.1 # gain 0.7 # cutoff 6500 # hcutoff 900 # dry 0.2 # speed 2
 
 
+
 do
   -- be real, maybe not
   l2 $ layer[id, density 0.125] $ slowcat [
@@ -245,7 +246,7 @@ do
         striate 2 $ s "<808cy:4:4(2, 8, 2), [~ [808cy:4:4 808cy:4:4 808cy:4:4 808cy:4:4] 808cy:4:4 808cy:4:4]/2>"
         # stretch sine/2 + 0.02 # freq 2049
         # gain 0.7
-    ]
+    ] # cutoff 1200
 
 
 

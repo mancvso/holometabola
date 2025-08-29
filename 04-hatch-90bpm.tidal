@@ -400,7 +400,7 @@ do -- BREAKS
   a1 $ layer[density 0.5, density 0.25] $ s "~ ~ ~ <htch:3(2, 12, 2)>" # freq 456 # room 0.4 # dry 0.4 # delay 0.2 # gain 0.8
 
 
-do
+do -- maybenot
   a2 $ silence
   -- highs
   l3 $ layer[density 0.125, (#freq 1024)] $ every 8 (slow 2) $ stack [

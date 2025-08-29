@@ -81,7 +81,7 @@ b3 $ density 2 $ s "[[haw:2 haw]/2 vt:2 [ haw*2 haw:3 ]*4 ~ haw]/2"
   # stretch 0.3
   # freq 4096
 
-
+hush
 
   l6 $ layer[density 0.25 . (# freq 400), density 0.5 . (# freq 100) . (#delay 0.2), density 0.5] $ striate 4 $ slowcat [
     stack [

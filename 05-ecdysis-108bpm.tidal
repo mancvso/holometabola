@@ -12,7 +12,7 @@
 let gain_slide x y z = gain y
 
 do
-  --resetCycles
+  resetCycles
   hush
   setcps(108/60/4)
   let ray = "<[vt:2 vt:2 vt:2 [vt:2*2] ~ exxo:2 ], vt:3*4, [vt:3 ~ vt:3*2]>"
@@ -50,7 +50,7 @@ do
   l3 $ layer[density 0.125] $ s "<vt:2*4, vt:3(3, 8), vt:3(4, 8)>" # freq 380 # legato 1 # timescale 2 # timescalewin 10
 
 do
-    -- tucutututu - tacatutu
+    -- tucutututu - tacatututu
       b1 $ slowcat [
           s "<[909 909 909 [909*2] ~ 909 ], bd*4, [bd ~ bd*2]>" # room 0.8 # gain 0.9 # cutoff 6500,
           s "<[909 909 909 [909*2] ~ 909 ], bd*4, [bd ~ bd*2]>" # room 0.8 # gain 1.0 # cutoff 5500 # lower 20,
@@ -393,6 +393,7 @@ do
         ]
       ] # freq 1624 # room 2 # amp 1.2 # cutoff 1700
 
+hush
 
     a1 $ density 0.255 $ striate 8 $ layer [density 2, striate 2, (#cutoff 1024)] $ slowcat [
         s "vt:2*2",

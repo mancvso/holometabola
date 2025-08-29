@@ -89,6 +89,8 @@ do
       density 0.15 $ s "<vt:2*4, bsc:6>" # freq 180 # gain 0.5 # room 1 # legato 0.25
     ] # freq 100 # fshift 10 # dry 0.2 # attack 0.2 # room 0.6 # gain 0.2
 
+--
+
 do
   l1 $ s "<vt:2(1, 12, 2), vt:2(3, 12, 4), [vt:2 vt:2 ~ vt:3]>" # room 0.6 # gain 0.75 # cutoff 9500 # freq 400
   l2 $ striate 2 $ slow 8 $ s "<vt:2(1, 12, 2), [vt:2 vt:2 ~ vt:2]>" # room 0.6 # gain 0.75 # cutoff 9500 # freq 400 # stretch sine/3 + 0.04
