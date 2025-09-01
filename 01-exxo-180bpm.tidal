@@ -284,9 +284,9 @@ hush
 -- subito
 do
   a1 $ silence
-  b1 $ struct "[1 [0 1 0 0] 0 0]" $ slow 2 $ s "<sd:5*2, [sd:8 sd:5*3], sd:4*3, sd:9*4, sd:5(4, 16, 2)>"
+  b5 $ struct "[1 [0 1 0 0] 0 0]" $ slow 2 $ s "<sd:5*2, [sd:8 sd:5*3], sd:4*3, sd:9*4, sd:5(4, 16, 2)>"
     # lower 2 # stretch 0.16 # gain 0.75 # cutoff 110
-  b2 $ striate 4 $ slow 8 $ slowcat [
+  b4 $ striate 4 $ slow 8 $ slowcat [
       s "<bass2:2(3, 12, 2), bass2:2(3, 12, 4), [bass2:2 bass2:2 ~ bass2:2]>",
       s "<bass2:2(6, 12, 2), bass2:2(4, 12, 4), [bass2:2 bass2:2 ~ bass2:2]>",
       s "<bass2:2(6, 12, 2), bass2:2(8, 12, 4), [bass2:2 [bass2:2 bass2:2] ~ bass2:2]>",
@@ -431,7 +431,7 @@ do
 
 
 
-do
+do -- pause()
   l2 $ layer[density 2 . (# gain 0.8) . (striate 2), id . (# gain 0.4) . (striate 4)] $ slowcat [
       s "<vt:2(3, 12, 2), [vt:2 vt:2 ~ vt:2]>",
       s "<vt:2(1, 12, 2), [vt:2 vt:2 ~ ~]>",

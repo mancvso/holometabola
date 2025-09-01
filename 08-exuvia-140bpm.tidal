@@ -621,6 +621,8 @@ l5 $ density 0.25 $ layer[fast 8, slow 4, (# freq 100)] $ stack [
 ] # gain 0.6 # resonance 0.4
 
 
+hush
+
   do
     b1 $ layer[id . (# cutoff 500), striate 8 . struct "1 0 [0 0 1 0] 0" . (# freq 100) . (# cutoff 128)] $ stack [
         s "uxay:4(4, 8)" # cutoff 4096 # gain 1.55 # lfo 0.25 # room 4,

@@ -2,7 +2,6 @@ do
   hush
   resetCycles
   setcps(80/60/4)
-  unsoloAll
   l1 $ layer[id, (#freq 30), density 0.5] $ stack [
       density 0.25 $ layer [striate 2, striate 4] $ slowcat [
         stack [
@@ -33,6 +32,8 @@ a3 $ layer[density 1, density 0.25, (# freq 128), (# freq 256), (# freq 512)] $ 
       ]
     ] # stretch 0.8
   ] # freq 972 # cutoff 4000 # legato 2 # speed 4 # stretch 0.1 # gain 1.2
+l2 $ silence
+
 -- 8%
 l2 $ struct "1 0 [ 1 1 ] 0" $ every 8 (# distort 0.2) $ stack [
     density 0.5 $ layer [striate 2] $ slowcat [
@@ -53,6 +54,7 @@ l2 $ struct "1 0 [ 1 1 ] 0" $ every 8 (# distort 0.2) $ stack [
   ]
 
 do
+a3 $ silence
 l1 $ layer [ (#freq 30), density 0.5] $ stack [
     density 0.25 $ layer [striate 2, striate 4] $ slowcat [
       stack [
@@ -104,8 +106,10 @@ hush
 do
   b1 $ silence
   l5 $ silence
+  b3 $ silence
   l3 $ silence
 
+hush
 
 
 do
@@ -156,6 +160,7 @@ l5 $ density 0.5 $ striate 4 $ slowcat [
 
 do
   -- 9%
+  b2 $ silence
   b1 $ layer[density 1, density 0.125 . (# freq 200)] $ stack [
       layer [(# (stretch sine/4 + 2.7))] $ s "<{gabba:4*8}?, gabba:2*6,techno:1(8, 8, 3), techno:1(3, 8), techno:4(3, 8, 1), techno:1(4, 16, 2), techno:6>",
       every 16 (density 1) $ density 0.125 $ layer [(#freq 250), (#freq 5000)] $ iter 2 $ s "<909:6*6(2, 8, 3),techno:2(2, 8, 1), techno:1(3, 8), techno:4(3, 8, 1), bend:1*4(4, 16, 2)>"
@@ -177,6 +182,7 @@ do
       ] # stretch 0.8
     ] # gain 0.6 # cutoff 600
 
+hush
 
 do
 -- 6%
@@ -293,7 +299,7 @@ unsoloAll
 
 
 -- pause
-b5 $ layer [density 2, slow 4, slow 16, (#freq 12800)] $ slowcat [
+b2 $ layer [density 2, slow 4, slow 16, (#freq 12800)] $ slowcat [
   s "~ gabba:4*6" # pan cosine # freq 400,
   s "gabba:4*6" # pan cosine # freq 200,
   stack [
