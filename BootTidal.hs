@@ -61,7 +61,19 @@ let only = (hush >>)
 :}
 
 :{
-let soloBeats = unsoloAll >> solo b1 >> solo b2 >> solo b3 >> solo b4 >> solo b5 >> solo b6
+-- Convenience functions for muting all patterns on each server
+let muteB = mapM_ ($ silence) [b1,b2,b3,b4,b5,b6]
+    muteL = mapM_ ($ silence) [l1,l2,l3,l4,l5,l6]
+    muteA = mapM_ ($ silence) [a1,a2,a3,a4,a5,a6]
+    muteAll = muteB >> muteL >> muteA
+:}
+
+:{
+-- Solo functions for each server
+let soloB = mapM_ solo ["b1","b2","b3","b4","b5","b6"]
+    soloL = mapM_ solo ["l1","l2","l3","l4","l5","l6"]
+    soloA = mapM_ solo ["a1","a2","a3","a4","a5","a6"]
+    soloAll = soloB >> soloL >> soloA
 :}
 
 :{
