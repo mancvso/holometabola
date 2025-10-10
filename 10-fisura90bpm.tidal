@@ -84,6 +84,8 @@ hush
       layer [density 0.5 . (#hcutoff 200) . (#cutoff 200) . (#higher 4), density 0.5] $ s "<derr:2(6, 12, 2), derr:3*2, derr:5(4, 16, 8)>" # freq 512 # higher 2 # room 0.25
     ] # cutoff 60 # resonance 0.3 # dry 0.3 # room 0.03 # delay 0.03 # amp 0.8
 
+unmuteAll
+
 do
   --d7 $ silence
   -- start the storm
@@ -107,9 +109,11 @@ do
         striate 8 $ s "~ ~ <derr:2(6, 12, 2), derr:3*2, derr:5(4, 16, 8)>" # freq 524 # higher 2 # room 0.5,
         striate 4 $ s "~ ~ <derr:4(3, 12, 2), derr:3*2, derr:3(3, 16, 1)> ~ ~" # freq 510 # room 0.25 # legato 0.25
       ]
-    ] # gain 0.8 # room 0.5
+    ] # gain 0.7 # room 0.5
 
-
+b1 $ s "bd*2"
+l1 $ s "bd*4"
+a1 $ s "~ bd"
 
 
 -- 7 is important
@@ -126,14 +130,14 @@ do
         s "<bass2:4(6, 12, 2), bass2:4:8(8, 12, 4), [bass2:4 [bass2:4 ~] ~ bass2:4]>"
       ]
       # room sine
-      # gain 0.6
+      # gain 0.5
       # cutoff 2420
-      # freq 120 |-| 20
+      # freq 120
       # stretch 1
       # legato 0.4
       # cut 2
       # dry 0.4
-      # resonance 0.8
+      # resonance 0.3
       # hcutoff 1040
 
 
@@ -204,7 +208,7 @@ l4 $ striate 4 $ density 0.5 $ slowcat [
       density 2 $ s "~ ~ <derr:2(1, 8, 2), derr:3*2, derr:5(4, 8)>" # freq 1024 |+| 10 # higher 4 # room 0.5,
       density 1 $ s "<derr:2(1, 8, 2), derr:5(4, 8)> [derr:5 ~ ] ~ " # freq 512 # legato 0.5 # higher 2 # room 0.5
     ]
-  ] # gain 1.1 # hcutoff 2800 # room 1 # delay 0.04
+  ] # gain 0.9 # hcutoff 2800 # room 1 # delay 0.04
 
 -- stomp clink
 do
@@ -232,7 +236,7 @@ do
         fast 2 $ s "~ ~ [bass2 bass2] bass2" # freq 128,
         s "[bass2 ~ [bass2 bass2] bass2*2]/4"
       ] # cutoff 1000 # room 0.6 # hcutoff 200 # freq 356 # gain 0.7
-    ] # gain 0.85 # legato 1
+    ] # gain 0.65 # legato 1
 
 
     # cutoff 588 #hcutoff 500
@@ -253,7 +257,7 @@ b4 $ layer[density 0.5 . (#degrade 0.4), density 0.25 . (#freq 128)] $ layer [sl
   s "gabba:2(12, 16)",
   s "gabba:2(8, 16)",
   s "gabba:2(2, 16)"
-] # gain 0.8
+] # gain 0.5
 
 
 
@@ -557,8 +561,6 @@ do
 
 do
   setcps(90/60/4)
-  hush
-  resetCycles
   b2 $ layer [id, slow 4] $ stack [
       slowcat [
         layer [density 0.125 . (# freq 600), density 0.5 . (# freq 200)] $ kkick # freq 128 # room 0.25,

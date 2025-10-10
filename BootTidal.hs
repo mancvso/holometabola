@@ -1,81 +1,78 @@
 :set -XOverloadedStrings
 :set prompt ""
-
 import Sound.Tidal.Context
-
 import System.IO (hSetEncoding, stdout, utf8)
 hSetEncoding stdout utf8
 
+-- Targets (tus puertos 57131–57133)
 :{
-let dirt1 = superdirtTarget { oLatency = 0.05, oAddress = "127.0.0.1", oPort = 57122 }
+let dirt1 = superdirtTarget {oLatency = 0.05, oAddress = "127.0.0.1", oPort = 57131}
+    dirt2 = superdirtTarget {oLatency = 0.05, oAddress = "127.0.0.1", oPort = 57132}
+    dirt3 = superdirtTarget {oLatency = 0.05, oAddress = "127.0.0.1", oPort = 57133}
 :}
 
+-- Shapes que exigen la “marca” dirtN para rutear al target correspondiente
 :{
-let shape1 = OSC "/dirt/play" $ Named { requiredArgs = ["s", "dirt1"] }
+let shape1 = OSC "/dirt/play" $ Named {requiredArgs = ["s","dirt1"]}
+    shape2 = OSC "/dirt/play" $ Named {requiredArgs = ["s","dirt2"]}
+    shape3 = OSC "/dirt/play" $ Named {requiredArgs = ["s","dirt3"]}
 :}
 
-let oscmap = [ (dirt1, [shape1] ) ]
+-- Mapa OSC
+let oscmap = [(dirt1, [shape1]), (dirt2, [shape2]), (dirt3, [shape3])]
 
-tidal <- startStream ( defaultConfig { cVerbose = True, cFrameTimespan = 1/20 } ) oscmap
+-- Stream principal (usa un ctrl port que no choque con SC)
+tidal <- startStream (defaultConfig {cVerbose = True, cFrameTimespan = 1/20, cCtrlPort = 57141}) oscmap
 
+-- Definimos los parámetros de control requeridos por los shapes
+-- (ojo: el nombre del parámetro debe ser EXACTAMENTE "dirt1|2|3")
+let dirt1p = pI "dirt1"
+    dirt2p = pI "dirt2"
+    dirt3p = pI "dirt3"
+
+-- Atajos útiles
 :{
-let only = (hush >>)
-    hush = streamHush tidal
-    list = streamList tidal
-    mute = streamMute tidal
-    unmute = streamUnmute tidal
-    unmuteAll = streamUnmuteAll tidal
-    unsoloAll = streamUnsoloAll tidal
-    solo = streamSolo tidal
-    unsolo = streamUnsolo tidal
-    once = streamOnce tidal
-    first = streamFirst tidal
-    asap = once
-    nudgeAll = streamNudgeAll tidal
-    all = streamAll tidal
-    resetCycles = streamResetCycles tidal
-    setCycle = streamSetCycle tidal
-    setcps = asap . cps
-    p = streamReplace tidal
-    b1 = p "b1" . (|< (orbit 0 |< pI "dirt1" 0))
-    b2 = p "b2" . (|< (orbit 1 |< pI "dirt1" 0))
-    b3 = p "b3" . (|< (orbit 2 |< pI "dirt1" 0))
-    b4 = p "b4" . (|< (orbit 3 |< pI "dirt1" 0))
-    b5 = p "b5" . (|< (orbit 4 |< pI "dirt1" 0))
-    b6 = p "b6" . (|< (orbit 5 |< pI "dirt1" 0))
-    -- etc
-    l1 = p "l1" . (|< (orbit 6 |< pI "dirt1" 0))
-    l2 = p "l2" . (|< (orbit 7 |< pI "dirt1" 0))
-    l3 = p "l3" . (|< (orbit 8 |< pI "dirt1" 0))
-    l4 = p "l4" . (|< (orbit 9 |< pI "dirt1" 0))
-    l5 = p "l5" . (|< (orbit 10 |< pI "dirt1" 0))
-    l6 = p "l6" . (|< (orbit 11 |< pI "dirt1" 0))
-    -- etc
-    a1 = p "a1" . (|< (orbit 12 |< pI "dirt1" 0))
-    a2 = p "a2" . (|< (orbit 13 |< pI "dirt1" 0))
-    a3 = p "a3" . (|< (orbit 14 |< pI "dirt1" 0))
-    a4 = p "a4" . (|< (orbit 15 |< pI "dirt1" 0))
-    a5 = p "a5" . (|< (orbit 16 |< pI "dirt1" 0))
-    a6 = p "a6" . (|< (orbit 17 |< pI "dirt1" 0))
-    -- etc
+let hush         = streamHush tidal
+    only         = (hush >>)
+    p            = streamReplace tidal
+    once         = streamOnce tidal
+    asap         = streamOnce tidal
+    nudgeAll     = streamNudgeAll tidal
+    all          = streamAll tidal
+    resetCycles  = streamResetCycles tidal
+    setcps       = asap . cps
+    xfade i      = transition tidal True (Sound.Tidal.Transition.xfadeIn 4) i
 :}
 
+-- Ruteo por grupos: BEATS (dirt1), LEADS (dirt2), AMBS (dirt3)
+-- Cada slot fija orbit + marca dirtNp=1 para que sólo dispare el shape de su target
 :{
--- Convenience functions for muting all patterns on each server
-let muteB = mapM_ ($ silence) [b1,b2,b3,b4,b5,b6]
-    muteL = mapM_ ($ silence) [l1,l2,l3,l4,l5,l6]
-    muteA = mapM_ ($ silence) [a1,a2,a3,a4,a5,a6]
-    muteAll = muteB >> muteL >> muteA
+-- BEATS @ 57131
+let b1 = p 1  . (# orbit 0) . (# dirt1p 1)
+    b2 = p 2  . (# orbit 1) . (# dirt1p 1)
+    b3 = p 3  . (# orbit 2) . (# dirt1p 1)
+    b4 = p 4  . (# orbit 3) . (# dirt1p 1)
+    b5 = p 5  . (# orbit 4) . (# dirt1p 1)
+    b6 = p 6  . (# orbit 5) . (# dirt1p 1)
+
+-- LEADS @ 57132
+    l1 = p 7  . (# orbit 0) . (# dirt2p 1)
+    l2 = p 8  . (# orbit 1) . (# dirt2p 1)
+    l3 = p 9  . (# orbit 2) . (# dirt2p 1)
+    l4 = p 10 . (# orbit 3) . (# dirt2p 1)
+    l5 = p 11 . (# orbit 4) . (# dirt2p 1)
+    l6 = p 12 . (# orbit 5) . (# dirt2p 1)
+
+-- AMBS @ 57133
+    a1 = p 13 . (# orbit 0) . (# dirt3p 1)
+    a2 = p 14 . (# orbit 1) . (# dirt3p 1)
+    a3 = p 15 . (# orbit 2) . (# dirt3p 1)
+    a4 = p 16 . (# orbit 3) . (# dirt3p 1)
+    a5 = p 17 . (# orbit 4) . (# dirt3p 1)
+    a6 = p 18 . (# orbit 5) . (# dirt3p 1)
 :}
 
-:{
--- Solo functions for each server
-let soloB = mapM_ solo ["b1","b2","b3","b4","b5","b6"]
-    soloL = mapM_ solo ["l1","l2","l3","l4","l5","l6"]
-    soloA = mapM_ solo ["a1","a2","a3","a4","a5","a6"]
-    soloAll = soloB >> soloL >> soloA
-:}
-
+-- Extras opcionales (get/set)
 :{
 let getState = streamGet tidal
     setI = streamSetI tidal
@@ -87,5 +84,4 @@ let getState = streamGet tidal
 
 :set prompt "~/endo> "
 :set prompt-cont ""
-
 default (Pattern String, Integer, Double)

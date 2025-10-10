@@ -128,7 +128,7 @@ b3 $ density 2 $ s "[[haw:2 haw]/2 vt:2 [ haw*2 haw:3 ]*4 ~ haw]/2"
   # freq 4096
 
 
-l6 $ s "[vt:2 vt:2] ~ [vt:3 vt:2 vt:3] ~" # freq 120
+l1 $ s "[vt:2 vt:2] ~ [vt:3 vt:2 vt:3] ~" # freq 120
 
 hush
 panic
@@ -215,7 +215,7 @@ l6 $ every 8 (striate 4) $ slowcat [
       n (run 4) # s "derr",
       n (run 8) # s "gra" # gain "0.6"
     ] # room saw # stretch sine/2
-  ] # room 1
+  ] # room 1 # gain 0.85
 
 do
   b1 $ silence
@@ -251,7 +251,7 @@ l6 $ density 0.5 $ striate 8 $ slowcat [
     n (run 4) # s "derr",
     n (run 8) # s "gra" # gain "0.6"
   ] # room saw # stretch sine/2
-] # room 2
+] # room 2 # gain 0.75
 
 
 
@@ -287,7 +287,7 @@ l4 $ layer[striate 2, slow 4, (#cutoff 1512), (#freq 512)] $ stack [
     n (run 2) # s "cre" # gain "0.6",
     fast 2 $ n (run 4) # s "derr",
     n (run 8) # s "gra" # gain "0.6"
-  ] # cutoff 1500 # pan sine # freq 500 # dry 0.1 # room 0.7 # gain 0.75
+  ] # cutoff 1500 # pan sine # freq 500 # dry 0.1 # room 0.7 # gain 0.65 # release 0.01
 
 unsoloAll
 
@@ -338,7 +338,7 @@ b1 $ fast 4 $ stack [
   ] # cutoff 7500 # lfo 0.8 # leslie 0.5 # degrade 2.7,
   every 16 (slow 2) $ n (run 6) # s "haw ~ less ~" # degrade 4.0 # cutoff 2500,
   slow 16 $ every 8 (fast 2) $ n (run 4) # s "~ ~ ~ ~ <less, 909, bd> ~ ~ ~" # crush 0.5 # cutoff 1500
-] # amp 1.2
+] # amp 1
 
 -- dissolve - alpha
 -- secure non-chaotic
@@ -505,7 +505,7 @@ do
       --resetCycles
       -- about to.. later highs and fast
       b2 $ density 0.5 $ s "<gabba:4*6, gabba:4*2>" # pan cosine
-      l6 $ layer[density 4, striate 4, striate 2 . (# freq 1000)] $ slowcat [
+      l6 $ layer[density 1, striate 4, striate 2 . (# freq 1000)] $ slowcat [
           stack [
             n (run 6) # s "vt",
             n (run 2) # s "cre" # gain "0.6",
@@ -530,7 +530,7 @@ do
             n (run 4) # s "derr",
             n (run 8) # s "gra" # gain "0.6"
           ] # room saw # stretch sine/2
-        ] # room 0.6 # freq 2200 # fshift 4 # stretch 0.74 # gain sine/16
+        ] # room 0.6 # freq 2200 # fshift 4 # stretch 0.74 # gain 0.8
         # resonance 0.001 # dry 0.001 # delay 0.0125 # hcutoff 1300
 
 
@@ -551,13 +551,13 @@ do
       s "[gabba:4*2] ~ bass0:6 [gabba*6]" # stretch sine/4 + 2.8 # freq 1024,
       s "<[909:8*6] ~ bd [bd*4], gabba:4(4, 8, 2), 909:6*2, bd*6>" # freq 512,
       slow 2 $ s "[gabba:4*3] ~ [bass2:6*2] [909:4*6]" # freq 800 # cutoff (range 500 1500 $ sine)
-    ] # gain 0.75 # freq 256 # room 1
+    ] # gain 0.70 # freq 256 # room 1
   -- real
   b2 $ density 2 $ layer [slow 2, slow 4] $ stack [
       s "[gabba:4*2] ~ bass0:6 [gabba*6]" # stretch sine/4 + 2.8 # freq 1024,
       s "<[909:8*6] ~ bd [bd*4], gabba:4(4, 8, 2), 909:6*2, bd*6>" # freq 512,
       slow 2 $ s "[gabba:4*3] ~ [bass2:6*2] [909:4*6]" # freq 800 # cutoff (range 500 1500 $ sine)
-    ] # cutoff 1500 # freq 550 # pan sine # room 0.75
+    ] # cutoff 1500 # freq 550 # pan sine # room 0.65 # gain 0.6
   -- secure non-chaotic
   b4 $ fast 2 $ stack [
       layer[slow 4, slow 8, slow 2, slow 16] $ slowcat [
@@ -602,7 +602,7 @@ do
           n (run 6) # s "haw",
           n (run 4) # s "haw"
         ]
-      ] # cutoff 7500 # lfo 0.8 # leslie 0.5 # degrade 2.7,
+      ] # cutoff 7500 # lfo 0.8 # leslie 0.5 # degrade 2.7 # gain 0.8,
       every 16 (slow 2) $ n (run 6) # s "haw ~ less ~" # degrade 4.0 # cutoff 2500,
       slow 16 $ every 8 (fast 2) $ n (run 4) # s "~ ~ ~ ~ <less, 909, bd> ~ ~ ~" # crush 0.5 # cutoff 1500
     ] # gain 0.8
@@ -787,7 +787,7 @@ do
         n (run 4) # s "derr",
         n (run 8) # s "gra" # gain "0.6"
       ] # room saw # stretch sine/2
-    ] # room 0.9 # dry 0.2
+    ] # room 0.9 # dry 0.2 # gain 0.7
   b4 $ density 2 $ every 16 (slow 4) $ every 4 (stut 5 0.5 0.4) $ every 8 (fast 2) $ slowcat [
       sound "bend*4",
       sound "bend*4",
@@ -813,7 +813,7 @@ do
         s "haw:3*2" # lpq (slow 1 saw*2) # gain 0.9,
         n (run 4) # s "haw" # gain "0.4 0.8 0.5 0.3" # freq "700"
       ]
-    ] # degrade 1.2 # gain 0.7 # room 1
+    ] # degrade 1.2 # gain 0.6 # room 1
     -- heart
   l1 $ striate 2 $ slowcat [
       stack [
@@ -840,7 +840,7 @@ do
         n (run 4) # s "derr",
         n (run 8) # s "gra" # gain "0.6"
       ] # room saw # stretch sine/2
-    ] # room 2
+    ] # room 2 # gain 0.7
 
 
 
@@ -849,7 +849,7 @@ b3 $ density 2 $ layer [slow 2, slow 4] $ stack [
   s "[gabba:4*2] ~ bass0:6 [gabba*6]" # stretch sine/4 + 2.8 # freq 1024,
   s "<[909:8*6] ~ bd [bd*4], gabba:4(4, 8, 2), 909:6*2, bd*6>" # freq 512,
   slow 2 $ s "[gabba:4*3] ~ [bass2:6*2] [909:4*6]" # freq 800 # cutoff (range 500 1500 $ sine)
-] # pan 0.8 # hcutoff 190 # cutoff 4200 # gain 0.9
+] # pan 0.8 # hcutoff 190 # cutoff 4200 # gain 0.7
 
 
 -- real
@@ -857,7 +857,7 @@ b4 $ density 2 $ layer [slow 2, slow 4] $ stack [
   s "[gabba:4*2] ~ bass0:6 [gabba*6]" # stretch sine/4 + 2.8 # freq 1024,
   s "<[909:8*6] ~ bd [bd*4], gabba:4(4, 8, 2), 909:6*2, bd*6>" # freq 512,
   slow 2 $ s "[gabba:4*3] ~ [bass2:6*2] [909:4*6]" # freq 800 # cutoff (range 500 1500 $ sine)
-] # cutoff 1500 # freq 550 # pan 0.2 # room 1 # gain 0.8
+] # cutoff 1500 # freq 550 # pan 0.2 # room 1 # gain 0.6
 
 
 -- real
@@ -974,7 +974,10 @@ b2 $ fast 4 $ stack [
   ] # cutoff 7500 # lfo 0.8 # leslie 0.5 # degrade 2.7,
   every 16 (slow 2) $ n (run 6) # s "haw ~ less ~" # degrade 4.0 # cutoff 2500,
   slow 16 $ every 8 (fast 2) $ n (run 4) # s "~ ~ ~ ~ <less, 909, bd> ~ ~ ~" # crush 0.5 # cutoff 1500
-] # gain 0.8
+] # gain 0.6
+
+
+muteA
 
 
 
@@ -984,7 +987,7 @@ b3 $ density 2 $ layer [slow 2, slow 4] $ stack [
   s "[gabba:4*2] ~ bass0:6 [gabba*6]" # stretch sine/4 + 2.8 # freq 1024,
   s "<[909:8*6] ~ bd [bd*4], gabba:4(4, 8, 2), 909:6*2, bd*6>" # freq 512,
   slow 2 $ s "[gabba:4*3] ~ [bass2:6*2] [909:4*6]" # freq 800 # cutoff (range 500 1500 $ sine)
-] # pan 0.8 # hcutoff 190 # cutoff 420 # gain 0.9
+] # pan 0.8 # hcutoff 190 # cutoff 420 # gain 0.5
 
 solo 8
 unsoloAll
@@ -994,7 +997,7 @@ b4 $ density 2 $ layer [slow 2, slow 4] $ stack [
   s "[gabba:4*2] ~ bass0:6 [gabba*6]" # stretch sine/4 + 2.8 # freq 1024,
   s "<[909:8*6] ~ bd [bd*4], gabba:4(4, 8, 2), 909:6*2, bd*6>" # freq 512,
   slow 2 $ s "[gabba:4*3] ~ [bass2:6*2] [909:4*6]" # freq 800 # cutoff (range 500 1500 $ sine)
-] # cutoff 500 # freq 250 # pan 0.2 # room 1 # gain 0.8
+] # cutoff 500 # freq 250 # pan 0.2 # room 1 # gain 0.7
 
 
 
@@ -1011,14 +1014,14 @@ do
         n (run 6) # s "[vt ~] vt [[vt ~] vt [vt ~] vt ~]" # freq 142,
         n (run 6) # s "[vt ~] vt [[vt ~] vt [vt ~] vt ~]"
       ]
-    ] # gain 1
+    ] # gain 0.6
   b3 $ stack [
       density 2 $ s "<gabba:4*3, [gabba:4 gabba:4 ~ gabba:4 ~ gabba:4]/2>" # pan 0.5 # freq 100 #hcutoff 1000 # cutoff 1000,
       s "gabba:2 ~ [gabba:2 gabba:2] ~",
       s "gabba:4*3" # pan cosine,
       s "~ [gabba:4*6]/4" # pan cosine*2,
       stut 2 0.2 0.3 $ s "[gabba:4*6]/2" # pan cosine # stretch 0.4
-    ]
+    ] # gain 0.6
   b1 $ every 4 (slow 4) $ stut 2 0.5 0.4 $ s "gabba:4*6" # pan cosine # cutoff 200
   b4 $ stack [
       density 0.25 $ striate 4 $ s "<bd:4*4, bd:2*6>" # pan sine*4 # freq 8512 # room 1 # pan 0.8,
@@ -1030,7 +1033,7 @@ do
       -- about to.. later highs and fast
       b3 $ silence
       b2 $ every 4 (slow 4) $ stut 2 0.5 0.4 $ s "gabba:4*6" # pan cosine # cutoff 200
-      l6 $ layer[density 4, striate 4, striate 2 . (# freq 1000)] $ slowcat [
+      l6 $ layer[density 4 . (# cutoff 600) . (# freq 300) . (# dry 0.01) . (# resonance 0.01), striate 2 . (# freq 128), striate 2 . (# freq 1000)] $ slowcat [
           stack [
             n (run 6) # s "vt",
             n (run 2) # s "cre" # gain "0.6",
@@ -1055,7 +1058,7 @@ do
             n (run 4) # s "derr",
             n (run 8) # s "gra" # gain "0.6"
           ] # room saw # stretch 0.6
-        ] # room 1 # freq 600
+        ] # room 1
 
 hush
 
@@ -1175,6 +1178,7 @@ b3 $ density 2 $ layer [slow 2, slow 4] $ stack [
   slow 2 $ s "[gabba:4*3] ~ [bass2:6*2] [909:4*6]" # freq 800 # cutoff (range 500 1500 $ sine)
 ] # pan 0.8 # hcutoff 190 # cutoff 4200 # gain 0.9
 
+-- intense one
 l6 $ density 2 $ striate 4 $ slow 2 $ slowcat [
   stack [
     n (run 6) # s "vt",
@@ -1207,6 +1211,8 @@ l6 $ striate 8 $ slow 2 $ slowcat [
   ]
 ] # freq 512 # room 0.9 # dry 0.2 # decay 0.8 # legato 0.25 # cutoff 500
 
+
+muteB
 
 -- too industrial
 l1 $ density 0.5 $ striate 4 $ slowcat [
@@ -1263,7 +1269,7 @@ hush
 unsoloAll
 panic
 
-d2 $ fast 2 $ s "[bd:2 ~] ~ [ ~ [ed0:5? ed0:5]/8 ~ ~ <ed0:14?, [ed0:2/5 ~]> ~ ~] ~" # cutoff 2500 # degrade "0.4 0.6 0.2" # gain 1.1
+d2 $ fast 2 $ s "[bd:2 ~] ~ [ ~ [ed0:5? ed0:5]/8 ~ ~ <ed0:14?, [ed0:2/5 ~]> ~ ~] ~" # cutoff 2500 # degrade "0.4 0.6 0.2" # gain 0.91
 
 d12 $ slow 2 $ every 8 (stut 1 0.5 0.2) $ n (arp "<up up converge>" "<f'm5'8 g'7sus4'8 g'7maj5'2 f'7maj6'4> ~") # s "midi" # midichan 0 # higher 4 # legato 2
 

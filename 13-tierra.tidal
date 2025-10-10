@@ -47,11 +47,11 @@ let gentle = layer[density 1, density 0.125, (# freq 128), (# freq 256), (# freq
       a3 $ layer[density 1, density 0.125, (# freq 128), (# freq 256), (# freq 512)] $ stack [
         density 0.5 $ striate 4 $ slowcat [
             stack [
-              n (run 6) # s "[bd bd]" # gain 1,
+              n (run 6) # s "[bd bd]" # gain 0.9,
               striate 2 $ n (run 3) # s "[~ [vt]]" # gain 0.8 # freq 128
             ]
           ] # stretch 0.8
-        ] # freq 972 # cutoff 4000 # legato 2 # speed 4 # stretch 0.1 # gain 1.2
+        ] # freq 972 # cutoff 4000 # legato 2 # speed 4 # stretch 0.1 # gain 1
 
 do
       --d6 $ slow 4 $ s "[~ ed0:3] [bass0:3 ~ <bass0:3 909:3> [bass0:3 ~ <bass0:2 909:3> ~]]/4 bass0:2 techno:6 ~" # cutoff (range 500 5000 $ cF 0.8 "12")
@@ -111,14 +111,14 @@ do
     ] # gain 0.7 # stretch 0.8 # room 0.8 # cutoff 2000
   b6 $ layer[density 1, density 0.25]
     $ s "<gabba:2(6, 6, 2), 909:4(4, 8), outdoor:5/4, bd:4(3,8), gabba:4(3, 6, 2)>"
-    # gain 0.8
+    # gain 0.7
     # room sine
   b5 $ slowcat [
     s "<gabba:2(6, 6, 2), 909:4(4, 8), exxo:5/4, bd:4(3,8), gabba:4(2, 6, 2)>",
     s "<gabba:2(4, 6, 2), 909:4(4, 8), exxo:5/4, bd:4(6,8), gabba:4(2, 6, 2)>",
     s "<gabba:2(3, 6, 2), 909:4(4, 8), exxo:5/4, bd:4(12,8), gabba:4(2, 6, 2)>",
     s "<gabba:2(3, 6, 2), 909:4(4, 8), exxo:5/4, bd:4(1,8), gabba:4(1, 6)>" ]
-    # cutoff 2000 # freq 3500 # gain 0.8
+    # cutoff 2000 # freq 3500 # gain 0.75
   l1 $ layer [density 0.5 . striate 4 . slow 8, slow 8, fast 2] $ slowcat [
     s "<outdoor:1, bd:2*4> <outdoor:2*2, bd*2> <outdoor:3, bd:3>",
     s "<outdoor:1*2, bd:2*4> <outdoor:2, gabba:4*2> <outdoor:3, bd:3, uxay:7*2>",
@@ -179,7 +179,7 @@ do -- landing
     do -- the good one
       b1 $ layer[density 2 . (# freq 128), density 0.25] $ s "<gabba:2(3, 6, 2), 909:4(4, 8), outdoor:5/4, bd:4(3,8), gabba:4(4, 6, 2)>"
         # gain 0.8
-        # room 0.9
+        # room 0.7
         # freq 1000
         # cutoff 2000
         # hcutoff 500
@@ -194,7 +194,7 @@ do -- landing
             s "<outdoor:1, bd:2*4> <outdoor:2*2, bd*2> <outdoor:3, bd:3>" # gain 0.9,
             s "<outdoor:1, bd:2*2> <outdoor:2*4, bd> <outdoor:3, bd:3*2>" # gain 0.5
         ] # cutoff 1500
-        # gain 0.89
+        # gain 0.79
       l3 $ density 0.5 $ layer [ghost, slow 12] $ struct "1 [1 1] 0 [1 1 0 0]" $ interlace (s "bd ~ [bd:2 ~ ~ <outdoor:4, ed0:1> ~ ~] ~ [bd ~ ~ [<ed0:1, outdoor:4> ~ [outdoor:4 ~ ~] bd:2]]") (s "bd:3 ~ bd <bd:3, bd:2*2>")
         # pan "0.1 0.3 0.35 0.5 0.6 0.65 0.8 0.9 0.85 0.6" # gain 0.9 # cutoff 500
       b3 $ density 1 $ s "<gabba:2(6, 6, 2), 909:4(4, 8), outdoor:5/4, bd:4(3,8), gabba:4(2, 6, 2)>"
@@ -245,7 +245,7 @@ hush
 
     do -- the good one
       b1 $ layer[density 0.5, density 0.125, density 2] $ s "<gabba:2(3, 6, 2), 909:4(4, 8), outdoor:5/4, bd:4(3,8), gabba:4(4, 6, 2)>"
-        # gain 0.8
+        # gain 0.75
         # room 0.9
         # freq 300
         # cutoff 200
@@ -254,18 +254,18 @@ hush
             s "outdoor:1 outdoor:1 ~" # gain 0.9,
             s "<outdoor:1, 909:2*2> outdoor:1 ~" # gain 0.5
         ]
-        # gain 0.8 # cutoff 2000 # room 2 # dry 0.4
+        # gain 0.75 # cutoff 2000 # room 2 # dry 0.4
       l2 $ slowcat [
             s "<outdoor:1*2, bd:2*2> <outdoor:2, bd*4> <outdoor:3, bd:3*4>" # gain 0.6,
             s "<outdoor:1, bd:2*4> <outdoor:2*2, bd*2> <outdoor:3, bd:3>" # gain 0.9,
             s "<outdoor:1, bd:2*2> <outdoor:2*4, bd> <outdoor:3, bd:3*2>" # gain 0.5
         ]
-        # gain 0.89
+        # gain 0.79
       l3 $ density 0.125 $ layer [ghost, slow 12] $ struct "1 [1 0] 0 [1 0 ~ 1]" $ interlace (s "bd ~ [bd:2 ~ ~ <outdoor:4, ed0:1> ~ ~] ~ [bd ~ ~ [<ed0:1, outdoor:4> ~ [outdoor:4 ~ ~] bd:2]]") (s "bd:3 ~ bd <bd:3, bd:2*2>")
         # pan "0.1 0.3 0.35 0.5 0.6 0.65 0.8 0.9 0.85 0.6" # gain 0.6 # cutoff 500
       b3 $ density 0.5 $ s "<gabba:2(6, 6, 2), 909:4(4, 8), outdoor:5/4, bd:4(3,8), gabba:4(2, 6, 2)>"
       b2 $ layer[density 0.5, density 0.125, density 2] $ s "<gabba:2(3, 6, 2), 909:4(4, 8), outdoor:5/4, bd:4(3,8), gabba:4(4, 6, 2)>"
-        # gain 0.8
+        # gain 0.75
         # room 0.9
         # freq 300
         # cutoff 200
@@ -407,7 +407,7 @@ l3 $ density 4 $ struct "0 [1 0] [1 1 1 0] 1" $ layer[density 0.5 . (# freq 240)
   ] # freq 2020 # resonance 0.6 # dry 0.2 # release 0.5 # decay 0.2 # gain 0.8 # room 0.3 # hcutoff 100 # delay 0.02
 
 
-
+hush
 
 do -- opening
   --d6 $ slow 4 $ s "[~ ed0:3] [bass0:3 ~ <bass0:3 909:3> [bass0:3 ~ <bass0:2 909:3> ~]]/4 bass0:2 techno:6 ~" # cutoff (range 500 5000 $ cF 0.8 "12")

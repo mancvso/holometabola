@@ -159,7 +159,7 @@ do
 
 do
   -- this mid song - clink
-  l1 $ slowcat [
+  l3 $ slowcat [
           s "<vt:2(3, 12, 2), [vt:2 vt:2 ~ vt:2]>",
           slowcat [
             s "<vt:2(3, 12, 2), [vt:2 vt:2 ~ vt:2]>",
@@ -327,7 +327,7 @@ do
 
 do
   l1 $ density 0.25 $ slowcat [
-    jux(#cutoff 1500) $ striate 4 $ slow 4 $ layer [slow 4, id, slow 8, striate 4] $ stack [
+    jux( #cutoff 1500) $ striate 4 $ slow 4 $ layer [slow 4, id, slow 8, striate 4] $ stack [
         s "<vt:3*3, [vt:2(6, 12, 3)]/2, vt:3*4, vt:2(3, 12)>",
         striate 2 $ s "<vt:3(2, 12, 2), vt:2(1, 12, 4), vt:2*3>"
       ]
@@ -342,7 +342,8 @@ do
       # room cosine |+| 0.4
       # freq 3800
     ] # gain 0.58 # dry 1.9 # cutoff 1100 # room 3 # cut 0
-  unsoloAll
+
+do
   b1 $ every 4 (# cutoff 1500) $ s "<bass2:2(3, 12, 2), [bass2:2 bass2:2 ~ bass2:2], bass1:2*6, bass2:3*2>"
     # room 0.6 # gain 0.75 # cutoff 500 # freq 200
   b2 $ every 4 (# cutoff 1500) $ slow 2 $ s "<bass2:2(3, 12, 2), [bass2:2 bass2:2 ~ bass2:2], bass1:2*6, bass2:3*2>"

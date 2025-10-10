@@ -107,12 +107,12 @@ a1 $ silence
 
 do
   b1 $ every 4 (# cutoff 1500) $ s "<bass2:2(3, 12, 2), [bass2:2 bass2:2 ~ bass2:2], bass1:2*6, bass2:3*2>"
-    # room 0.6 # gain 0.75 # cutoff 500 # freq 200
+    # room 0.6 # gain 0.65 # cutoff 500 # freq 200
   b2 $ every 4 (# cutoff 1500) $ slow 2 $ s "<bass2:2(3, 12, 2), [bass2:2 bass2:2 ~ bass2:2], bass1:2*6, bass2:3*2>"
-    # room 0.6 # gain 0.75 # cutoff 500 # freq 200
+    # room 0.6 # gain 0.65 # cutoff 500 # freq 200
   b3 $ s "<vt:2(3, 12, 2), [vt:2 vt:2 ~ vt:2]>"
-    # room 0.8 # gain 0.75 # cutoff 9500 # freq 200
-  b4 $ density 0.25 $ s "~ <bass2(8, 8), bass2(2, 8, 2)>" # room 0.6 # gain 0.75 # cutoff 2000 # freq 300 # fshift 10
+    # room 0.8 # gain 0.65 # cutoff 9500 # freq 200
+  b4 $ density 0.25 $ s "~ <bass2(8, 8), bass2(2, 8, 2)>" # room 0.6 # gain 0.65 # cutoff 2000 # freq 300 # fshift 10
 
   a3 $ silence
 
@@ -251,7 +251,7 @@ do -- drama birds
 l3 $ layer[slow 4, density 0.25, fast 2 . (# freq 128) . (# hcutoff 6000)] $ stack [
     s "<vt:2(1, 12, 2), [vt:2 vt:2 ~ vt:2]>" # freq 200 # stretch sine/3 + 0.04,
     s "<vt:2(4, 12, 2), [~ vt:2 ~ vt:2]>" # freq 220 # dry 0.2 # room 0.8
-    ] # amp 2 # cutoff 3500 # hcutoff 600
+    ] # amp 0.65 # cutoff 3500 # hcutoff 600
 
 -- movement
 do
@@ -307,12 +307,12 @@ do -- maybe not
 
 
 do
-  -- better as interlude (or post holo) can be super fast
+  --
   l1 $ stut 1 2 0.2 $ density 1 $ jux(#cutoff 1500) $ striate 4 $ slow 8 $ layer [slow 8, slow 16, striate 4] $ stack [
         s "<bsc:3*3, [bsc:2(6, 12, 3)]/2, vt:2, bsc:2(3, 12)>"
-    ] # legato 0.95 # cutoff 2000 # gain 0.9
+    ] # legato 0.95 # cutoff 2000 # gain 0.8
   a1 $ stack [
-      striate 4 $ density 0.25 $ s "vt:2 ~ [vt:2 vt:2] ~ ~ ~ [vt:2] ~ ~ ~ ~ ~" # freq 300 # legato 0.75 # stretch 0.2 # gain 0.9,
+      striate 4 $ density 0.25 $ s "vt:2 ~ [vt:2 vt:2] ~ ~ ~ [vt:2] ~ ~ ~ ~ ~" # freq 300 # legato 0.75 # stretch 0.2 # gain 0.8,
       density 0.25 $ s "bsc:2 ~ [bsc:2 bsc:2] ~ ~ ~ [bsc:2] ~ ~ ~ ~ ~" # freq 1200 # legato 0.75 # stretch 0.2 # gain 0.8,
       s "vt:2 ~ [vt:2 vt:2] ~ ~ [vt:2] ~ ~ ~ vt:2 ~ ~" # freq 300 # legato 2 # delay 0.2 # gain 0.9
     ] # gain 0.7
