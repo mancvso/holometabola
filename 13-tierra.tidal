@@ -55,7 +55,7 @@ let gentle = layer[density 1, density 0.125, (# freq 128), (# freq 256), (# freq
 
 do
       --d6 $ slow 4 $ s "[~ ed0:3] [bass0:3 ~ <bass0:3 909:3> [bass0:3 ~ <bass0:2 909:3> ~]]/4 bass0:2 techno:6 ~" # cutoff (range 500 5000 $ cF 0.8 "12")
-      b1 $ density 0.25 $ s "<gabba:2(6, 6, 2), 909:4(4, 8), outdoor:5/4, bd:4(3,8), gabba:4(2, 6, 2)>"
+      b1 $ density 0.25 $ s "<gabba:2(6, 6, 2), 909:4(4, 8), outdoor:5/4, bd:4(3,8), gabba:4(2, 6, 2)>" # cutoff 500 # room 0.55 # resonance 0.04
       b3 $ density 0.25 $ s "<909:4(4, 8), [~ ~ ~ 909:4(6, 6, 2)], bd:4(3,8), gabba:4(2, 6, 2)>" # hcutoff 800 # cutoff 200 # room 0.2 # gain 0.8
       --let patt = "<[sd:3 sd:4], [sd:2 sd:2 sd:4 sd:2]> <[sd <uxay:3, bd:2*2> sd:2 uxay:3*2], [~ uxay:2]> [sd:9 ~ <techno:2, bd:2*2>]"
       let patt = "<[ed0:3 [ed0:4 ~ uxay:9 [ed0:4 ed0:4]]], [ed0:1 [ed0:1(8, 16)]]> ed0:1 [ed0:6 [ed0:8 cre:12]]" -- <[sd <uxay:3, ed0:2*2> sd:2 uxay:3*2], [~ uxay:2]> [sd:9 ~ <techno:2, ed0:2*2>]"
@@ -63,10 +63,10 @@ do
       b2 $ layer[density 0.5, density 0.125] $ every 16 (stutter 2 0.2) $ struct shape $ s patt # cutoff 3500 # gain 1 # gain 0.85
 
 
-      l1 $ s "<outdoor:1*2, bd:2*2> <outdoor:2, bd*4> <outdoor:3, bd:3>" # gain 0.6
+      l1 $ striate 4 $ density 0.25 $ s "<outdoor:1*2, bd:2*2> <outdoor:2, bd*4> <outdoor:3, bd:3>" # gain 0.6 # decay 0.25 # delay 0.04
 
       -- glacial
-      l1 $ layer[slow 8, (#freq 2000), density 0.25] $ slowcat [
+      l3 $ layer[slow 8, (#freq 2000), density 0.25] $ slowcat [
             s "<outdoor:1*2, bd:2*2> <outdoor:2, bd*4> <outdoor:3, bd:3>" # gain 0.6,
             s "<outdoor:1, bd:2*4> <outdoor:2*2, bd*2> <outdoor:3, bd:3>" # gain 0.9,
             s "<outdoor:1, bd:2*2> <outdoor:2*4, bd> <outdoor:3, bd:3*2>" # gain 0.5 # freq 100
@@ -158,7 +158,7 @@ do -- landing
     density 1 $ s "<gabba:2(6, 6, 2), 909:4(4, 8), outdoor:5/4, bd:4(3,8), gabba:4(3, 6, 2)>"
     ] # freq 128 # resonance 0.2 # room 1
   -- yes
-  a2 $ layer [(# freq 126), density 0.25] $ stack [
+  a2 $ layer [(# freq 126), density 1, density 2] $ stack [
     s "co ~ [co co]" # pan 0.5,
     s "co*3 [~ co?]" # pan 0.8,
     density 4 $ s "~ ~ [co:7 ~]" # pan 0.2,
@@ -254,13 +254,13 @@ hush
             s "outdoor:1 outdoor:1 ~" # gain 0.9,
             s "<outdoor:1, 909:2*2> outdoor:1 ~" # gain 0.5
         ]
-        # gain 0.75 # cutoff 2000 # room 2 # dry 0.4
+        # gain 0.75 # cutoff 200 # room 2 # dry 0.4
       l2 $ slowcat [
             s "<outdoor:1*2, bd:2*2> <outdoor:2, bd*4> <outdoor:3, bd:3*4>" # gain 0.6,
             s "<outdoor:1, bd:2*4> <outdoor:2*2, bd*2> <outdoor:3, bd:3>" # gain 0.9,
             s "<outdoor:1, bd:2*2> <outdoor:2*4, bd> <outdoor:3, bd:3*2>" # gain 0.5
         ]
-        # gain 0.79
+        # gain 0.79 # cutoff 1000
       l3 $ density 0.125 $ layer [ghost, slow 12] $ struct "1 [1 0] 0 [1 0 ~ 1]" $ interlace (s "bd ~ [bd:2 ~ ~ <outdoor:4, ed0:1> ~ ~] ~ [bd ~ ~ [<ed0:1, outdoor:4> ~ [outdoor:4 ~ ~] bd:2]]") (s "bd:3 ~ bd <bd:3, bd:2*2>")
         # pan "0.1 0.3 0.35 0.5 0.6 0.65 0.8 0.9 0.85 0.6" # gain 0.6 # cutoff 500
       b3 $ density 0.5 $ s "<gabba:2(6, 6, 2), 909:4(4, 8), outdoor:5/4, bd:4(3,8), gabba:4(2, 6, 2)>"
@@ -560,7 +560,7 @@ do -- opening
         a1 $ layer [density 2 . (#degrade 0.1) . (# delay 0.2), density 0.25 . (#degrade 0.4), (density 1) . (# freq 256)] $ s "~ ~ <bass2(4, 4), bass2, bass2(3, 4)>"
 
 
-
+hush
 
     do -- the good one
       b1 $ layer[density 0.5, density 0.125, density 2] $ s "<gabba:2(3, 6, 2), 909:4(4, 8), outdoor:5/4, bd:4(3,8), gabba:4(4, 6, 2)>"

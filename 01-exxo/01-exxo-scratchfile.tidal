@@ -1,0 +1,64 @@
+-- PLZ READ, for later :)
+do
+  b2 $ silence
+  l6 $ jux(density 0.5 . stut 2 0.25 0.1) $ density 0.25 $ striate 4 $ s "<vt:2(2, 12, 2), [vt:2 vt:2 ~ vt:2]>"
+    # room sine
+    # gain 0.95
+    # cutoff 2500
+    # resonance (range 0.2 0.8 $ sine)
+    # freq 300 # pan 0.2 # cutoff 3000
+  b1 $ density 0.125 $ struct "<[1 [0 1 0 0] 1 1]*2, [1 [0 1 0 0] 1 1]/2, [1 [0 1 0 0] 1 1], [0 0 1 1]>"
+    $ density 0.125 $ s "<sd:5*2, [sd:8 sd:5*3], sd:4*3, sd:9*4, sd:5(4, 16, 2)>" # lower 2 # stretch 0.18 # gain 0.9 # cutoff 550
+    --setcps(86/60/4)
+  l3 $ slow 4 $ layer[striate 2, density 0.5 . (#delay 0.1) . (# freq 4000)] $ s "<vt:2(3, 12, 2), [vt:2 vt:2 ~ vt:2]>"
+    # room sine
+    # gain 0.8
+    # cutoff 400
+    # freq 600
+  l4 $ density 0.25 $ layer[density 0.5, density 0.5 . (# freq 128)] $ cat [
+    s "<exxo:1*2, [exxo:1 exxo:1*3], exxo:2*3, exxo:2*4, exxo:5(4, 16, 2)>",
+    s "<exxo:1(2, 4, 2), [exxo:1 exxo:1(3, 8, 2)], exxo:2(3, 8, 1), exxo:2(4, 4), exxo:5(4, 16, 2)>"
+    ]
+    # stretch 0.18
+    # amp 0.6
+    # legato 0.125
+    # freq 1122
+    # dry 0.2
+    # resonance 0.4
+    # cutoff 6500
+    # hcutoff 2000
+    # room 0.9
+    # attack 0.1
+    # release 0.8
+    # decay 0.4
+    # cut 1
+  a1 $ slow 1 $ striate 4 $ s "<vt:2(3, 12, 2), [vt:2 vt:2 ~ vt:2]>"
+    # room sine
+    # gain 0.75
+    # cutoff 9500
+    # freq 600 # pan 0.2
+  a2 $ layer[density 0.5, density 0.25 . (# freq 128)] $ s "<exxo:1*2, [exxo:1 exxo:1*3], exxo:2*3, exxo:2*4, exxo:5(4, 16, 2)>"
+    # stretch 0.18
+    # legato 0.125
+    # gain 0.92
+    # freq 1122
+    # dry 0.5
+    # resonance 0.4
+    # cutoff 7500
+    # hcutoff 2000
+    # cut 1
+  b4 $ struct "[1 [0 1 0 0] 1 1]" $ slow 8 $ s "<sd:5*2, [sd:8 sd:5*3], sd:4*3, sd:9*4, sd:5(4, 16, 2)>" # lower 2 # stretch 0.18 # gain 0.9 # cutoff 55
+  a1 $ layer[fast 2, id] $ striate 4 $ slow 4 $ stack [
+      density 2 $ s "[exxo:1 ~ [<exxo:2(3, 6), exxo:1(4, 6)>] ~]" # freq 256,
+      slow 2 $ s "[exxo:1 ~ exxo:1 ~]" # stretch 1 # freq 1000
+    ] # room 1 # gain 1 # cutoff 1600 # delay 0.2 # cut 1
+
+  -- 29% higher energy
+  l1 $ slow 8 $ density 0.125 $ layer[density 0.125 . (#freq 128), slow 2 . density 0.25 . (# freq 64)] $ striate 2 $ stack [
+    s "<exxo:1*2, exxo:5(4, 16, 2)>",
+    s "<exxo:1/2, [exxo:5 ~ ~ ~]/8>"
+    ] # hcutoff 3600
+
+-- subito
+do
+  a6 $ silence
