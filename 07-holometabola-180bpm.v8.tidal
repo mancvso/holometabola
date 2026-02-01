@@ -249,9 +249,16 @@ do -- drama birds
 
 -- jazzy
 l3 $ layer[slow 4, density 0.25, fast 2 . (# freq 128) . (# hcutoff 6000)] $ stack [
-    s "<vt:2(1, 12, 2), [vt:2 vt:2 ~ vt:2]>" # freq 200 # stretch sine/3 + 0.04,
+    s "<vt:2(1, 12, 2), [vt:2 vt:2 ~ vt:2]>" # freq 200 # stretch 0.2,
     s "<vt:2(4, 12, 2), [~ vt:2 ~ vt:2]>" # freq 220 # dry 0.2 # room 0.8
-    ] # amp 0.65 # cutoff 3500 # hcutoff 600
+    ] # amp 0.75 # cutoff 3500 # hcutoff 600
+
+
+-- jazzy-fast2
+l3 $ layer[slow 2, density 0.25, fast 2 . (# freq 128) . (# hcutoff 6000)] $ stack [
+    s "<vt:2(1, 12, 2), [vt:2 vt:2 ~ vt:2]>" # freq 200 # stretch 0.2,
+    s "~ <vt:2(4, 12, 2), [~ vt:2 ~ vt:2]>" # freq 220 # dry 0.2 # room 0.8
+  ] # amp 0.75 # freq 800 # legato 0.25
 
 -- movement
 do

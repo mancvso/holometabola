@@ -344,12 +344,14 @@ b2 $ every 8 (slow 2) $ s "[co:4 co:4] co [co:4 co:4] co" # pan 0.5 # room 0.5 #
 
 do
 -- liberated beat
-b1 $ slowcat [
+b1 $ slow 2 $ layer[density 2 . (# delay 0.2) . (# freq 200), density 0.25] $ slowcat [
     slow 2 $ s "<gabba(4, 8), co:3(1, 8, 1)>",
     layer [slow 2, id . (# freq 512)] $ s "<gabba(4, 8), co:3(1, 8, 1)>",
     striate 4 $ slow 2 $ s "<gabba(4, 8), co:3(1, 8, 1)>",
     layer [slow 2, id . (# freq 512), density 2 . (# freq 1024) . (# delay 0.02) . (# resonance 0.01)] $ s "<gabba(4, 8), co:3(1, 8, 1)>"
   ] # cutoff 4096 # gain 1 # lfo 5.5 |/| 0.3 # room 2 # dry 0.9 # size sine # gain 1.1  --floor
+
+do
 -- heart
 l2 $ stack [
     every 16 (slow 2) $ stack [
@@ -445,13 +447,13 @@ b1 $ slow 2 $ s "<gabba(4, 8), co:3(1, 8, 1)>" # cutoff 4096 # gain 1 # lfo 5.5 
 -- attack
 b2 $ density 0.5 $ s "<gabba(4, 8, 2), co:3(2, 8, 1)>" # cutoff 4096 # gain 1 # lfo 5.5 |/| 0.3 # room 2 # dry 0.9 # size sine  --floor
 
-
+hush
 
 do
   -- kids
-  l1 $ slow 4 $ layer [slow 4, id] $ interlace (
-        s "[uxay:4(4, 8), bd*2]" # cutoff 1500 # gain 1 # lfo luv
-      ) (fast 2 $ stack [
+  l1 $ density 0.125 $ layer [slow 4, id] $ interlace (
+        s "[uxay:4(2, 8), bd*2]" # cutoff 1500 # gain 1 # lfo luv
+      ) (fast 1 $ stack [
         s "[uxay:4(4, 8), bd*2]" # cutoff 5500 # gain 0.75 # lfo luv  # room 1.1,
         layer[rev, fast 4, fast 2] $ s "[uxay:4(4, 8), bd*4]" # delay 0.2
       ]
@@ -562,20 +564,8 @@ a4 $ layer[every 16 (slow 2), density 0.25 . (# freq 64)] $ stack [
 # freq "400 300 300 400" # hcutoff 1250 # cutoff 200
 
 
-
--- kids
-l2 $ layer [slow 8, density 0.25] $ interlace (
-    s "[uxay:4(4, 8), bd*2]" # cutoff 1500 # gain 0.8 # lfo luv
-  ) (fast 2 $ stack [
-    s "[uxay:4(4, 8), bd*2]" # cutoff 5500 # gain 0.75 # lfo luv  # room 1.1,
-    layer[rev, fast 4, fast 2] $ s "[uxay:4(4, 8), bd*4]" # delay 0.2
-  ]
-) # stretch 0.1
-# speed (fmap ([4,1,3]!!) $ markovPat 16 2 [[2,3,2], [2,4,2], [0,1,0]]) # freq 656
-# room 2 # gain 0.7
-
   -- continuity
-b2 $ density 1 $ s "[co:4 co:4] co [co:4 co:4] co" # pan 0.25 # room 0.5 # freq 1129
+l1 $ density 1 $ s "[co:4 co:4] co [co:4 co:4] co" # pan 0.25 # room 0.5 # freq 1129
 
 -- the new shape is complete
 a4 $ density 0.125 $ stack [
@@ -602,7 +592,7 @@ b5 $ density 2 $ layer [slow 2, slow 8] $ struct "<1(12, 24, 4), [1 [1 1 0 1]]>"
   # gain 0.75
   # cutoff 6500
 
-a4 $ every 8 (slow 2) $ s "[gabba:4] [~ gabba:4] [gabba:4] [gabba:4]" # cutoff 600 # gain 0.6
+a4 $ every 8 (slow 2) $ s "[gabba:4*2] [~ gabba:4] [gabba:4] [gabba:4]" # cutoff 600 # gain 0.6
   # freq 100
 
 -- NOPE
@@ -613,7 +603,7 @@ a4 $ every 8 (slow 2) $ s "[gabba:4] [~ gabba:4] [gabba:4] [gabba:4]" # cutoff 6
     ] # cutoff 3500 # freq 300
 
 do
-  -- easy
+  -- STRONG EASY
   l2 $ s "<[co co] ~ co ~  co [co ~] ~ ~ [co co], co(8, 16), co:2(3, 8, 2)>" # gain "1 1.1 [0.9 1 0.9 0.9] 1 [0 1 0 1] 1.1 [0.9 1 0.9 0.9] 1"
     -- no live/no love
   b2 $ juxBy 0.7 (#cutoff 9000) $ stack [
@@ -630,11 +620,24 @@ do
   -- liberated beat
   b1 $ slow 2 $ s "<gabba(4, 8), co:3(1, 8, 1)>" # cutoff 1096 # lfo 5.5 |/| 0.3 # room 2 # dry 0.9 # size sine # amp 1 # freq 64  --floor
 
+
+  -- kids
+  l2 $ layer [slow 8 . every 4 (slow 2), density 0.25 . every 2 (fast 2)] $ interlace (
+      s "[uxay:4(4, 8), bd*2]" # cutoff 1500 # gain 0.8 # lfo luv
+    ) (fast 2 $ stack [
+      s "[uxay:4(4, 8), bd*2]" # cutoff 5500 # gain 0.75 # lfo luv  # room 1.1,
+      layer[rev, fast 4, fast 2] $ s "[uxay:4(4, 8), bd*4]" # delay 0.2
+    ]
+  ) # stretch 0.1
+  # speed (fmap ([4,1,3]!!) $ markovPat 8 1 [[2,3,2], [2,4,2], [0,1,0]]) # freq 656
+  # room 2 # gain 0.7
+
 a4 $ silence
 
 do
+  hush
   -- DUNNO trance dark
-  l1 $ density 1 $ stack [
+  l1 $ density 0.5 $ stack [
       slow 4 $ layer [slow 4, slow 8] $ interlace (
           s "[exxo:4(4, 8), bd*2]" # cutoff 1500 # gain 1 # lfo luv
         ) (fast 2 $ stack [
@@ -644,6 +647,20 @@ do
       ) # stretch 0.1 # freq 128 # speed (fmap ([4,1,3]!!) $ markovPat 16 2 [[2,3,2], [2,4,2], [0,1,0]]) # freq 256 # degrade 2 # stretch 0.2,
       striate 2 $ slow 2 $ density 2 $ s "[ ~ uxay:2] [~ uxay:2] [uxay:4 uxay:2] [uxay:4]" # freq "200 500 900 1300 1500 2300 4500"
     ] # room 1 # amp 1
+
+
+do
+  -- hush
+    -- DUNNO trance dark
+  l1 $ density 0.5 $ every 4 (density 2) $ stack [
+      slow 4 $ layer [slow 4, slow 8] $ fast 2 $ stack [
+          s "[vt:2(4, 8), bd*2]" # cutoff 15500 # gain 0.75 # lfo luv  # room 1.1,
+          layer[rev, fast 4, fast 2] $ s "[exxo:3(4, 8), bd*4]" # delay 0.2
+        ] # stretch 0.1 # freq 128 # speed (fmap ([4,1,3]!!) $ markovPat 16 2 [[2,3,2], [2,4,2], [0,1,0]]) # freq 256 # degrade 2 # stretch 0.2,
+      striate 2 $ slow 2 $ density 2 $ s "[ ~ uxay:2] [~ uxay:2] [uxay:4 uxay:2] [uxay:4]" # freq "200 500 900 1300 1500 2300 4500"
+    ] # room 1 # amp 1 # cutoff 7000 # freq 600
+
+
 
     -- heart
     l5 $ stack [
@@ -660,7 +677,7 @@ do
 
     do
       -- kids
-      l1 $ slow 4 $ layer [slow 4, id] $ interlace (
+      l1 $ slow 16 $ layer [slow 4, id] $ interlace (
             s "[uxay:4(4, 8), bd*2]" # cutoff 1500 # gain 1 # lfo luv
           ) (fast 2 $ stack [
             s "[uxay:4(4, 8), bd*2]" # cutoff 5500 # gain 0.75 # lfo luv  # room 1.1,
@@ -669,6 +686,7 @@ do
         ) # stretch 0.1
         # speed (fmap ([4,1,3]!!) $ markovPat 16 2 [[2,3,2], [2,4,2], [0,1,0]]) # freq 656
         # room 2 # gain 0.8 # cutoff 600
+
       -- liberated beat
       b1 $ slow 2 $ s "<gabba(4, 8), co:3(1, 8, 1)>" # cutoff 4096 # gain 1 # lfo 5.5 |/| 0.3 # room 2 # dry 0.9 # size sine # gain 0.85  --floor
       -- attack

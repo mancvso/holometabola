@@ -327,7 +327,7 @@ unsoloAll
         # gain 0.8
         # room sine # freq 300
 
-    d3 $ slow 2 $ layer[id, slow 2] $ s "<rs:6(6, 12, 4), rs:8(4, 12, 4), rs:4(3, 12, 2)>" # freq 142 # gain_slide "3" 0.62 1 # room sine*32
+    b3 $ slow 2 $ layer[id, slow 2] $ s "<rs:6(6, 12, 4), rs:8(4, 12, 4), rs:4(3, 12, 2)>" # freq 142 # gain_slide "3" 0.62 1 # room sine*32
 
         do
           -- pre heart
@@ -633,6 +633,8 @@ do
           s "<gabba:4(4, 6)>",
           density 1 $ s "<gabba:2(6, 6, 2), 909:4(4, 8), outdoor:5/4, bd:4(3,8), gabba:4(3, 6, 2)>"
           ] # freq 128 # resonance 0.2 # room 1
+
+do
         -- yes
         b3 $ layer [(# freq 126), density 0.25] $ stack [
           s "co ~ [co co]" # pan 0.5,

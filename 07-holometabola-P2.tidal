@@ -16,6 +16,8 @@ do
   -- d10 $ silence
   hush
   setcps(180/60/4)
+
+do
   b1 $ fast 1 $ s "<bass2:2(3, 12, 2), bass2:2:8(3, 12, 4), [bass2:2 bass2:2 ~ bass2:2]>" # room 0.6 # gain 0.55 # cutoff 9500 # freq 200
   b2 $ fast 1 $ s "<bass2:2(3, 12, 2), bass2:2:8(3, 12, 4), [bass2:2 bass2:2 ~ bass2:2]>" # room 0.6 # gain 0.45 # cutoff 9500 # freq 400
   b3 $ slow 4 $ s "~ ~ ~ <bass2:2(6, 12, 2), bass2:8(6, 12, 4), [bass2:2 bass2:2 ~ bass2:2]>" # room 0.8 # gain 0.7 # cutoff 1000 # freq 280
@@ -197,7 +199,7 @@ hush
 
 do
     -- better for other, slow chords
-    l4 $ density 0.125 $ every 4 (layer[id, (#freq 218)]) $ stack [
+    l4 $ density 0.5 $ every 4 (layer[id, (#freq 218)]) $ stack [
         s "<vt:2(1, 12, 2), [vt:2 vt:2 ~ vt:2]>" # freq 200 # stretch sine/3 + 0.04,
         density 0.5 $ slowcat [
           s " ~ vt:2 [[vt:2 ~] vt:2] vt:2 ~ ~ [vt:2 [[vt:2 ~] vt:2]] ~ ",

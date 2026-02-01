@@ -64,15 +64,15 @@ do
     ]
   ]
 
-b1 $ s "gabba:4*6" # pan cosine
+b5 $ s "gabba:4*6" # pan cosine
 
-b1 $ every 4 (slow 4) $ stut 2 0.5 0.4 $ s "gabba:4*6" # pan cosine # cutoff 200
+b5 $ every 4 (slow 4) $ stut 2 0.5 0.4 $ s "gabba:4*6" # pan cosine # cutoff 200
 
 -- l4 $ s "[vt:3 vt:2] ~ [vt:3 vt:2 vt:3] ~" # freq 180 # room 0.6
 
-b2 $ layer [density 0.5 . (# freeze 1), density 1 . (# freq 200)] $ s "< [cc(4, 16, 8)] [co:2(6, 12)] , [co:5(3, 8, 2)] >" # hcutoff 1900 # cutoff 2600 # freq 2800 # degrade 0.6 # attack 0 # release 0.2 # delay 0.1
+b3 $ layer [density 0.5 . (# freeze 1), density 1 . (# freq 200)] $ s "< [cc(4, 16, 8)] [co:2(6, 12)] , [co:5(3, 8, 2)] >" # hcutoff 1900 # cutoff 2600 # freq 2800 # degrade 0.6 # attack 0 # release 0.2 # delay 0.1
 
-d3 $ density 2 $ striate 8 $ s "bd:4*4" # pan sine
+b6 $ density 2 $ striate 8 $ s "bd:4*4" # pan sine
 
 b3 $ density 2 $ s "[[haw:2 haw]/2 vt:2 [ haw*2 haw:3 ]*4 ~ haw]/2"
   # cutoff 4500
@@ -541,7 +541,7 @@ b5 $ striate 2 $ density 4 $ stack [
 ] # hcutoff 19500 # pan 0.4 # freq 1460 # degrade 1.2 # room 0.8
 
 do
-  b1 $ every 4 (slow 4) $ stut 2 0.5 0.4 $ s "gabba:4*6" # pan cosine # cutoff 200
+  b5 $ every 4 (slow 4) $ stut 2 0.5 0.4 $ s "gabba:4*6" # pan cosine # cutoff 200
   b6 $ silence
   a1 $ striate 2 $ every 8 (striate 4 ) $ density 2 $ sound "[~ [gra:2*4] [bd] vt]*2" # stretch 0.4 # freq 128
 

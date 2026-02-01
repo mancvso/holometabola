@@ -89,6 +89,7 @@ do
 
 -- 67%
 l4 $ silence
+
 l4 $ every 4 (id . slow 32) $ layer[slow 4 . (# fshift 8) . (# hcutoff 600), slow 16 . (#hcutoff 400), slow 6 . every 4(slow 2) . (#hcutoff 400), density 0.25] $ slowcat [
       s "~",
       s "~",
@@ -160,6 +161,7 @@ do -- to
     # gain 0.691
     # cutoff 2900
     # freq 980
+    # legato 0.5
     # resonance 0.02
     # room 0.02
 
@@ -1028,6 +1030,8 @@ do -- maybe not -- incipient
       s "<{[co:5(2, 8) ~ ~ ~]/16 co:5}, [[co:4]/8 ~ [co:3(4, 8, 2)]/8 co:2/4]>" # pan 0.3 # freq 512,
       slow 8 $ s "{~ co:5 co:5*3 co:5*4}" # pan 0.7 # freq 64 # lfo 2.4 # decay 0.8 # attack 0.2
     ] # gain 0.7 # room 0.6 # degrade 0.9
+
+do
   -- subito
   b6 $ striate 4 $ slow 4 $ slowcat [
       s "<bass2:2(3, 12, 2), bass2:2:8(3, 12, 4), [bass2:2 bass2:2 ~ bass2:2]>",
@@ -1091,7 +1095,7 @@ do
     # freq 160
     # resonance 0.2
     -- raising up, ma not yet
-  b4 $ density 0.5 $ stack [
+  b4 $ layer[every 4  (density 1), density 0.5] $ stack [
       s "<bass2:2(4, 12), bass2:2:8(6, 12, 4), [bass2:2 bass2:2 ~ bass2:2]>" # room 0.6 # freq 200,
       s "<bass2:2(12, 12, 1), bass2:2:8(3, 12, 4), [bass2:2 bass2:2 ~ bass2:2]>" # room 0.6 # freq 4000 # hcutoff 600
     ]

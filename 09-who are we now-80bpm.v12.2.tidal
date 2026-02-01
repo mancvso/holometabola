@@ -55,7 +55,7 @@ l3 $ struct "1 0 [ 1 1 ] 0" $ every 8 (# distort 0.2) $ stack [
     ],
     density 0.25 $ striate 4 $ slowcat [
       stack [
-        n (run 6) # s "[vt vt]" # gain 0.7
+        n (run 6) # s "[vt vt]" # gain 0.75
       ] # freq 400
     ] # stretch 0.8
   ] # gain 0.65
@@ -324,7 +324,7 @@ unsoloAll
 
 
 -- pause
-b3 $ layer [density 1 . every 4 (fast 2), slow 4, slow 16, (#freq 12800)] $ slowcat [
+b3 $ layer [density 0.5 . every 4 (fast 2), slow 4, slow 16, (#freq 12800)] $ slowcat [
   s "~ gabba:4*6" # pan cosine # freq 400,
   s "gabba:4*6" # pan cosine # freq 200,
   layer[id, fast 2, stut 2 0.5 0.5 . every 8 (density 2) . (#fshift 10) . (# freq 300)] $ stack [
@@ -343,7 +343,7 @@ b3 $ layer [density 1 . every 4 (fast 2), slow 4, slow 16, (#freq 12800)] $ slow
   ] # delay 0.2 # cutoff 1600 # resonance 0.3 # dry 0.2 # fshift 2 # cutoff 800 # legato 0.25,
   s "~ ~ gabba:4*2" # pan cosine # freq 400
 ] # gain 1
-# cutoff 840
+# cutoff 8400
 # room 0.4
 # dry 0.01
 # hcutoff 14

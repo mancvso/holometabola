@@ -659,6 +659,7 @@ do
 
 
 do
+  hush
   b2 $ layer [id, slow 4] $ stack [
       slowcat [
         layer [density 0.125 . (# freq 600), density 0.5 . (# freq 200)] $ kkick # freq 128 # room 0.25,

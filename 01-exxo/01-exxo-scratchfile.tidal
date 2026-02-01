@@ -59,6 +59,11 @@ do
     s "<exxo:1/2, [exxo:5 ~ ~ ~]/8>"
     ] # hcutoff 3600
 
--- subito
-do
-  a6 $ silence
+
+
+  b4 $ slowcat [
+    struct "[1 [0 1 0 0] 0 0]" $ slow 4 $ s "<sd:5*2, [sd:8 sd:5*3], sd:4*3, sd:9*4, sd:5(4, 16, 2)>"
+    # lower 1 # stretch 0.98 # gain 0.7 # cutoff 550,
+    slow 1 $ s "<sd:5*2, [sd:8 sd:5*3], sd:4*3, sd:9*4, sd:5(4, 16, 2)>"
+    # lower 2 # stretch 0.18 # gain 0.65 # cutoff 5500 # freq 512
+    ]
