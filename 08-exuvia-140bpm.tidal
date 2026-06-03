@@ -36,15 +36,18 @@ hush
 --  # legato 2 # gain 0.7 # room 2 # pan sine # cutoff 1400 # freq 300
 
 do
-b5 $ density 1 $ s "bd*2 [bd*4]*2" # freq 300
-b3 $ slow 4 $ sound "[ [gabba:4 ~ gabba:4 ~] ] [imp:6/2] [gabba:4 [gabba:4 ~  ~ [gabba:4]/2 ] ] gabba:4"
-  # legato 2 # gain 0.7 # room 2 # pan sine # cutoff 2300 # freq 400
-l2 $ density 0.5 $ every 2 (spin 2) $ sound "[[~ co:3] imp:6/2] [co:3 [~ co:3 [co:3 co:3]/2 imp:6/4]*2]" # legato 2 # gain 0.7 # room 2 # pan sine
-b4 $ sound "[gabba:4*2] ~ ~ ~"
-    # legato 2 # gain 0.7 # room 2 # pan sine # cutoff 1400 # freq 300
-b2 $ every 4 (spin 4) $ spin 2 $ fast 2 $ every 8 (density 2) $ slow 4 $ s "[gabba:4*2] ~ ~ [gabba:4]" # cutoff 90 # freq 200
-b6 $ spin 4 $ density 0.5 $ s "[gabba:4*2] ~ ~ [gabba:4]" # cutoff 200 # freq 2000
-  # lfocutoffint 0.2 # lfo 0.2 # dry 0.2 # fshift 100 # attack 0.2 # legato 2 # distort saw
+  hush
+  setcps(140/60/4)
+  resetCycles
+  b5 $ stack 
+    [
+      density 1 $ s "bd*2 [bd*4]*2" # freq 300,
+      slow 4 $ sound "[ [gabba:4 ~ gabba:4 ~] ] [imp:6/2] [gabba:4 [gabba:4 ~  ~ [gabba:4]/2 ] ] gabba:4" # legato 2 # gain 0.7 # room 2 # pan sine # cutoff 2300 # freq 400,
+      density 0.5 $ every 2 (spin 2) $ sound "[[~ co:3] imp:6/2] [co:3 [~ co:3 [co:3 co:3]/2 imp:6/4]*2]" # legato 2 # gain 0.7 # room 2 # pan sine,
+      sound "[gabba:4*2] ~ ~ ~" # legato 2 # gain 0.7 # room 2 # pan sine # cutoff 1400 # freq 300,
+      every 4 (spin 4) $ spin 2 $ fast 2 $ every 8 (density 2) $ slow 4 $ s "[gabba:4*2] ~ ~ [gabba:4]" # cutoff 90 # freq 200,
+      spin 4 $ density 0.5 $ s "[gabba:4*2] ~ ~ [gabba:4]" # cutoff 200 # freq 2000 # lfocutoffint 0.2 # lfo 0.2 # dry 0.2 # fshift 100 # attack 0.2 # legato 2 # distort saw
+    ] # hcutoff 1600
 
 -- ready - dron
 l1 $ layer[density 1 . (#distort saw)]  $ layer[struct "[1 1] [1 ~ 1 0] 1 [1 [~ 1]]", (#dry 0.01) . (# cutoff 400) . (#room 0.8) . (# freq 4000) . (#hcutoff 200)] $ stack [
@@ -72,7 +75,7 @@ do
         -- sound "[[909 909] [ co:3 909 [909 909] 909]] [909 909] co:3 [909 [ co:3 909 [909 909] 909]]" # legato 1.25
       ] # cutoff 4500 # freq "[200 300 200 400] 300 300 [400 300 300 300]" # lfo 5,
       n (run 4) # sound "co(8, 8)" # pan 0.5 |+| sine # cutoff 2500 |/| 500 # gain 0.6
-      ] # gain 0.7 # room 1
+      ] # gain 0.7 # room 1 # cutoff 600
 
 
       do
@@ -87,7 +90,7 @@ do
               -- sound "[[909 909] [ co:3 909 [909 909] 909]] [909 909] co:3 [909 [ co:3 909 [909 909] 909]]" # legato 1.25
             ] # cutoff 4500 # freq "[200 300 200 400] 300 300 [400 300 300 300]" # lfo 5,
             n (run 4) # sound "co(8, 8)" # pan 0.5 |+| sine # cutoff 2500 |/| 500 # gain 0.6
-            ] # gain 0.7 # room 2 # attack 1
+            ] # gain 0.7 # room 2 # attack 1 # cutoff 600
 
 
 do
@@ -160,7 +163,7 @@ do
     # lfo 0.8 # lfocutoffint 0.6 # lfodelay 0.2 # attack 0.1 # release 0.8 # stretch 3
 
     do
-    b4 $ sound "[gabba:4*2] ~ ~ ~"
+    b5 $ sound "[gabba:4*2] ~ ~ ~"
         # legato 2 # gain 0.7 # room 2 # pan sine # cutoff 1400 # freq 300
     b2 $ every 4 (spin 4) $ spin 2 $ fast 2 $ every 8 (density 2) $ slow 4 $ s "[gabba:4*2] ~ ~ [gabba:4]" # cutoff 90 # freq 200
     b6 $ spin 4 $ density 2 $ s "[gabba:4*2] ~ ~ [gabba:4]" # cutoff 200 # freq 2000
@@ -202,10 +205,11 @@ hush
     ] # gain 0.80
 
 
-l1 $ silence
+
+
 
     -- compress and explode
-    l6 $ layer [density 0.25 . (# fshift 40), (# freq 9200), density 1 . (# freq 400), density 0.25 . (# distort saw)] $ stack [
+    b5 $ layer [density 0.25 . (# fshift 40), (# freq 9200), density 1 . (# freq 400), density 0.25 . (# distort saw)] $ stack [
       s "uxay:4(4, 8)" # cutoff 4096 # gain 0.75 # lfo 0.25 # room 4,
       fast 1 $ s "uxay:4(1, 8, 2)" # cutoff 11096 # hcutoff 5042 # gain 0.75 # room 1 , --floor
       interlace (
@@ -352,7 +356,7 @@ hush
 
     THIRD PHASE
 
-    l6 $ silence
+    l3 $ silence
 
     do
       -- not ready - the heavy
@@ -487,7 +491,7 @@ hush
                 s "[gabba] [~ gabba:4 gabba:3 gabba:5*4]",
                 s "~ ~ [gabba*4] [~ gabba:4 gabba:3*2 gabba:5*4]",
                 s "[ [~ gabba:4] [~ gabba:4 ~ gabba:4]/4 ] * 2"
-              ] # gain 0.7 # room 0.9 |+| 5 # lfo 2 |+| 2 # distort saw
+              ] # gain 0.7 # room 0.9 |+| 5 # lfo 2 |+| 2 # distort saw # hcutoff 600
 
 
 hush
@@ -595,7 +599,7 @@ hush
 
                 hush
 
-              --
+              -- SOONER
               -- not ready
               l1 $ density 0.5 $ layer[fast 4, slow 4] $ stack [
                   stack [
@@ -817,6 +821,7 @@ b4 $ silence
 hush
 
 b4 $ silence
+
 b4 $ slow 4 $ layer [density 0.25 . (# freq 7000), density 1 . (#freq 100), striate 8 . (# freq 29) . (# fshift 200)] $ s "<gabba:4(16, 16, 2), gabba:4(8, 8, 2), 909(6, 8, 2), bd:4(8, 16, 4)>"
 # cutoff 950 # gain 0.7
 

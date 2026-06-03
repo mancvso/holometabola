@@ -29,11 +29,11 @@ do
   l2 $ layer[density 0.5, slow 8 . density 0.125 . (#nudge 4)] $ stack [
       fast 2 $ s "uxay:4(8, 8, 2)" # cutoff 2048 # gain "0.6 0.6 0.8 1.2" # degrade 1.125 # freq 120, --floor
       s "exxo:2(4, 8, 4)" # cutoff 1512 # gain "1.2 0.8 1.0 0.8" # degrade (sine - 0.7) # freq 360 --floor
-    ] # gain 0.8 |/| 0.2 # cutoff 8550
+    ] # gain 0.8 |/| 0.2 # cutoff 1855
   b2 $ layer[density 0.5, slow 4 . every 4 (slow 2) . (#nudge 4)] $ stack [
       slow 2 $ s "<bd(4, 8, 2), co(6, 8, 2), co(2, 8, 2), cc:1(2, 32, 3)>",
       density 0.25 $ s "<bd(2, 8), co(2, 8), exxo:5(1, 8), {exxo:1(1, 16) exxo:2(4, 16) exxo:1(6, 16)}>" # degrade 1.2 # room 0.8 # dry 0.6
-    ] # cutoff 3250
+    ] # cutoff 18000
     # room 1.9 # freq 154 # hcutoff 1800
     # gain 0.6
 
@@ -41,31 +41,30 @@ l6 $ layer[striate 2 . density 0.25 . (# distort saw) . (#cutoff 600) . (#amp 0.
   fast 2 $ s "<<uxay:2(2, 8, 2) uxay:4(2, 8) uxay:4(3, 8)>>",
   fast 1 $ density 0.5 $ s "[bd [~ ~ bd] [bd [~ bd]/2 bd bd ] [~ bd] ]"
   ]
-  # cutoff 3500 # gain 0.8 # lfo 0.8 # overgain 0.4 # nudge 4
+  # cutoff 350 # gain 0.8 # lfo 0.8 # overgain 0.4 # nudge 4
 
-b3 $ silence
-
+do
 b3 $ layer[density 0.125, striate 2 . density 0.25 . (# distort saw) . (#cutoff 600) . (#amp 0.4)] $ slowcat [
   s "<<uxay:2(2, 8, 2) uxay:4(1, 8) uxay:4(6, 8)>>",
   density 0.25 $ s "[bd [~ ~ bd] [bd [~ bd]/2 bd bd ] [~ bd] ]"
   ]
-  # cutoff 1500 # gain 0.8 # lfo 0.8 # overgain 0.2
+  # cutoff 150 # gain 0.8 # lfo 0.8 # overgain 0.2
 
 do
   -- buried
   b4 $ stack [
-      slow 4 $ s "uxay:4(2, 8, 2)/2" # cutoff 1048 # gain "0.6 0.6 0.8 1.2" # degrade 1.125, --floor
+      slow 4 $ s "cc:4(2, 8, 2)/2" # cutoff 1048 # gain "0.6 0.6 0.8 1.2" # degrade 1.125, --floor
       density 0.5 $ s "cc:4(4, 8, 4)" # cutoff 512 # gain "1.2 0.8 1.0 0.8" # degrade (sine - 0.7) --floor
     ]
-      # cutoff 955 # freq 4200
+      # cutoff 955 # freq 420
       # gain 0.8
       # speed (fmap ([2,1,3]!!)
       $ markovPat 16 2 [[3,5,2], [4,4,2], [0,1,0]])
-  b5 $ layer[slow 4 . (# cutoff 500), density 0.25 . (#freq 100) . (# lfo 0.2) . (# attack 0.03) . (# decay 0.8) . (# resonance 0.3) . (# legato 2.75)] $ stack [
+  b5 $ layer[slow 4 . (# cutoff 500), density 0.5 . (#freq 400) . (#accelerate 16) . (# lfo 0.2) . (# attack 0.03) . (# decay 0.8) . (# resonance 0.3) . (# legato 2.75)] $ stack [
       density 1 $ s "<bd(4, 8, 2), co(6, 8, 2), co(4, 8, 2), cc:1(6, 32)>",
       density 0.25 $ s "<bd(2, 8), co(2, 8), co(1, 8), {cc:1(3, 16) cc:1(1, 16) cc:1(6, 16)}>" # degrade 1.2 # room 0.8 # dry 0.6
-    ] # cutoff 3250
-    # room 1.9 # freq 1500
+    ] # cutoff 625
+    # room 1.9 # freq 150
     # gain 0.8
 
 hush
@@ -73,7 +72,7 @@ unsoloAll
 
 do
   -- floor
-  b2 $ layer[density 0.25 . every 4 (fast 2) . every 8 (striate 4) . (# freq 1000) , juxBy 0.3 (# cutoff 100) . (# freq 200)] $ s "<<uxay:4(3, 8) uxay:4(3, 8) uxay:4(3, 8)>, [bd ~ [bd ~]*2 ~ bd]>"
+  b2 $ slow 2 $ layer[density 0.25. every 4 (slow 2) . every 8 (striate 1) . (# freq 100) , density 0.5 . juxBy 0.3 (# cutoff 100) . (# freq 200)] $ s "<<uxay:4(3, 8) uxay:4(3, 8) uxay:4(3, 8)>, [bd ~ [bd ~]*2 ~ bd]>"
     # cutoff 350 |+| 10 # gain 1 # lfo 0.8
     # speed (fmap ([2,1,3]!!)
     $ markovPat 16 2 [[3,5,2], [4,4,2], [0,1,0]])
@@ -224,7 +223,7 @@ do
 let gain_slide x y z = gain y
 
 do
-  -- heart
+  -- heart -- sooner
   l4 $ stack [
       every 16 (slow 2) $ stack [
         every 8 (slow 2) $ s "[co co] ~ co ~ [co co] ~ co [co co]"  # pan 0.5,
@@ -371,7 +370,7 @@ do
   let paa1 = s "[co co:6] ~ co ~ [co co:6] ~ [co co:6] co" # degrade 0.2 |-| 0.1 # gain 1.15 # room 1 |*| 1.4  # delay 0.25 # pan sine
   let paa2 = s "[co:4 co:4] co [co:4 co:4] co"  # pan 0.25 # room 0.5
   -- d7 $ capply (cF 1 "18") (const $ paa2) $ paa1
-  b3 $ paa2 # overgain 0.4
+  b3 $ paa2 # overgain 0.11 # cutoff 8500
 
 
 
@@ -395,6 +394,7 @@ l1 $ stack [
 do
   -- b1 $ silence
   -- solemn heart
+  l1 $ silence
   l2 $ density 0.125 $ layer[striate 8, striate 2, slow 4] $ s "vt:4*2" # freq 1024
   l4 $ density 0.25 $ layer[(# hcutoff 4000), density 0.5] $ every 16 (slow 2) $ stack [
       every 8 (slow 4) $ s "[co co] ~ co ~ [co co] ~ co [co co]" # pan 0.9 # gain 0.6 # freq 400,
@@ -445,7 +445,7 @@ l3 $ stack [
   ] # room 2 # gain 0.4 # freq 200
 
 
-b5 $ slow 2 $ s "<gabba(4, 8), co:3(1, 8, 1)>" # cutoff 409 # gain 1 # lfo 5.5 |/| 0.3 # room 2 # dry 0.9 # size sine # gain 1.1  --floor
+b3 $ slow 2 $ s "<gabba(4, 8), co:3(1, 8, 1)>" # cutoff 409 # gain 1 # lfo 5.5 |/| 0.3 # room 2 # dry 0.9 # size sine # gain 1.1  --floor
 
 
 ---
@@ -556,16 +556,16 @@ b2 $ density 0.5 $ s "<gabba(4, 8, 2), co:3(2, 8, 1)>" # cutoff 4096 # gain 1 # 
 hush
 
 do
-  -- kids
-  l1 $ every 4 (density 2) $ layer [slow 2 . (# cutoff 600), density 0.125 . (# distort saw)] $ interlace (
+  -- kids offsprings -- come back before you go.
+  l1 $ density saw + 2 $ every 4 (density 2) $ layer [slow 2 . (# cutoff 600), density 0.125 . (# distort saw)] $ interlace (
         s "[uxay:4(2, 8), bd*2]" # cutoff 1500 # gain 1 # lfo luv
       ) (fast 1 $ stack [
         s "[uxay:4(4, 8), bd*2]" # cutoff 5500 # gain 0.75 # lfo luv  # room 1.1,
         layer[rev, fast 4, fast 2] $ s "[uxay:4(4, 8), bd*4]" # delay 0.2
       ]
-    ) # stretch 0.4
-    # speed (fmap ([4,1,3]!!) $ markovPat 16 2 [[2,3,2], [2,4,2], [0,1,0]]) # freq 656
-    # room 1 # timescale 0.8
+    ) # stretch 0,6
+    # speed (fmap ([4,1,3]!!) $ markovPat 16 4 [[2,3,2], [2,4,2], [0,1,0]]) # freq 656
+    # room 2 # timescale 0.6
   -- liberated beat
   b1 $ slow 2 $ s "<gabba(4, 8), co:3(1, 8, 1)>" # cutoff 4096 # gain 1 # lfo 5.5 |/| 0.3 # room 2 # dry 0.9 # size sine # gain 1  --floor
   -- attack
@@ -700,7 +700,7 @@ b6 $ slow 2 $ s "<gabba(4, 8), co:3(1, 8, 1)>" # cutoff 4096 # gain 1 # lfo 5.5 
       ] # room 1 # amp 1
 
 
-      -- kids
+      -- kids offsprings
       l4 $ slow 2 $ every 4 (density 0.5) $ density 0.125 $ layer [slow 8 . every 4 (slow 2), density 0.25 . every 2 (fast 2), slow 2 . (#distort saw) . (# fshift 128)] $ interlace (
           s "[uxay:4(4, 8), bd*2]" # cutoff 1500 # gain 0.8 # lfo luv
         ) (fast 2 $ stack [
@@ -713,7 +713,7 @@ b6 $ slow 2 $ s "<gabba(4, 8), co:3(1, 8, 1)>" # cutoff 4096 # gain 1 # lfo 5.5 
 
 
       do
-        -- kids
+        -- kids -- yass offsprings
         l3 $ density 0.25 $ layer [slow 4, density 0.25, slow 2] $ interlace (
               s "[uxay:4(4, 8), bd*2]" # cutoff 1500 # gain 1 # lfo luv
             ) (fast 2 $ stack [
@@ -747,24 +747,24 @@ a4 $ every 8 (slow 2) $ s "[gabba:4*2] [~ gabba:4] [gabba:4] [gabba:4]" # cutoff
       b2 $ juxBy 0.7 (#cutoff 9000) $ stack [
           s "reverbkick:3(5, 8, 1)" # hcutoff 500 # cutoff 18500 # gain 0.9,
           s "bd:8(5, 8)" # cutoff 4500 # gain 0.4 |+| 0.1 # pan sine
-        ]  # room 0.75 # cutoff 1200
+        ]  # room 0.75 # cutoff 18000
       -- rerepeet
       b3 $ density 0.5 $ layer[slow 4, (#cutoff 1500)] $ stack [
           s "reverbkick:3(5, 8, 1)" # hcutoff 500 # cutoff 18500  # gain 1.2 # leslie 0.4,
           slow 2 $ s "bd:8(5, 8)" # cutoff 4500 # gain 0.8 # leslie 0.2 # pan sine,
           s "bd:8(5, 8, 2)" # cutoff 4500 # gain 0.8 # leslie 0.2 # pan sine,
           s "bend(8, 16)" # room 2
-        ]  # room 0.5 # gain 1 # cutoff 6000
+        ]  # room 0.8 # gain 1 # cutoff 18000 # overgain 0.01 # distort 0.01
 
 
 
 hush
 
-
+do
 -- STRONG EASY
-l2 $ s "<[co co] ~ co ~  co [co ~] ~ ~ [co co], co(8, 16), co:2(3, 8, 2)>" # gain "1 1.1 [0.9 1 0.9 0.9] 1 [0 1 0 1] 1.1 [0.9 1 0.9 0.9] 1"
+l1 $ s "<[co co] ~ co ~  co [co ~] ~ ~ [co co], co(8, 16), co:2(3, 8, 2)>" # gain "1 1.1 [0.9 1 0.9 0.9] 1 [0 1 0 1] 1.1 [0.9 1 0.9 0.9] 1"
   -- no live/no love
-b2 $ juxBy 0.7 (#cutoff 9000) $ stack [
+b3 $ juxBy 0.7 (#cutoff 9000) $ stack [
     s "reverbkick:3(5, 8, 1)" # hcutoff 500 # cutoff 18500 # gain 0.9,
     s "bd:8(5, 8)" # cutoff 4500 # gain 0.4 |+| 0.1 # pan sine
   ]  # room 0.75 # cutoff 1200
@@ -787,7 +787,7 @@ b1 $ slow 2 $ s "<gabba(4, 8), co:3(1, 8, 1)>" # cutoff 1096 # lfo 5.5 |/| 0.3 #
     ]
   ) # stretch 0.1
   # speed (fmap ([4,1,3]!!) $ markovPat 8 1 [[2,3,2], [2,4,2], [0,1,0]]) # freq 656
-  # room 2 # gain 0.7
+  # room 2 # gain 0.7 # room 1.4 # dry 1.7 # cutoff 8500
 
 a4 $ silence
 
@@ -797,7 +797,7 @@ a4 $ silence
 do -- NOPE
   -- NOO hush
     -- DUNNO trance dark
-  l1 $ slow 2 $ density 0.5 $ every 4 (density 2) $ stack [
+  l3 $ slow 2 $ density 0.5 $ every 4 (density 2) $ stack [
       slow 4 $ layer [slow 4, slow 8] $ fast 2 $ stack [
           s "[vt:2(4, 8), bd*2]" # cutoff 15500 # gain 0.75 # lfo luv  # room 1.1,
           layer[rev, fast 4, fast 2] $ s "[exxo:3(4, 8), bd*4]" # delay 0.2
@@ -919,7 +919,7 @@ do
                 # cutoff 3500 # gain 0.8 # lfo 0.8 # overgain 0.4 # freq 300
 
 
-                do
+                do -- with offsprings
                   -- STRONG EASY
                   -- l2 $ s "<[co co] ~ co ~  co [co ~] ~ ~ [co co], co(8, 16), co:2(3, 8, 2)>" # gain "1 1.1 [0.9 1 0.9 0.9] 1 [0 1 0 1] 1.1 [0.9 1 0.9 0.9] 1"
                   l3 $ density 0.5 $ s "~ <[co co] ~ co ~  co [co ~] ~ ~ [co co], co(8, 16), co:2(3, 8, 2)>" # gain "1 1.1 [0.9 1 0.9 0.9] 1 [0 1 0 1] 1.1 [0.9 1 0.9 0.9] 1"
@@ -958,9 +958,20 @@ do
 
     muteA
     muteL
+    muteB
+
+do
+  b1 $ silence
+  b2 $ silence
+  b3 $ silence
+  b4 $ silence
+  b5 $ silence
+  b6 $ silence
+  l1 $ silence
+  l2 $ silence
 
     do
-      -- kids
+      -- kids -- yass
       l1 $ slow 16 $ layer [slow 4, id] $ interlace (
             s "[uxay:4(4, 8), bd*2]" # cutoff 1500 # gain 1 # lfo luv
           ) (fast 2 $ stack [
@@ -1008,9 +1019,10 @@ do
   a4 $ silence
   b6 $ silence
   b5 $ silence
+  
   -- buried
   b1 $ stack [
-    fast 2 $ s "uxay:4(8, 8, 2)" # cutoff 1048 # gain "0.6 0.6" ]
+    fast 1 $ s "uxay:4(8, 8, 2)" # cutoff 1048 # gain "0.6 0.6" ]
 
 
 hush

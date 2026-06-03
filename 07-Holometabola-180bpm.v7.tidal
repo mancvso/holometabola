@@ -2,7 +2,7 @@
 -- --------------------
 -- BLOOM I
 -- --------------------
-setcps(180/60/4)|
+setcps(180/60/4)
 unsoloAll
 panic
 b1 $ s "bd"
@@ -52,9 +52,13 @@ panic
 unsoloAll
 
 do
-    l5 $ s "<vt:2(3, 12, 2), vt:2(3, 12, 4), [vt:2 vt:2 ~ vt:3]>" # room 0.6 # gain 0.75 # cutoff 9500 # freq 400
-    l6 $ striate 4 $ slow 4 $ s "<vt:2(3, 12, 2), [vt:2 vt:2 ~ vt:2]>" # room 0.6 # gain 0.75 # cutoff 9500 # freq 400 # stretch sine/3 + 0.04
-    l3 $ slow 2 $ layer[slow 2, striate 2] $ s "<vt:2*4, bsc:6>" # freq 200 # gain 0.8
+  l5 $ s "<vt:2(3, 12, 2), vt:2(3, 12, 4), [vt:2 vt:2 ~ vt:3]>" # room 0.6 # gain 0.75 # cutoff 9500 # freq 400
+  -- birds
+  l6 $ silence
+  l3 $ slow 2 $ layer[slow 2, striate 2] $ s "<vt:2*4, bsc:6>" # freq 200 # gain 0.8
+  
+  l6 $ striate 4 $ slow 4 $ s "<vt:2(3, 12, 2), [vt:2 vt:2 ~ vt:2]>" # room 0.6 # gain 0.75 # cutoff 9500 # freq 400 # stretch sine/3 + 0.04
+
 
 unsoloAll
 panic
@@ -434,6 +438,7 @@ do
   d12 $ slow 2 $ every 8 (# cutoff 1500) $ every 32 (#cutoff 500) $ interlace (s "<gabba:2(4, 12, 2), [bass2:2 bass2:2 ~ bass2:2], gabba:2*3, gabba:4*2>")
     (s "<gabba:2(6, 12, 2), [bass2:2 bass2:2 ~ bass2:2]*3, gabba:3(3, 16, 3), gabba:4*4>")
     # room 0.4 # gain 0.65 # cutoff 4912 # freq 2400
+  
   -- hope
   d3 $ stut 2 0.3 0.4 $ layer [slow 16, slow 8] $ density 4 $ stack [
       s "<vt:3*6, [vt:2(6, 12, 3)]/2, vt:3*4, vt:2(6, 12)>" # freq 128,

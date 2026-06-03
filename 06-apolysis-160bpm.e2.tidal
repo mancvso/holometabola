@@ -117,7 +117,7 @@ do
         n (run 6) # s "vt",
         density 2 $ n (run 6) # s "vt" # freq 64 # hcutoff 600
       ]
-    ] # cutoff 600
+    ] # cutoff 60
 
 
     l5 $ struct "0 1 [1 0 1 1]" $ layer[density 0.25 . (# freq 400), density 0.5 . (# freq 100) . (#delay 0.2), density 0.5] $ striate 4 $ slowcat [
@@ -1205,7 +1205,7 @@ b1 $ layer[fast 1, fast 0.5] $ stack [
   slow 16 $ every 8 (fast 2) $ n (run 4) # s "~ ~ ~ ~ <less, 909, bd> ~ ~ ~" # crush 0.5 # cutoff 1500
 ] # gain 0.8
 
-
+hush
 
 -- heart
 l1 $ slowcat [
