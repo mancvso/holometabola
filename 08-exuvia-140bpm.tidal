@@ -39,7 +39,7 @@ do
   hush
   setcps(140/60/4)
   resetCycles
-  b5 $ stack 
+  b5 $ stack
     [
       density 1 $ s "bd*2 [bd*4]*2" # freq 300,
       slow 4 $ sound "[ [gabba:4 ~ gabba:4 ~] ] [imp:6/2] [gabba:4 [gabba:4 ~  ~ [gabba:4]/2 ] ] gabba:4" # legato 2 # gain 0.7 # room 2 # pan sine # cutoff 2300 # freq 400,
@@ -115,7 +115,7 @@ do
       ] # cutoff 2096 # gain 0.6 # lfo 0.25 # room 1,
       s "uxay:4(4, 8)" # cutoff 4096 # gain 0.75 # lfo 0.25 # room 4,
       s "uxay:4(4, 8)" # cutoff 11096 # hcutoff 5042 # gain 0.75 # room sine --floor
-    ] # gain 0.85
+    ] # gain 0.85 # cutoff 120
 
   -- better
   b6 $ layer[density 2 . slow 4 . striate 8, density 1] $ s "[[co mt] co] [[co co] [[co mt] co [co mt] co]]" # freq 120 |+| 30 # stretch 0.2
