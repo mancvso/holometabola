@@ -74,31 +74,6 @@ s.reboot {
             x.initNodeTree;
         };*/
 
-		~busses = ~dirt.orbits.do { |each|
-				var bus = Bus.audio(each.server, each.numChannels);
-			each.outBus( bus );
-				bus
-		};
-
-			Ndef(\x, {
-				var level = 2;
-				var distortion = 10;
-				var reverbFeedback = 0.1;
-				~allBuses = ~busses.collect { |each| InBus.ar(each.outBus, each.numChannels) };
-				~mix = ~allBuses.collect { |x|
-					var d = { 0.01.rand } ! x.size;
-					DelayN.ar(x, d, d)
-				};
-				~loop = LocalIn.ar(~dirt.numChannels);
-				5.do { ~loop = AllpassL.ar(~loop, 0.15, { ExpRand(0.03, 0.15) } ! 2, 3) };
-				~mix = ~loop * reverbFeedback + ~mix;
-				~mix = LeakDC.ar(~mix);
-				LocalOut.ar(~mix);
-				~mix = Compander.ar(~mix,~mix, 0.3, slopeBelow:1, slopeAbove:0.5, clampTime:0.01, relaxTime:0.01);
-				~mix = (~mix * distortion).tanh * (level / distortion.max(1));
-				~mix
-			}).play;
-
 
 
 	};

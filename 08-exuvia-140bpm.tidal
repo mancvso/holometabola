@@ -289,8 +289,8 @@ hush
 
     do -- good one
       b1 $ stack [
-          s "uxay:4(4, 8)" # cutoff 4096 # gain 0.75 # lfo 0.25 # room 4,
-          fast 1 $ s "uxay:4(4, 8)" # cutoff 11096 # hcutoff 5042 # gain 0.75 # room 1 --floor
+          s "uxay:4(4, 8)" # cutoff 406 # gain 0.75 # lfo 0.25 # room 4,
+          fast 1 $ s "uxay:4(4, 8)" # cutoff 11096 # hcutoff 502 # gain 0.75 # room 1 --floor
         ] # gain 0.75 |+| 0.8
         -- better
       b2 $ density 0.25 $ striate 128 $ slow 4 $ s "[[co mt] co] [[co co] [[co mt] co [co mt] co]]" # freq 120  # stretch 0.2
@@ -345,8 +345,8 @@ hush
                   -- sound "[[909 909] [ co:3 909 [909 909] 909]] [909 909] co:3 [909 [ co:3 909 [909 909] 909]]" # legato 1.25
                 ] # cutoff 4500 # freq "[200 300 200 400] 300 300 [400 300 300 300]" # lfo 5,
                 n (run 4) # sound "co(8, 8)" # pan 0.5 |+| sine # cutoff 2500 |/| 500 # gain 0.7
+                -- quicker
             ] # room 0.8
-          -- quicker
           b2 $ layer [density 0.125, density 0.25, striate 2, striate 8 . (# freq 100)] $ s "<gabba:4(16, 16, 2), gabba:4(8, 8, 2), 909(6, 8, 2), bd:4(8, 16, 4)>" # cutoff 550 # gain 0.7
           b3 $ layer[density 1, density 4 . (#freq 128)] $ stack [
               s "uxay:4(4, 8)" # cutoff 4096 # gain 0.75 # lfo 0.25 # room 4 # freq 255,
@@ -357,6 +357,8 @@ hush
     THIRD PHASE
 
     l3 $ silence
+
+hush
 
     do
       -- not ready - the heavy
@@ -722,7 +724,7 @@ a1 $ silence
               l5 $ silence
 
               do
-                setcps(140/60/4)
+                -- setcps(140/60/4)
                 unsoloAll
                 l6 $ layer[id, slow 4] $ stack [
                       stack [

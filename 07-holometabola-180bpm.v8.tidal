@@ -7,7 +7,7 @@ b1 $ every 4 (slow 2) $ striate 3 $ s "<exxo(4, 6), exxo:3(2, 16, 8)>" # pan 0.1
 
 -- bosco
 do
-  --hush
+  hush
   resetCycles
   setcps(180/60/4)
   -- setcps(86/60/4)
@@ -508,7 +508,7 @@ do
     # room 0.4 # gain 0.75 # cutoff 4912 # freq 2400 # dry 0.7 # cut 0
 
 -- the one
-b1 $ every 4 (# gain 2) $ density 0.5 $ layer[density 2, (#degrade 8)] $ s "<gabba:4*3, [bend:4(6, 12, 3)]/2, haw:3*4, 909:4(3, 12), bd:4*2>"
+b1 $ every 4 (# gain 2) $ density 0.5 $ layer[density 2, (#degrade 8), fast 2 . (#overgain 0.75) . (#degrade 2) . (#cutoff 1200) . (#hcutoff 1000) . (# gain 0.0125)] $ s "<gabba:4*3, [bend:4(6, 12, 3)]/2, haw:3*4, 909:4(3, 12), bd:4*2>"
 # stretch 10
 # cutoff 300
 

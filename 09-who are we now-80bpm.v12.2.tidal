@@ -3,7 +3,7 @@ do
   -- setBaseline
   resetCycles
   setcps(80/60/4)
-  
+
   l2 $ layer[id, (#freq 60) . (# amp 0.3) . (# cutoff 100), density 0.5] $ stack [
       density 0.25 $ layer [striate 2, striate 4] $ slowcat [
         stack [
@@ -20,6 +20,8 @@ do
         ]
       ] # stretch 0.8
     ]
+
+hush
 
 a1 $ density 0.25 $ layer[slow 2, density 0.5 . (#freq 60) . (# amp 0.3) . (# cutoff 100), density 0.25] $ stack [
       density 0.25 $ layer [striate 2, striate 4] $ slowcat [
@@ -79,7 +81,7 @@ l3 $ struct "1 0 [ 1 1 ] 0" $ every 8 (# distort 0.2) $ stack [
   hush
 
 do -- sooner
-l1 $ layer [ (#freq 260) . (# amp 0.3), density 0.5, every 6 . (#freq 260) . (# amp 0.3)] $ stack [
+  l1 $ layer [ id . (# freq 260) . (# amp 0.3), density 0.5, every 6 (slow 2) . (#freq 260) . (# amp 0.3)] $ stack [
     density 0.25 $ layer [striate 2, striate 4] $ slowcat [
       stack [
         n (run 6) # s "vt" # gain 0.7,
@@ -95,9 +97,10 @@ l1 $ layer [ (#freq 260) . (# amp 0.3), density 0.5, every 6 . (#freq 260) . (# 
       ]
     ] # stretch 0.8,
     density 0.5 $ every 4 (striate 2) $ n (run 6) # s "vt" # gain 0.6 # speed 2 # legato 2 # attack 0.5
-  ] # gain 0.66 |+| 0.01
--- 8%
-l3 $ every 8 (# distort 0.2) $ stack [
+    ] # gain 0.86 |+| 0.01
+
+    -- 8%
+  l3 $ every 8 (# distort 0.2) $ stack [
     density 0.5 $ layer [striate 2] $ slowcat [
       stack [
         n (run 4) # s "[vt vt ~ [~ vt]]" # gain 0.9 # stretch 0.8 # room 0.9,
@@ -137,12 +140,37 @@ l4 $ layer[struct "1 0 [ 1 1 ] 0", density 0.25 . (#delay 0.25) . (# hcutoff 500
   ] # gain 0.65 # nudge 4 # cutoff 7000 # legato 0.3
 
 
+hush
 
+do
+  -- the one
+  b1 $ density 0.125 $ every 2 (# gain 2) $ layer[density 2, fast 4 . density 0.5 . (# cutoff 500)] $ layer [
+      (#nudge 4) . density 1 . (#stretch 0.4) . (#freq 1000),
+      density 2 . (#degrade 2) . (#stretch 0.18) . (# freq 3480) . (#cutoff 7800) . (#hcutoff 2080),
+      (#nudge 8) . every 4 (slow 4) . every 3 (slow 2) . slow 2 . (#freq 1240) . (#overgain 0.025) . fast 2 . (striate 2) . (#cutoff 1960) . (#hcutoff 160)
+    ] $ stack [
+    slow 2 $ s "<gabba:3*2, [bend:2(6, 12, 3)]/2, haw:6*4, 909:4(3, 12), bd:4*2>",
+    slow 4 $ s "<gabba:3*3, [bend:8(12, 12, 3)]/2, haw:4(6,4), 909:4(6, 12), bd:4(4, 8)>",
+    fast 2 $ s "<gabba:3*4, [bend:8(6, 12, 3)]/2, haw:4*4, 909:4(3, 12), bd:4*2>"
+    ]
+    # cutoff 2800
+    # gain 0.7
 
+    do
+      -- the one
+      b1 $ density 0.25 $ every 2 (# gain 2) $ layer[density 2, fast 4 . density 0.5 . (# cutoff 500)] $ layer [
+          (#nudge 4) . density 1 . (#stretch 0.4) . (#freq 1000),
+          density 2 . (#degrade 2) . (#stretch 0.18) . (# freq 3480) . (#cutoff 7800) . (#hcutoff 2080),
+          (#nudge 8) . every 4 (slow 4) . every 3 (slow 2) . slow 2 . (#freq 1240) . (#overgain 0.025) . fast 2 . (striate 2) . (#cutoff 1960) . (#hcutoff 160)
+        ] $ slowcat [
+        s "<gabba:3*2, [bend:2(6, 12, 3)]/2, haw:6*4, 909:4(3, 12), bd:4*2>",
+        fast 2 $ s "<gabba:3*3, [bend:8(12, 12, 3)]/2, haw:4(6,4), 909:4(6, 12), bd:4(4, 8)>",
+        s "<~, [bend:8(6, 12, 3)]/2, haw:4*4, 909:4(3, 12), bd:4*2>"
+        ]
+        # cutoff 2000
+        # gain 0.15
 
-
-
-
+hush
 
 
 -- 8%
@@ -223,7 +251,7 @@ hush
 do -- POP
   -- 9%
   b2 $ silence
-  b1 $ layer[density 1, density 0.125 . (# fshift 20)] $ stack [
+  b4 $ layer[density 1, density 0.125 . (# fshift 20)] $ stack [
       layer [( # stretch (range 1.3 1.5 $ sine*8) ), density 0.125]
         $ s "<{gabba:4*8}?, gabba:2*6,techno:1(8, 8, 3), techno:1(3, 8), techno:4(3, 8, 1), techno:1(4, 16, 2), techno:6>",
       every 16 (density 1) $ density 0.125 $ layer [(#freq 290), (#freq 5000)]
@@ -267,7 +295,7 @@ l5 $ slow 4 $ layer[density 2, density 0.5] $ every 8 (striate 4) . (#freq 200) 
 
 do
 -- 6%
-b4 $ layer[slow 4 . striate 2 . (#freq 128), density 0.25 . (# 200), density 0.5 . (#freq 100)]
+b5 $ layer[slow 4 . striate 2 . (#freq 128), density 0.25 . (# 200), density 0.5 . (#freq 100)]
   $ layer [density 2 . (# freq 24), slow 2 . (# freq 128), slow 2 . (# freq 72)] $ stack
   [
     slowcat [
@@ -385,7 +413,7 @@ unsoloAll
 hush
 
 do -- remate
-  b1 $ slow 2 $ striate 4 $ layer[density 0.25, density 1] $ s "<gabba:4*3,gabba:4*2,exxo:1(12, 8, 4), exxo:1(2, 8, 2), exxo:1(3, 8, 4), exxo:1(2, 16, 6), techno:6>"
+  b4 $ slow 2 $ striate 4 $ layer[density 0.25, density 1] $ s "<gabba:4*3,gabba:4*2,exxo:1(12, 8, 4), exxo:1(2, 8, 2), exxo:1(3, 8, 4), exxo:1(2, 16, 6), techno:6>"
     # cutoff 1600 # room 0.2 # resonance 0.2 # delay 0.02 # hcutoff 100
     # gain 0.75
   -- 10%
@@ -516,7 +544,7 @@ do -- POP
     # hcutoff 140
     # degrade 0.8
     # stretch 0.8
-  b1 $ layer [density 1, density 0.125 . (# freq 200)] $ stack [
+  b4 $ layer [density 1, density 0.125 . (# freq 200)] $ stack [
       layer [(# (stretch sine/4 + 2.7))]
         $ s "<{gabba:4*8}?, gabba:2*6,techno:1(8, 8, 3), techno:1(3, 8), techno:4(3, 8, 1), techno:1(4, 16, 2), techno:6>",
       every 16 (density 1) $ density 0.125 $ layer [(#freq 250), (#freq 5000)]
@@ -601,7 +629,7 @@ a1 $ stack [
   do -- POP
     -- 9%
     -- b2 $ silence
-    b1 $ layer [density 1, density 0.125 . (# freq 200)] $ stack [
+    b4 $ layer [density 1, density 0.125 . (# freq 200)] $ stack [
         layer [(# (stretch sine/4 + 2.7))]
           $ s "<{gabba:4*8}?, gabba:2*6,techno:1(8, 8, 3), techno:1(3, 8), techno:4(3, 8, 1), techno:1(4, 16, 2), techno:6>",
         every 16 (density 1) $ density 0.125 $ layer [(#freq 250), (#freq 5000)]
@@ -678,10 +706,10 @@ l1 $ layer [id, (#freq 100), density 0.25 . (# freq 90) . (# hcutoff 100) . (# d
 hush
 
   do -- remate
-  b1 $ slow 2 $ striate 4 $ layer[density 0.25, density 1] $ s "<gabba:4*3,gabba:4*2,exxo:1(12, 8, 4), exxo:1(2, 8, 2), exxo:1(3, 8, 4), exxo:1(2, 16, 6), techno:6>"
+  b4 $ slow 2 $ striate 4 $ layer[density 0.25, density 1] $ s "<gabba:4*3,gabba:4*2,exxo:1(12, 8, 4), exxo:1(2, 8, 2), exxo:1(3, 8, 4), exxo:1(2, 16, 6), techno:6>"
     # cutoff 1600 # room 0.2 # resonance 0.2 # delay 0.02 # hcutoff 100
     # gain 0.75
- 
+
  -- 10%
   l2 $ density 0.5 $ striate 4 $ slowcat [
     stack [
@@ -691,7 +719,7 @@ hush
       n (run 8) # s "gra" # gain "0.6"
     ]
     ] # stretch 0.4
-  
+
   -- pause
   b2 $ layer [density 2 . every 4 (fast 2), slow 4, slow 16, (#freq 12800)] $ slowcat [
     s "~ gabba:4*6" # pan cosine # freq 400,
@@ -718,7 +746,7 @@ hush
     # hcutoff 140
     # degrade 0.4
     # stretch 0.8
-  
+
   -- 9%
   b3 $ density 1 $ stack [
       layer [(# (stretch sine/4 + 2.7))] $ s "[<{gabba:4*8}?, gabba:2*6,techno:1(8, 8, 3), techno:1(3, 8), techno:4(3, 8, 1), techno:1(4, 16, 2), techno:6> ~]/2",
@@ -729,8 +757,8 @@ hush
 
 
   do
-    hush
-    b1 $ slow 2 $ striate 4 $ layer[density 0.25, density 1] $ s "<gabba:4*3,gabba:4*2,exxo:1(12, 8, 4), exxo:1(2, 8, 2), exxo:1(3, 8, 4), exxo:1(2, 16, 6), techno:6>"
+    -- hush
+    b6 $ slow 2 $ striate 4 $ layer[density 0.25, density 1] $ s "<gabba:4*3,gabba:4*2,exxo:1(12, 8, 4), exxo:1(2, 8, 2), exxo:1(3, 8, 4), exxo:1(2, 16, 6), techno:6>"
       # cutoff 1600 # room 0.2 # resonance 0.2 # delay 0.02 # hcutoff 100
       # gain 0.75
     b4 $ slow 2 $ striate 2 $ layer[density 0.25, density 1] $ s "<gabba:4*3,gabba:4*2,exxo:1(12, 8, 4), exxo:1(2, 8, 2), exxo:1(3, 8, 4), exxo:1(2, 16, 6), techno:6>"
@@ -777,7 +805,7 @@ hush
         ]
       ] # stretch 0.8
      ] # cutoff 200 # gain 0.4
-    
+
 
 -- synth
 
