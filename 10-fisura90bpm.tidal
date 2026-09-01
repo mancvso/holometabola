@@ -269,14 +269,14 @@ l4 $ striate 4 $ density 0.5 $ slowcat [
 -- stomp clink
 do
   b3 $ density 0.5 $ every 4 (#freq 200) $ stack [
-        density 0.5 $ s "<gabba:2*2, gabba:4(6, 12), gabba:6(3, 12, 1), gabba:2(1, 12)>",
+        density 0.5 $ s "<gabba:2*2, gabba:4(6, 12), gabba:6(3, 12, 1), gabba:2(1, 12)>*2",
         density 0.25 $ s "<gabba:2(2, 8, 1), gabba:4(3, 12), gabba:6(4, 12, 1), gabba:2(1, 12)>",
-        density 0.25 $ s "<gabba:2(4, 8), gabba:4(6, 12), gabba:6(6, 12, 1), gabba:2(1, 12)>",
-        density 0.5 $ s "<gabba:2(4, 8), gabba:4(24, 12), gabba:6(3, 12, 1), gabba:2(1, 12)>",
-        density 0.125 $ s "<gabba:2(4, 8), gabba:4(24, 12), gabba:6(4, 12, 1), gabba:2(1, 12)>",
-        density 0.25 $ s "~ <gabba:2(3, 8), gabba:4(24, 12), gabba:6(4, 12, 1), gabba:2(1, 12)>",
-        density 0.125 $ s "<gabba:2(2, 8), gabba:4(24, 12), gabba:6(1, 12, 1), gabba:2(1, 12)>",
-        density 0.125 $ s "<gabba:2(4, 8), gabba:4(6, 12), gabba:6(3, 12, 1), gabba:2(1, 12)>"
+        density 0.25 $ s "<gabba:2(4, 8), gabba:4(6, 12), gabba:6(6, 12, 1), gabba:2(1, 12)>*2",
+        density 0.5 $ s "<gabba:2(4, 8), gabba:4(24, 12), gabba:6(3, 12, 1), gabba:2(1, 12)>*2",
+        density 0.125 $ s "<gabba:2(4, 8), gabba:4(24, 12), gabba:6(4, 12, 1), gabba:2(1, 12)>*2",
+        density 0.25 $ s "~ <gabba:2(3, 8), gabba:4(24, 12), gabba:6(4, 12, 1), gabba:2(1, 12)>/2",
+        density 0.125 $ s "<gabba:2(2, 8), gabba:4(24, 12), gabba:6(1, 12, 1), gabba:2(1, 12)>*2",
+        density 0.125 $ s "<gabba:2(4, 8), gabba:4(6, 12), gabba:6(3, 12, 1), gabba:2(1, 12)>/2"
       ] # pan sine # stretch 0.4 # cutoff 100 # freq 590 # gain 0.8
   -- HELL IS HERE
   b1 $ layer [density 1, density 0.25] $ slow 2 $ every 4(slow 4) $ layer[density 0.5, density 0.125 . (# degrade 0.3)] $ layer[id, (#hcutoff 1000), (#freq 5678)] $ stack [
@@ -333,7 +333,7 @@ b4 $ layer[density 0.5 . (#degrade 0.4), density 0.25 . (#freq 128)] $ layer [sl
 
 
 -- echoes of the electric
-l4 $ layer[density 0.5, density 0.25 . (# delay 0.05) . (# cutoff 500) . (# accelerate 0.8) . (# room sine)] $ stack [
+l4 $ layer [density 0.5, density 0.25 . (# delay 0.05) . (# cutoff 500) . (# accelerate 0.8) . (# room sine)] $ stack [
   slowcat [
     stack [
       striate 8 $ s "<derr:2(6, 12, 2), derr:3*2, derr:5(4, 16, 8)>",
@@ -442,7 +442,7 @@ hush
 do
   b2 $ stack [
         density 1 $ s "<gabba:2(3, 16, 4), gabba:4(6, 12, 8), gabba:6(3, 12, 1), gabba:2(1, 12)>",
-        density 2 $ every 4 (slow 2) $ s "~ <gabba:2(3, 16, 4), gabba:4(6, 12, 8), gabba:6(3, 12, 1), gabba:2(1, 12)>"
+        density 2 $ every 4 (slow 2) $ s "~ <gabba:2(3, 16, 4), gabba:4(6, 12, 8), gabba:6(3, 12, 1), gabba:2(1, 12)>/2"
       ] # pan 0.5 # stretch 0.4 # cutoff 489 # freq 700 # gain 0.95 # hcutoff 60
   b3 $ density 1 $ every 4 (#freq 200) $ stack [
         density 0.5 $ s "<gabba:2*2, gabba:4(6, 12), gabba:6(3, 12, 1), gabba:2(1, 12)>",
@@ -499,7 +499,7 @@ d5 $ stack [
 d5 $ density 0.25 $ s "<derr:2(3, 8, 2), derr:5(2, 8)> [derr:5 ~ ] ~ " # freq 1024
 
 
-do
+do -- true bass
   b1 $ density 0.5 $ kkick # freq 128 # room 0.25
   l2  $ layer[density 2, density 0.25] $ slowcat [ -- clink
       s "<bass2:4(6, 12, 2), bass2:4:8(3, 12, 4), [bass2:4 bass2:4 ~ bass2:4]>",

@@ -199,6 +199,7 @@ do
       striate 2 $ slow 2 $ density 2 $ s "[ ~ uxay:2] [~ uxay:2] [uxay:4 uxay:2] [uxay:4]" # freq "200 500 900 1300 1500 2300 4500"
     ] # room 1 # gain 0.8
 
+do
   -- buried
   b6 $ stack [
       fast 1 $ s "uxay:4(8, 8, 2)" # cutoff 1048 # gain "0.6 0.6 0.8 1.2" # degrade 1.125, --floor
@@ -252,7 +253,7 @@ l6 $ slow 4 $ layer [slow 4 . (#distort saw), slow 8] $ interlace (
   ]
 ) # stretch 0.1
 # speed (fmap ([4,1,3]!!) $ markovPat 16 2 [[2,3,2], [2,4,2], [0,1,0]]) # freq 656
-# room 2 # freq 512 # gain 0.6
+# room 2 # freq 512 # gain 0.6 # begin (slow 13 $ range 0 0.9 sine) # sustain 2
 
 
 -- NOPE easy
@@ -302,7 +303,7 @@ do
       # gain 1.1  --floor
 
   do
-    -- rerepeet
+    -- rearlier
     b4 $ density 0.5 $ layer[slow 4, (#cutoff 1500)] $ stack [
         s "reverbkick:3(5, 8, 1)" # hcutoff 500 # cutoff 18500  # gain 1.2 # leslie 0.4,
         slow 2 $ s "bd:8(5, 8)" # cutoff 4500 # gain 0.8 # leslie 0.2 # pan sine,
@@ -588,6 +589,7 @@ do
   b1 $ fast 0.025 $ s "<gabba(4, 8), co:3(1, 8, 1)>" # cutoff 4096 # gain 1 # lfo 5.5 |/| 0.3 # room 2 # dry 0.9 # size sine # gain 1.1  --floor
 
 
+do
 -- no live/no love
 b4 $ juxBy 0.7 (#cutoff 8000) $ stack [
   s "reverbkick:3(5, 8, 1)" # hcutoff 500 # cutoff 18500 # gain_slide "4" 0.7 1.2 |+| 0.8,
@@ -669,7 +671,7 @@ a4 $ density 0.125 $ stack [
 ] # pan 0.25 # room 0.5 # freq 840
 
 
--- liberated beat
+-- bridge liberated beat
 b1 $ slowcat [
   slow 2 $ s "<gabba(4, 8), co:3(1, 8, 1)>",
   layer [slow 2, id . (# freq 512)] $ s "<gabba(4, 8), co:3(1, 8, 1)>",
@@ -700,6 +702,7 @@ b6 $ slow 2 $ s "<gabba(4, 8), co:3(1, 8, 1)>" # cutoff 4096 # gain 1 # lfo 5.5 
       ] # room 1 # amp 1
 
 
+do
       -- kids offsprings
       l4 $ slow 2 $ every 4 (density 0.5) $ density 0.125 $ layer [slow 8 . every 4 (slow 2), density 0.25 . every 2 (fast 2), slow 2 . (#distort saw) . (# fshift 128)] $ interlace (
           s "[uxay:4(4, 8), bd*2]" # cutoff 1500 # gain 0.8 # lfo luv
@@ -778,8 +781,9 @@ b4 $ density 0.5 $ layer[slow 4, (#cutoff 1500)] $ stack [
 -- liberated beat
 b1 $ slow 2 $ s "<gabba(4, 8), co:3(1, 8, 1)>" # cutoff 1096 # lfo 5.5 |/| 0.3 # room 2 # dry 0.9 # size sine # amp 1 # freq 64  --floor
 
+do
   -- kids
-  l2 $ layer [slow 8 . every 4 (slow 2), density 0.25 . every 2 (fast 2)] $ interlace (
+  l2 $ layer [slow 2 . every 4 (slow 2), density 1 . every 2 (fast 2)] $ interlace (
       s "[uxay:4(4, 8), bd*2]" # cutoff 1500 # gain 0.8 # lfo luv
     ) (fast 2 $ stack [
       s "[uxay:4(4, 8), bd*2]" # cutoff 5500 # gain 0.75 # lfo luv  # room 1.1,
