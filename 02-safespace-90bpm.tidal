@@ -53,12 +53,31 @@ do -- 11 %
     # fshift 6000
     # delay 0.05
 
-hush
+
+do
+  hush
+  a6 $ every 2 (density 2 . (#release 0.6) . (#attack 0.5) ) $ density 0.25 $ layer[id, slow 4, (#freq 128), (#freq 64)] $ stack [
+        slow 2 $ stack [
+          sound "[~ imp:2/2] [[~] [ co ~  [imp:2 imp:2/2] ~ ]]" # gain 0.7 # legato 0.95 # pan sine ,
+          slow 2 $ sound "[[co:3 co:3] imp:2/2] [co:3 [co:3 co:3 [co:3 co:3] imp:2/4]]" # legato 2 # gain 0.7 # room 2 # pan sine ,
+          fast 2 $ sound "<imp:2(4, 4, 2)>" # gain 0.8,
+          s "vt:4(4, 16, 2)" # gain sine # pan sine*2 # freq 100
+          -- sound "[[909 909] [ co:3 909 [909 909] 909]] [909 909] co:3 [909 [ co:3 909 [909 909] 909]]" # legato 1.25
+        ] # cutoff 2000 # freq 400,--"200 300 300 300" # lfo 5,
+        fast 2 $ n (run 4) # sound "co(8, 8)*2" # pan 0.5 |+| sine # cutoff 1500 |/| 500 # gain 0.6 # freq 200
+      ] # gain 1 # cutoff 600 --_slide "6" 1 1.1
+  a4 $ jux(density 4) $ density 0.25 $ stut 2 0.1 0.2 $ s "[exxo:5(3, 4, 1), exxo:5/2]" # dry sine # resonance 0.2 # cutoff 1500 # pan sine*2 # gain 0.6  # begin (slow 13 $ range 0 0.9 sine) # sustain 2
+  b4 $ jux(slow 1 . (#freq 600)) $ density 0.25 $ s "<bass2:2(3, 12, 2), bass2:2:8(3, 12, 4), [bass2:2 bass2:2 ~ bass2:2]>"*2 # room 0.6 # gain 0.55 # cutoff 9500 # freq 200
+
+do
+  b3 $ every 4 (fast 4 . (#freq 120) ) $ s "<bass2:2(3, 12, 2), bass2:2:8(3, 12, 4), [bass2:2 bass2:2 ~ bass2:2]>"*2 # room 0.6 # gain 0.45 # cutoff 9500 # freq 400
+  b2 $ every 3 (fast 4) . density 0.25 $ s "~ ~ ~ <bass2:2(6, 12, 2), bass2:8(6, 12, 4), [bass2:2 bass2:2 ~ bass2:2]>" # room 0.8 # gain 0.7 # cutoff 1000 # freq 280
+  b6 $ layer[fast 1, slow 4 . (# freq 600)] $ s "~ ~ ~ <bass2:2(6, 12, 2), bass2:8(6, 12, 4), [bass2:2 bass2:2 ~ bass2:2]>" # room 0.8 # gain 0.7 # cutoff 1000 # freq 280
+
 
 do
   setcps(90/60/4)
   -- incipient
-  hush
   a6 $ layer[id, slow 4, (#freq 128), (#freq 64)] $ stack [
         slow 2 $ stack [
           sound "[~ imp:2/2] [[~] [ co ~  [imp:2 imp:2/2] ~ ]]" # gain 0.7 # legato 0.95 # pan sine ,
@@ -115,7 +134,7 @@ do
   a4 $ density 0.15 $ jux(density 4) $ density 0.25 $ stut 2 0.1 0.2 $ s "[exxo:5(3, 4, 1), exxo:5/2]" # dry sine # resonance 0.2 # cutoff 1500 # pan sine*2 # gain 0.6
   -- 11%
 
-do
+do -- init
   hush
   b1 $ layer[slow 4, slow 2 . (# freq 600)] $ s "~ ~ ~ <bass2:2(6, 12, 2), bass2:8(6, 12, 4), [bass2:2 bass2:2 ~ bass2:2]>"/2 # room 0.8 # gain 0.7 # cutoff 1000 # freq 280
   a3 $ layer[density 1, density 0.25, (# freq 128), (# freq 256), (# freq 512)] $ stack [
@@ -140,7 +159,7 @@ do
       # fshift 6000
       # delay 0.05
 
-do
+do -- init
   hush
   b3 $ slow 16 $ s "<bass2:2(3, 12, 2), bass2:2:8(3, 12, 4), [bass2:2 bass2:2 ~ bass2:2]>" # room 0.6 # gain 0.45 # cutoff 9500 # freq 400
   setcps(90/60/4)
@@ -482,6 +501,7 @@ do -- pause
   -- for extra something
   b6 $ density 0.5 $ layer[fast 2, slow 8, slow 2] $ s "<rs:6(3, 12, 4), cre:2(4, 12, 4), rs:4(4, 12, 2)>" # freq 256 # gain 0.72 # room sine*32 # gain 0.9
 
+hush
 
 do
   -- tension: more ambient

@@ -513,11 +513,6 @@ do -- float
 
 hush
 
-do
-  l1 $ silence
-  l3 $ silence
-  b3 $ silence
-
     l1 $ layer [density 0.5 . (# freq 100), density 1 . (#freq 200) . (# cutoff 800) . (# delay 0.01)] $ stack [
         slow 4 $ slowcat [
           s "<808cy(3, 12, 2), 808cy:8(4, 12, 4), [bd ~ bd*2]>",
@@ -607,12 +602,6 @@ do
         ]
       ] # freq 1624 # room 2 # gain 0.7 # cutoff 1700
 
-
-do
-  b1 $ silence
-  a3 $ silence
-  l3 $ silence
-
 do
   l3 $ slow 2 $ density 0.5 $ striate 2 $ density 0.5 $ layer[density 1, struct "1 0 [1 1 1 1] 1" . density 1 . (#freq 190)] $ layer [density 4, striate 2, (#cutoff 1024)] $ slowcat [
       s "vt:2*2",
@@ -696,6 +685,7 @@ do -- float anew
         ]
       ] # freq 1624 # room 2 # gain 0.7 # cutoff 2700
 
+do
     -- float
       a4 $ every 4 (fast 2) $ slow 2 $ every 4 (density 0.5 . stut 2 0.2 0.2) $ striate 8 $ layer [density 1, density 0.5] $ stack [
         slowcat [
@@ -793,9 +783,6 @@ do
         ] # gain_slide "6" 1 1.2
 
 
-panic
-
-hush
 
 do -- jump hush
   l1 $ layer [(#freq 128), density 0.25] $ slowcat [
@@ -925,6 +912,8 @@ do
         ],
         s "~"
     ] # hcutoff 6000 # amp 0.4
+
+-------------------------------------
       
 
 do -- slowmo
